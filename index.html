@@ -99,14 +99,14 @@
                         case "WHOAMI":
                             response = "Ryan Kiapour | Likes: Swift, HTML, CSS, Javascript and Python";
                             break;
-                        case "ABOUT":
-                            response = "Command not found. Type 'HELP' to see the available commands.";
+                        case "VERSION":
+                            response = "Running 1.2.1";
                             break;
                         case "CONTACT":
                             response = "You can reach me at ryan@ryancodes.xyz";
                             break;
                         case "HELP":
-                            response = "Available commands: WHOAMI, CONTACT, CLEAR, HELP.";
+                            response = "Available commands: WHOAMI, CONTACT, CLEAR, VERSION, HELP.";
                             break;
                     }
 
@@ -129,7 +129,7 @@
                 const helpMsg = document.createElement("div");
                 helpMsg.className = "output";
                 terminal.insertBefore(helpMsg, terminal.children[1]); // Ensure it's the second message
-                simulateTypeEffect("Type 'WHOAMI', 'CONTACT', 'CLEAR', or 'HELP' to execute commands.", helpMsg, () => {
+                simulateTypeEffect("Type 'HELP' for a list of comands", helpMsg, () => {
                     document.getElementById("commandInput").focus();
                 });
             });
