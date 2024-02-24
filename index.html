@@ -174,7 +174,7 @@
                             const output = document.createElement("div");
                             output.className = "output";
                             terminal.insertBefore(output, terminal.lastElementChild);
-                            simulateTypeEffect('Complete', output, () => {
+                            simulateTypeEffect('████████', output, () => {
                                 terminal.scrollTop = terminal.scrollHeight;
                             });
                         }, 5000); // Wait 5 seconds before clearing (includes falling duration)
