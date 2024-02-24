@@ -1,207 +1,201 @@
-
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Ryan Codes</title>
-        <link rel="icon" href="favicon.ico" type="image/x-icon">
-        <style>
-            body {
-                background-color: #222;
-                color: #fff;
-                font-family: Consolas, monospace;
-                font-size: 14px;
-                margin: 0;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                height: 100vh;
-            }
-    
-            .terminal {
-                position: relative; /* Updated for matrix effect positioning */
-                width: 600px;
-                height: 400px;
-                background-color: #000;
-                border: 2px solid #1f618d;
-                border-radius: 4px;
-                padding: 20px;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-                overflow: auto;
-            }
-    
-            .matrix-effect {
-                display: none; /* Hidden by default */
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: black;
-                overflow: hidden;
-                color: #00ff00;
-                font-family: Consolas, monospace;
-                font-size: 14px;
-                z-index: 2; /* Ensures it covers other content */
-            }
-    
-            .output {
-                color: #00ff00; /* Green color */
-                margin-bottom: 10px;
-            }
-    
-            .command-line {
-                display: flex;
-                align-items: baseline;
-            }
-    
-            .command-prompt {
-                color: #00ff00; /* Green color */
-                margin-right: 5px;
-            }
-    
-            .command-input {
-                background-color: transparent;
-                border: none;
-                outline: none;
-                color: #00ff00; /* Green color */
-                font-family: inherit;
-                font-size: inherit;
-                flex-grow: 1;
-                caret-color: #00ff00; /* Green color */
-            }
-        </style>
-    </head>
-    <body>
-        <div class="terminal" id="terminal">
-            <div class="matrix-effect" id="matrixEffect"></div> <!-- Matrix effect container -->
-            <!-- Dynamic content will be added here -->
-            <div class="command-line">
-                <div class="command-prompt">></div>
-                <input id="commandInput" class="command-input" type="text" onkeydown="handleCommand(event)">
-            </div>
+<head>
+    <meta charset="UTF-8">
+    <title>Ryan Codes</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            background-color: #222;
+            color: #fff;
+            font-family: Consolas, monospace;
+            font-size: 14px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .terminal {
+            position: relative;
+            width: 600px;
+            height: 400px;
+            background-color: #000;
+            border: 2px solid #1f618d;
+            border-radius: 4px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            overflow: auto;
+        }
+
+        .matrix-effect {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            overflow: hidden;
+            color: #00ff00;
+            font-family: Consolas, monospace;
+            font-size: 14px;
+            z-index: 2;
+        }
+
+        .output {
+            color: #00ff00;
+            margin-bottom: 10px;
+        }
+
+        .command-line {
+            display: flex;
+            align-items: baseline;
+        }
+
+        .command-prompt {
+            color: #00ff00;
+            margin-right: 5px;
+        }
+
+        .command-input {
+            background-color: transparent;
+            border: none;
+            outline: none;
+            color: #00ff00;
+            font-family: inherit;
+            font-size: inherit;
+            flex-grow: 1;
+            caret-color: #00ff00;
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal" id="terminal">
+        <div class="matrix-effect" id="matrixEffect"></div>
+        <div class="command-line">
+            <div class="command-prompt">></div>
+            <input id="commandInput" class="command-input" type="text" onkeydown="handleCommand(event)">
         </div>
-    
-        <script>
-            function simulateTypeEffect(text, outputElement, callback) {
-                let index = 0;
-                outputElement.textContent = ""; // Clear the element first
-                function type() {
-                    if (index < text.length) {
-                        outputElement.textContent += text.charAt(index++);
-                        setTimeout(type, 100); // Adjust typing speed
-                    } else if (callback) {
-                        callback();
-                    }
+    </div>
+
+    <script>
+        function simulateTypeEffect(text, outputElement, prepend = false, callback) {
+            let index = 0;
+            outputElement.innerHTML = prepend ? "<span style='color: #00ff00;'>code@ryancodes.xyz:~$ </span>" : "";
+            function type() {
+                if (index < text.length) {
+                    outputElement.innerHTML += text.charAt(index++);
+                    setTimeout(type, 100);
+                } else if (callback) {
+                    callback();
                 }
-                type();
             }
-    
-            function handleCommand(event) {
-                if (event.keyCode === 13) { // Enter key is pressed
-                    const commandInput = document.getElementById("commandInput");
-                    const command = commandInput.value.trim().toUpperCase();
-                    const terminal = document.getElementById("terminal");
-    
-                    if (command === "CLEAR") {
-                        // Removes all output elements
-                        terminal.querySelectorAll('.output').forEach(e => e.remove());
-                    } else if (command === "MATRIX") {
-                        startMatrixEffect();
-                        commandInput.value = ""; // Clear the input
-                        return; // Prevent further processing
-                    } else {
+            type();
+        }
+
+        function handleCommand(event) {
+            if (event.keyCode === 13) { // Enter key is pressed
+                const commandInput = document.getElementById("commandInput");
+                const command = commandInput.value.trim().toUpperCase();
+                const terminal = document.getElementById("terminal");
+
+                if (command === "CLEAR") {
+                    terminal.querySelectorAll('.output').forEach(e => e.remove());
+                } else if (command === "MATRIX") {
+                    startMatrixEffect();
+                    commandInput.value = ""; // Clear the input
+                    return; // Prevent further processing
+                } else {
+                    const output = document.createElement("div");
+                    output.className = "output";
+                    terminal.insertBefore(output, terminal.lastElementChild);
+
+                    let response = "Command not found. Type 'HELP' to see the available commands.";
+                    switch (command) {
+                        case "WHOAMI":
+                            response = "Ryan Kiapour | Likes: Swift, HTML, CSS, Javascript and Python";
+                            break;
+                        case "VERSION":
+                            response = "Running 1.3.0";
+                            break;
+                        case "CONTACT":
+                            response = "You can reach me at ryan@ryancodes.xyz | Instagram: ryancodes.xyz/ig";
+                            break;
+                        case "HELP":
+                            response = "Available commands: WHOAMI, CONTACT, CLEAR, VERSION, MATRIX, HELP.";
+                            break;
+                        case "":
+                            response = ">";
+                    }
+
+                    simulateTypeEffect(response, output, true, () => {
+                        terminal.scrollTop = terminal.scrollHeight;
+                    });
+                }
+
+                commandInput.value = ""; // Clear the input
+            }
+        }
+
+        function startMatrixEffect() {
+            const matrixEffect = document.getElementById('matrixEffect');
+            matrixEffect.style.display = 'block';
+
+            let counter = 0;
+            const maxCount = 100;
+            const interval = setInterval(() => {
+                if (counter < maxCount) {
+                    const span = document.createElement('span');
+                    span.textContent = Math.random() > 0.5 ? '0' : '1';
+                    span.style.position = 'absolute';
+                    span.style.top = Math.random() * 100 + '%';
+                    span.style.left = Math.random() * 100 + 'vw';
+                    matrixEffect.appendChild(span);
+                    
+                    span.animate([
+                        { top: '0', opacity: 1 },
+                        { top: '100vh', opacity: 0 }
+                    ], {
+                        duration: Math.random() * 3000 + 2000,
+                        easing: 'linear',
+                        fill: 'forwards'
+                    });
+
+                    counter++;
+                } else {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        matrixEffect.style.display = 'none';
+                        matrixEffect.innerHTML = '';
                         const output = document.createElement("div");
                         output.className = "output";
                         terminal.insertBefore(output, terminal.lastElementChild);
-    
-                        let response = "Command not found. Type 'HELP' to see the available commands.";
-                        switch (command) {
-                            case "WHOAMI":
-                                response = "code@ryancodes.xyz:~$ Ryan Kiapour | Likes: Swift, HTML, CSS, Javascript and Python";
-                                break;
-                            case "VERSION":
-                                response = "code@ryancodes.xyz:~$ Running 1.3.0";
-                                break;
-                            case "CONTACT":
-                                response = "code@ryancodes.xyz:~$ You can reach me at ryan@ryancodes.xyz | Instagram: ryancodes.xyz/ig";
-                                break;
-                            case "HELP":
-                                response = "code@ryancodes.xyz:~$ Available commands: WHOAMI, CONTACT, CLEAR, VERSION, MATRIX, HELP.";
-                                break;
-                            case "": 
-                                response = ">"   
-                        }
-    
-                        simulateTypeEffect(response, output, () => {
+                        simulateTypeEffect('Complete', output, true, () => {
                             terminal.scrollTop = terminal.scrollHeight;
                         });
-                    }
-    
-                    commandInput.value = ""; // Clear the input
+                    }, 5000);
                 }
-            }
-    
-            function startMatrixEffect() {
-                const matrixEffect = document.getElementById('matrixEffect');
-                matrixEffect.style.display = 'block'; // Show the matrix effect container
-    
-                let counter = 0;
-                const maxCount = 100; // Number of characters to generate
-                const interval = setInterval(() => {
-                    if (counter < maxCount) {
-                        const span = document.createElement('span');
-                        span.textContent = Math.random() > 0.5 ? '0' : '1';
-                        span.style.position = 'absolute';
-                        span.style.top = '0';
-                        span.style.left = Math.random() * 100 + 'vw'; // Random horizontal position
-                        matrixEffect.appendChild(span);
-                        
-                        // Animate falling
-                        span.animate([
-                            { top: '0', opacity: 1 },
-                            { top: '100vh', opacity: 0 }
-                        ], {
-                            duration: Math.random() * 3000 + 2000, // Random duration
-                            easing: 'linear',
-                            fill: 'forwards'
-                        });
-    
-                        counter++;
-                    } else {
-                        clearInterval(interval);
-                        setTimeout(() => {
-                            matrixEffect.style.display = 'none';
-                            matrixEffect.innerHTML = ''; // Clear matrix effect
-                            // Display "Complete" message
-                            const output = document.createElement("div");
-                            output.className = "output";
-                            terminal.insertBefore(output, terminal.lastElementChild);
-                            simulateTypeEffect('Complete', output, () => {
-                                terminal.scrollTop = terminal.scrollHeight;
-                            });
-                        }, 5000); // Wait 5 seconds before clearing (includes falling duration)
-                    }
-                }, 200); // Speed of matrix effect
-            }
-    
-            function initialMessages() {
-                const terminal = document.getElementById("terminal");
-                const welcomeMsg = document.createElement("div");
-                welcomeMsg.className = "output";
-                terminal.insertBefore(welcomeMsg, terminal.firstChild);
-    
-                simulateTypeEffect("LOADING RYANCODES.XYZ ████████████████████████████", welcomeMsg, () => {
-                    const helpMsg = document.createElement("div");
-                    helpMsg.className = "output";
-                    terminal.insertBefore(helpMsg, terminal.children[1]); // Ensure it's the second message
-                    simulateTypeEffect("code@ryancodes.xyz:~$ Welcome to Ryancodes.xyz | Type 'HELP' for a list of commands", helpMsg, () => {
-                        document.getElementById("commandInput").focus();
-                    });
+            }, 200);
+        }
+
+        function initialMessages() {
+            const terminal = document.getElementById("terminal");
+            const welcomeMsg = document.createElement("div");
+            welcomeMsg.className = "output";
+            terminal.insertBefore(welcomeMsg, terminal.firstChild);
+
+            simulateTypeEffect("LOADING RYANCODES.XYZ ████████████████████████████", welcomeMsg, false, () => {
+                const helpMsg = document.createElement("div");
+                helpMsg.className = "output";
+                terminal.insertBefore(helpMsg, terminal.children[1]);
+                simulateTypeEffect("Welcome to Ryancodes.xyz | Type 'HELP' for a list of commands", helpMsg, true, () => {
+                    document.getElementById("commandInput").focus();
                 });
-            }
-    
-            document.addEventListener("DOMContentLoaded", initialMessages);
-        </script>
-    </body>
-    </html>
-    
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", initialMessages);
+    </script>
+</body>
+</html>
