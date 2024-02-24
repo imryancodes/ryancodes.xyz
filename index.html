@@ -187,12 +187,12 @@
                 const welcomeMsg = document.createElement("div");
                 welcomeMsg.className = "output";
                 terminal.insertBefore(welcomeMsg, terminal.firstChild);
-    
-                simulateTypeEffect("Welcome to ryancodes.xyz | NEWS: IOS app testflight link coming soon", welcomeMsg, () => {
+                simulateTypeEffect("LOADING RYANCODES.XYZ: ████████████████████████████████████", welcomeMsg, () => {
+                
                     const helpMsg = document.createElement("div");
                     helpMsg.className = "output";
                     terminal.insertBefore(helpMsg, terminal.children[1]); // Ensure it's the second message
-                    simulateTypeEffect("Type 'HELP' for a list of commands", helpMsg, () => {
+                    simulateTypeEffect("Welcome to ryancodes.xyz | Type 'HELP' for a list of commands", helpMsg, () => {
                         document.getElementById("commandInput").focus();
                     });
                 });
