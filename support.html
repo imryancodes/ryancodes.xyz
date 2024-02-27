@@ -1,0 +1,80 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Support</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            background-color: black;
+            color: green;
+            font-family: monospace;
+        }
+        .matrix {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            text-align: center;
+            color: white;
+        }
+        .email-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .email-link:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix" id="matrix"></div>
+    <div class="content">
+        <h1>Contact Ryancodes Support</h1>
+        <p>Click the button below to send us an email:</p>
+        <a href="mailto:contact@ryancodes.xyz?subject=Ryancodes-%20support" class="email-link">Send Email</a>
+    </div>
+    <script>
+        const matrixElement = document.getElementById('matrix');
+        const columns = window.innerWidth / 20;
+        for(let i = 0; i < columns; i++) {
+            const column = document.createElement('div');
+            column.style.position = 'absolute';
+            column.style.top = `${-Math.random() * 1000}px`;
+            column.style.left = `${i * 20}px`;
+            column.style.color = 'green';
+            column.style.whiteSpace = 'nowrap';
+            matrixElement.appendChild(column);
+            
+            const animate = () => {
+                const character = Math.random() < 0.5 ? '0' : '1';
+                column.innerText += character;
+                if(column.innerText.length > 100) column.innerText = '';
+                column.style.top = `${parseInt(column.style.top) + 20}px`;
+                if(parseInt(column.style.top) > window.innerHeight) column.style.top = `${-Math.random() * 1000}px`;
+                setTimeout(animate, 50);
+            };
+            animate();
+        }
+    </script>
+</body>
+</html>
