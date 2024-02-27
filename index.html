@@ -123,11 +123,14 @@
                             case "CONTACT":
                                 response = "You can reach me at ryan@ryancodes.xyz | Instagram: ryancodes.xyz/ig";
                                 break;
-                            case "MY-APPS":
+                            case "MYAPPS":
                                 response = "ryancodes.xyz/apps"
                                 break;
                             case "HELP":
-                                response = "Available commands: WHOAMI, CONTACT, CLEAR, VERSION, MATRIX, MY-APPS, HELP.";
+                                response = "Available commands: WHOAMI, CONTACT, CLEAR, VERSION, MATRIX, MYAPPS, PRIVACY-POLICY, HELP.";
+                                break;
+                            case "PRIVACY-POLICY":
+                                response = "ryancodes.xyz/privacy-policy";
                                 break;
                         }
                         simulateTypeEffect(response, output, true, () => {
