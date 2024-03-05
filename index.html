@@ -184,6 +184,21 @@
             }, 200);
         }
 
+
+        
+Copy code
+function redirectToMobile() {
+    if (window.innerWidth <= 800) { // This width threshold can be adjusted based on your needs
+        window.location.href = "https://ryancodes.xyz/mobile";
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    redirectToMobile();
+    initialMessages();
+});
+
+        
         function initialMessages() {
             const terminal = document.getElementById("terminal");
             const welcomeMsg = document.createElement("div");
