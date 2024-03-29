@@ -71,12 +71,7 @@
     </style>
 </head>
 <body>
-    <script>
-        if(screen.width <= 699){
-            document.location = "https://ryancodes.xyz/mobile"
-        }
-
-    </script>
+    
     <div class="terminal" id="terminal">
         <div class="matrix-effect" id="matrixEffect"></div>
         <div class="command-line">
@@ -202,7 +197,7 @@
             welcomeMsg.className = "output";
             terminal.insertBefore(welcomeMsg, terminal.firstChild);
 
-            simulateTypeEffect("████████████████████████████", welcomeMsg, false, () => {
+            simulateTypeEffect("LOADING RYANCODES.XYZ ████████████████████████████", welcomeMsg, false, () => {
                 const helpMsg = document.createElement("div");
                 helpMsg.className = "output";
                 terminal.insertBefore(helpMsg, terminal.children[1]);
