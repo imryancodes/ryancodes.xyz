@@ -1,0 +1,53 @@
+<html>
+<head>
+    <title>RyanCodes News</title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+        }
+
+        .news-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .news-square {
+            width: 300px;
+            height: 300px;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .news-square:hover {
+            transform: translateY(-5px);
+        }
+
+        h2, p {
+            color: #333;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="news-container">
+        <div class="news-square">
+            <h2><a href="https://wwdc.com">WWDC24</a></h2>
+            <p>Invited to WWDC24 on 6/10-14. More info on 4/4.</p>
+        </div>
+    </div>
+</body>
+</html>
