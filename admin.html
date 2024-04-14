@@ -41,6 +41,22 @@
         a:hover {
             text-decoration: underline;
         }
+
+        .banner {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: opacity 0.3s ease;
+        }
+
+        .banner.show {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -49,7 +65,20 @@
             <p>No news at this time.</p>
         </div>
     </div>
+    <div class="banner" id="scrollBanner">
+        <script type="text/javascript" src="https://www.authpro.com/auth/ryanfrfr/?action=pp"></script>
+    </div>
+    <script>
+        window.addEventListener('scroll', function() {
+            var scrollBanner = document.getElementById('scrollBanner');
+            if (window.scrollY > 500) {
+                scrollBanner.classList.add('show');
+            } else {
+                scrollBanner.classList.remove('show');
+            }
+        });
+    </script>
 </body>
-    <script type="text/javascript" src="https://www.authpro.com/auth/ryanfrfr/?action=pp">
+</html>
 </script>
 </html>
