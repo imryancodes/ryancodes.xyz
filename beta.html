@@ -8,12 +8,41 @@
             background-color: #222;
             color: #fff;
             font-family: Consolas, monospace;
-            font-size: 14px;
+            font-size: 16px;
             margin: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100vh;
+        }
+
+        .startup-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .startup-screen h1 {
+            font-family: 'Arial', sans-serif;
+            font-size: 4rem;
+            color: #006400; /* Initial dark green color */
+            animation: changeColor 3s forwards; /* Apply color change animation */
+        }
+
+        @keyframes changeColor {
+            0% {
+                color: #006400; /* Dark green */
+            }
+            100% {
+                color: #00ff00; /* Final green color */
+            }
         }
 
         .terminal {
@@ -22,9 +51,10 @@
             height: 100vh;
             background-color: #000;
             border: none;
-            padding: 20px;
+            padding: 60px 20px 20px 20px;
             box-shadow: none;
             overflow: auto;
+            display: none; /* Hidden initially */
         }
 
         .matrix-effect {
@@ -79,6 +109,10 @@
     </style>
 </head>
 <body>
+    <div class="startup-screen" id="startupScreen">
+        <h1>Ryan Codes</h1>
+    </div>
+
     <div class="terminal" id="terminal">
         <div class="matrix-effect" id="matrixEffect"></div>
         <div class="command-line">
@@ -88,7 +122,26 @@
     </div>
 
     <script>
-        // JavaScript functionality remains unchanged
+        // Hide the startup screen and show the terminal after 3 seconds
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(() => {
+                document.getElementById("startupScreen").style.display = "none";
+                document.getElementById("terminal").style.display = "block";
+                const welcomeMsg = document.createElement("div");
+                welcomeMsg.className = "output";
+                terminal.insertBefore(welcomeMsg, terminal.firstChild);
+
+                simulateTypeEffect("LOADING RYANCODES.XYZ ████████████████████████████", welcomeMsg, false, () => {
+                    const helpMsg = document.createElement("div");
+                    helpMsg.className = "output";
+                    terminal.insertBefore(helpMsg, terminal.children[1]);
+                    simulateTypeEffect("Welcome to Ryancodes.xyz | Type 'HELP' for a list of commands", helpMsg, true, () => {
+                        document.getElementById("commandInput").focus();
+                    });
+                });
+            }, 3000);
+        });
+
         function redirectIfPhone() {
             const userAgent = navigator.userAgent.toLowerCase();
             const isMobile = /iphone|ipad|ipod|android|blackberry|iemobile|opera mini/i.test(userAgent);
@@ -160,22 +213,6 @@
                 commandInput.value = ""; // Clear the input
             }
         }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            const terminal = document.getElementById("terminal");
-            const welcomeMsg = document.createElement("div");
-            welcomeMsg.className = "output";
-            terminal.insertBefore(welcomeMsg, terminal.firstChild);
-
-            simulateTypeEffect("LOADING RYANCODES.XYZ ████████████████████████████", welcomeMsg, false, () => {
-                const helpMsg = document.createElement("div");
-                helpMsg.className = "output";
-                terminal.insertBefore(helpMsg, terminal.children[1]);
-                simulateTypeEffect("Welcome to Ryancodes.xyz | Type 'HELP' for a list of commands", helpMsg, true, () => {
-                    document.getElementById("commandInput").focus();
-                });
-            });
-        });
     </script>
 </body>
 </html>
