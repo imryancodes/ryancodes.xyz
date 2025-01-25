@@ -144,7 +144,7 @@
                 const helpMsg = document.createElement("div");
                 helpMsg.className = "output";
                 terminal.insertBefore(helpMsg, terminal.children[1]);
-                simulateTypeEffect("Welcome to Ryancodes.xyz 2.0! | Type 'HELP' for a list of commands", helpMsg, true, () => {
+                simulateTypeEffect("Welcome to Ryancodes.xyz 2.0! | Type 'HELP' for a list of commands | Click anywhere to enter full screen", helpMsg, true, () => {
                     document.getElementById("commandInput").focus();
                 });
             }, 4000); // Adjusted for the faster transition
