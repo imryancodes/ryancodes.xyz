@@ -1,14 +1,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Ryan Codes</title>
+    <title>Ryancodes.xyz</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
     <style>
         body {
             background-color: #222;
             color: #fff;
             font-family: Consolas, monospace;
-            font-size: 14px;
+            font-size: 16px;
             margin: 0;
             display: flex;
             align-items: center;
@@ -16,16 +17,52 @@
             height: 100vh;
         }
 
+        .startup-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .startup-screen h1 {
+            font-family: 'Roboto', sans-serif;
+            font-size: 5rem;
+            color: #006400;
+            animation: changeColor 2s forwards, fadeOut 2s 2s forwards; /* Shortened color change animation with fade-out */
+        }
+
+        @keyframes changeColor {
+            0% {
+                color: #006400;
+            }
+            100% {
+                color: #00ff00;
+            }
+        }
+
+        @keyframes fadeOut {
+            100% {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
         .terminal {
             position: relative;
-            width: 600px;
-            height: 400px;
+            width: 100vw;
+            height: 100vh;
             background-color: #000;
-            border: 2px solid #1f618d;
-            border-radius: 4px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            border: none;
+            padding: 60px 20px 20px 20px;
+            box-shadow: none;
             overflow: auto;
+            display: none;
         }
 
         .matrix-effect {
@@ -80,57 +117,51 @@
     </style>
 </head>
 <body>
-    
+    <div class="startup-screen" id="startupScreen">
+        <h1>Ryancodes.xyz</h1>
+    </div>
+
     <div class="terminal" id="terminal">
         <div class="matrix-effect" id="matrixEffect"></div>
         <div class="command-line">
-            <div class="command-prompt">></div>
+            <div class="command-prompt">&gt;</div>
             <input id="commandInput" class="command-input" type="text" onkeydown="handleCommand(event)">
         </div>
     </div>
 
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(() => {
+                document.getElementById("startupScreen").style.display = "none";
+                document.getElementById("terminal").style.display = "block";
+                const welcomeMsg = document.createElement("div");
+                welcomeMsg.className = "output";
+                terminal.insertBefore(welcomeMsg, terminal.firstChild);
+
+                const helpMsg = document.createElement("div");
+                helpMsg.className = "output";
+                terminal.insertBefore(helpMsg, terminal.children[1]);
+                simulateTypeEffect("Welcome to Ryancodes.xyz 2.0! | Type 'HELP' for a list of commands", helpMsg, true, () => {
+                    document.getElementById("commandInput").focus();
+                });
+            }, 4000); // Adjusted for the faster transition
+        });
+
+
         function simulateTypeEffect(text, outputElement, prepend = false, callback) {
             let index = 0;
             outputElement.innerHTML = prepend ? "<span style='color: #00ff00;'>code@ryancodes.xyz:~$ </span>" : "";
-            
+
             function type() {
                 if (index < text.length) {
-                    if (text.substring(index).startsWith("http://") || text.substring(index).startsWith("https://")) {
-                        let urlEnd = text.indexOf(" ", index);
-                        if (urlEnd === -1) urlEnd = text.length;
-                        let url = text.substring(index, urlEnd);
-                        
-                        // Create a new span for the link
-                        let linkSpan = document.createElement('span');
-                        linkSpan.className = 'typing-link';
-                        outputElement.appendChild(linkSpan);
-                        
-                        function typeLink(linkIndex) {
-                            if (linkIndex < url.length) {
-                                linkSpan.textContent += url[linkIndex];
-                                setTimeout(() => typeLink(linkIndex + 1), 100);
-                            } else {
-                                // Convert span to actual link when finished typing
-                                outputElement.innerHTML = outputElement.innerHTML.replace(
-                                    `<span class="typing-link">${url}</span>`,
-                                    `<a href="${url}" target="_blank" style="color: #00ff00;">${url}</a>`
-                                );
-                                index = urlEnd;
-                                setTimeout(type, 100);
-                            }
-                        }
-                        
-                        typeLink(0);
-                    } else {
-                        outputElement.innerHTML += text.charAt(index);
-                        index++;
-                        setTimeout(type, 100);
-                    }
+                    outputElement.innerHTML += text.charAt(index);
+                    index++;
+                    setTimeout(type, 100);
                 } else if (callback) {
                     callback();
                 }
             }
+
             type();
         }
 
@@ -142,10 +173,6 @@
 
                 if (command === "CLEAR") {
                     terminal.querySelectorAll('.output').forEach(e => e.remove());
-                } else if (command === "MATRIX") {
-                    startMatrixEffect();
-                    commandInput.value = ""; // Clear the input
-                    return; // Prevent further processing
                 } else {
                     const output = document.createElement("div");
                     output.className = "output";
@@ -182,65 +209,6 @@
                 commandInput.value = ""; // Clear the input
             }
         }
-
-        function startMatrixEffect() {
-            const matrixEffect = document.getElementById('matrixEffect');
-            matrixEffect.style.display = 'block';
-
-            let counter = 0;
-            const maxCount = 100;
-            const interval = setInterval(() => {
-                if (counter < maxCount) {
-                    const span = document.createElement('span');
-                    span.textContent = Math.random() > 0.5 ? '0' : '1';
-                    span.style.position = 'absolute';
-                    span.style.top = Math.random() * 100 + '%';
-                    span.style.left = Math.random() * 100 + 'vw';
-                    matrixEffect.appendChild(span);
-                    
-                    span.animate([
-                        { top: '0', opacity: 1 },
-                        { top: '100vh', opacity: 0 }
-                    ], {
-                        duration: Math.random() * 3000 + 2000,
-                        easing: 'linear',
-                        fill: 'forwards'
-                    });
-
-                    counter++;
-                } else {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        matrixEffect.style.display = 'none';
-                        matrixEffect.innerHTML = '';
-                        const output = document.createElement("div");
-                        output.className = "output";
-                        terminal.insertBefore(output, terminal.lastElementChild);
-                        simulateTypeEffect('Complete', output, true, () => {
-                            terminal.scrollTop = terminal.scrollHeight;
-                        });
-                    }, 5000);
-                }
-            }, 200);
-        }
-
-        function initialMessages() {
-            const terminal = document.getElementById("terminal");
-            const welcomeMsg = document.createElement("div");
-            welcomeMsg.className = "output";
-            terminal.insertBefore(welcomeMsg, terminal.firstChild);
-
-            simulateTypeEffect("LOADING RYANCODES.XYZ ████████████████████████████", welcomeMsg, false, () => {
-                const helpMsg = document.createElement("div");
-                helpMsg.className = "output";
-                terminal.insertBefore(helpMsg, terminal.children[1]);
-                simulateTypeEffect("Welcome to Ryancodes.xyz | Type 'HELP' for a list of commands", helpMsg, true, () => {
-                    document.getElementById("commandInput").focus();
-                });
-            });
-        }
-
-        document.addEventListener("DOMContentLoaded", initialMessages);
     </script>
 </body>
 </html>
