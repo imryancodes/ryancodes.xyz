@@ -154,14 +154,41 @@
 
             function type() {
                 if (index < text.length) {
-                    outputElement.innerHTML += text.charAt(index);
-                    index++;
-                    setTimeout(type, 100);
+                    if (text.substring(index).startsWith("http://") || text.substring(index).startsWith("https://")) {
+                        let urlEnd = text.indexOf(" ", index);
+                        if (urlEnd === -1) urlEnd = text.length;
+                        let url = text.substring(index, urlEnd);
+                        
+                        // Create a new span for the link
+                        let linkSpan = document.createElement('span');
+                        linkSpan.className = 'typing-link';
+                        outputElement.appendChild(linkSpan);
+                        
+                        function typeLink(linkIndex) {
+                            if (linkIndex < url.length) {
+                                linkSpan.textContent += url[linkIndex];
+                                setTimeout(() => typeLink(linkIndex + 1), 100);
+                            } else {
+                                // Convert span to actual link when finished typing
+                                outputElement.innerHTML = outputElement.innerHTML.replace(
+                                    `<span class="typing-link">${url}</span>`,
+                                    `<a href="${url}" target="_blank" style="color: #00ff00;">${url}</a>`
+                                );
+                                index = urlEnd;
+                                setTimeout(type, 100);
+                            }
+                        }
+                        
+                        typeLink(0);
+                    } else {
+                        outputElement.innerHTML += text.charAt(index);
+                        index++;
+                        setTimeout(type, 100);
+                    }
                 } else if (callback) {
                     callback();
                 }
             }
-
             type();
         }
 
@@ -191,7 +218,7 @@
                                 response = "https://ryancodes.xyz/apps";
                                 break;
                             case "HELP":
-                                response = "Available commands: WHOAMI, CONTACT, CLEAR, IZTECH, MYAPPS, PRIVACY-POLICY, HELP.";
+                                response = "Available commands: WHOAMI, CONTACT, CLEAR, MATRIX, IZTECH, MYAPPS, PRIVACY-POLICY, HELP.";
                                 break;
                             case "PRIVACY-POLICY":
                                 response = "https://ryancodes.xyz/privacy-policy";
@@ -199,8 +226,8 @@
                             case "IZTECH":
                                 response = "Check out Iztech- my newly released tech support company- at https://iztech.xyz. At Iztech, we help with anything tech related, for FREE.";
                                 break;
-                            case "Matrix":
-                                response = "Only on the classic site: ryancodes.xyz/classic";
+                            case "MATRIX":
+                                response = "Only on the classic site: https://ryancodes.xyz/classic";
                                 break;
                         }
                         simulateTypeEffect(response, output, true, () => {
