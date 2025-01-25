@@ -3,6 +3,7 @@
     <meta charset="UTF-8">
     <title>Ryancodes.xyz</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
     <style>
         body {
             background-color: #222;
@@ -30,18 +31,25 @@
         }
 
         .startup-screen h1 {
-            font-family: 'Arial', sans-serif;
-            font-size: 4rem;
-            color: #006400; /* Initial dark green color */
-            animation: changeColor 3s forwards; /* Apply color change animation */
+            font-family: 'Roboto', sans-serif;
+            font-size: 5rem;
+            color: #006400;
+            animation: changeColor 2s forwards, fadeOut 2s 2s forwards; /* Shortened color change animation with fade-out */
         }
 
         @keyframes changeColor {
             0% {
-                color: #006400; /* Dark green */
+                color: #006400;
             }
             100% {
-                color: #00ff00; /* Final green color */
+                color: #00ff00;
+            }
+        }
+
+        @keyframes fadeOut {
+            100% {
+                opacity: 0;
+                visibility: hidden;
             }
         }
 
@@ -54,7 +62,7 @@
             padding: 60px 20px 20px 20px;
             box-shadow: none;
             overflow: auto;
-            display: none; /* Hidden initially */
+            display: none;
         }
 
         .matrix-effect {
@@ -122,7 +130,6 @@
     </div>
 
     <script>
-        // Hide the startup screen and show the terminal after 3 seconds
         document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
                 document.getElementById("startupScreen").style.display = "none";
@@ -137,7 +144,7 @@
                 simulateTypeEffect("Welcome to Ryancodes.xyz | Type 'HELP' for a list of commands", helpMsg, true, () => {
                     document.getElementById("commandInput").focus();
                 });
-            }, 3000);
+            }, 4000); // Adjusted for the faster transition
         });
 
         function redirectIfPhone() {
