@@ -131,6 +131,9 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            // Wait for the user interaction (click) to trigger fullscreen
+            document.body.addEventListener('click', requestFullscreen);
+
             setTimeout(() => {
                 document.getElementById("startupScreen").style.display = "none";
                 document.getElementById("terminal").style.display = "block";
@@ -141,11 +144,28 @@
                 const helpMsg = document.createElement("div");
                 helpMsg.className = "output";
                 terminal.insertBefore(helpMsg, terminal.children[1]);
-                simulateTypeEffect("Welcome to Ryancodes.xyz 2.0! | Type 'HELP' for a list of commands", helpMsg, true, () => {
+                simulateTypeEffect("Welcome to Ryancodes.xyz 2.0! | Type 'HELP' for a list of commands | Click anywhere to enter full screen", helpMsg, true, () => {
                     document.getElementById("commandInput").focus();
                 });
             }, 4000); // Adjusted for the faster transition
         });
+
+        // Function to request fullscreen
+        function requestFullscreen() {
+            const docEl = document.documentElement;
+            if (docEl.requestFullscreen) {
+                docEl.requestFullscreen();
+            } else if (docEl.mozRequestFullScreen) { // Firefox
+                docEl.mozRequestFullScreen();
+            } else if (docEl.webkitRequestFullscreen) { // Chrome, Safari, and Opera
+                docEl.webkitRequestFullscreen();
+            } else if (docEl.msRequestFullscreen) { // IE/Edge
+                docEl.msRequestFullscreen();
+            }
+
+            // Remove the event listener after fullscreen is triggered
+            document.body.removeEventListener('click', requestFullscreen);
+        }
 
         function redirectIfPhone() {
             const userAgent = navigator.userAgent.toLowerCase();
