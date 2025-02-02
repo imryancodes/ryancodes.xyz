@@ -205,11 +205,11 @@
                     output.className = "output";
                     terminal.insertBefore(output, terminal.lastElementChild);
 
-                    let response = "Command not found. Type 'HELP' to see the available commands.";
+                   let response = "Command not found. Type 'HELP' to see the available commands.";
                     if (command !== "") {
                         switch (command) {
                             case "WHOAMI":
-                                response = "Ryan | Likes: Swift, HTML, CSS, Javascript and Python";
+                                response = "Hi I'm Ryan, and I Love coding. In my time coding, I have learned how to make apps, how to make websites, how to make artificial intelligence using Python, how to build cool projects with Arduinos, how to develop for a Minecraft server (Developed at 75,000+ member server), how to run a tech support firm, and finaly how to make games using Godot and Unreal Engine.";
                                 break;
                             case "CONTACT":
                                 response = "Go to https://ryancodes.xyz/contact to get in touch.";
@@ -218,7 +218,7 @@
                                 response = "https://ryancodes.xyz/apps";
                                 break;
                             case "HELP":
-                                response = "Available commands: WHOAMI, CONTACT, CLEAR, MATRIX, IZTECH, MYAPPS, PRIVACY-POLICY, HELP.";
+                                response = "Available commands: WHOAMI, CONTACT, CLEAR, MATRIX, IZTECH, MYAPPS, MYGAMES, PRIVACY-POLICY, HELP.";
                                 break;
                             case "PRIVACY-POLICY":
                                 response = "https://ryancodes.xyz/privacy-policy";
@@ -228,6 +228,9 @@
                                 break;
                             case "MATRIX":
                                 response = "Only on the classic site: https://ryancodes.xyz/classic";
+                                break;
+                            case "MYGAMES":
+                                response = "https://ryancodes.xyz/games";
                                 break;
                         }
                         simulateTypeEffect(response, output, true, () => {
