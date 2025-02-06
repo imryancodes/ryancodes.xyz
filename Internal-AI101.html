@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Photo Gallery</title>
+  <style>
+    /* Reset and base styling */
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+    
+    /* Gallery grid styling */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      padding: 15px;
+    }
+    
+    .gallery img {
+      width: 100%;
+      height: auto;
+      cursor: pointer;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Modal (lightbox) styling */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.9);
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .modal-content {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 5px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+    
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 35px;
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    
+    .close:hover,
+    .close:focus {
+      color: #bbb;
+      text-decoration: none;
+    }
+    
+    #caption {
+      text-align: center;
+      color: #ccc;
+      padding: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Photo Gallery -->
+  <div class="gallery">
+    <!-- Replace these src paths with your own image file paths -->
+    <img src="AI101/AI101-1.png" alt="Screen 1" />
+    <img src="AI101/AI101-2.png" alt="Screen 2" />
+    <img src="AI101/AI101-3.png" alt="Screen 3" />
+    <img src="AI101/AI101-4.png" alt="Screen 4" />
+    <img src="AI101/AI101-5.png" alt="Screen 5" />
+    <img src="AI101/AI101-5.png" alt="Screen 6" />
+    <img src="AI101/AI101-7.png" alt="Screen 7" />
+    <!-- Add more images as needed -->
+  </div>
+
+  <!-- Modal for enlarged photo -->
+  <div id="modal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="modal-img" />
+    <div id="caption"></div>
+  </div>
+
+  <script>
+    // Wait for the document to load
+    document.addEventListener('DOMContentLoaded', function() {
+      const modal = document.getElementById('modal');
+      const modalImg = document.getElementById('modal-img');
+      const captionText = document.getElementById('caption');
+      const closeBtn = document.querySelector('.close');
+      const images = document.querySelectorAll('.gallery img');
+      
+      // Add click event to each gallery image
+      images.forEach(image => {
+        image.addEventListener('click', function() {
+          modal.style.display = 'flex'; // Use flex to center content
+          modalImg.src = this.src;
+          captionText.textContent = this.alt;
+        });
+      });
+      
+      // Close the modal when the close button is clicked
+      closeBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+      });
+      
+      // Also close the modal if the user clicks outside the image
+      modal.addEventListener('click', function(event) {
+        if (event.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
