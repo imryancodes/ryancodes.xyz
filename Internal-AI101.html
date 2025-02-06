@@ -4,41 +4,69 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Photo Gallery</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* Reset and base styling */
+    :root {
+      --primary-color: #333;
+      --background-color: #f4f4f4;
+      --accent-color: #007BFF;
+      --modal-bg: rgba(0, 0, 0, 0.9);
+    }
+    
+    /* Global Reset */
     * {
       box-sizing: border-box;
     }
     
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
+      font-family: 'Roboto', sans-serif;
+      background: var(--background-color);
+      color: var(--primary-color);
+      line-height: 1.6;
     }
     
-    /* Gallery grid styling */
+    /* Header */
+    header {
+      background: var(--accent-color);
+      color: #fff;
+      padding: 1rem 0;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    
+    /* Gallery Grid */
     .gallery {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 15px;
-      padding: 15px;
     }
     
     .gallery img {
       width: 100%;
       height: auto;
+      border-radius: 8px;
       cursor: pointer;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
     
     .gallery img:hover {
       transform: scale(1.05);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
     
-    /* Modal (lightbox) styling */
+    /* Modal (Lightbox) Styling */
     .modal {
       display: none; /* Hidden by default */
       position: fixed;
@@ -47,44 +75,73 @@
       top: 0;
       width: 100%;
       height: 100%;
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.9);
+      background-color: var(--modal-bg);
       justify-content: center;
       align-items: center;
+      animation: fadeIn 0.5s;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
     
     .modal-content {
       max-width: 90%;
       max-height: 80%;
-      border-radius: 5px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      animation: zoomIn 0.3s;
     }
     
+    @keyframes zoomIn {
+      from { transform: scale(0.7); }
+      to { transform: scale(1); }
+    }
+    
+    /* Close Button */
     .close {
       position: absolute;
       top: 20px;
       right: 35px;
-      color: #fff;
-      font-size: 40px;
+      background: #fff;
+      color: var(--primary-color);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      font-size: 28px;
       font-weight: bold;
       cursor: pointer;
-      transition: color 0.3s;
+      transition: background 0.3s, color 0.3s;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     }
     
-    .close:hover,
-    .close:focus {
-      color: #bbb;
-      text-decoration: none;
+    .close:hover {
+      background: var(--accent-color);
+      color: #fff;
     }
     
+    /* Caption Styling */
     #caption {
       text-align: center;
-      color: #ccc;
+      color: #fff;
       padding: 10px 0;
+      font-size: 1rem;
+      max-width: 90%;
+      margin: 10px auto;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 5px;
     }
   </style>
 </head>
 <body>
+  <!-- Header -->
+  <header>
+    <h1>Photo Gallery</h1>
+  </header>
+  
   <!-- Photo Gallery -->
   <div class="gallery">
     <!-- Replace these src paths with your own image file paths -->
@@ -93,20 +150,19 @@
     <img src="AI101/AI101-3.png" alt="Screen 3" />
     <img src="AI101/AI101-4.png" alt="Screen 4" />
     <img src="AI101/AI101-5.png" alt="Screen 5" />
-    <img src="AI101/AI101-5.png" alt="Screen 6" />
+    <img src="AI101/AI101-6.png" alt="Screen 6" />
     <img src="AI101/AI101-7.png" alt="Screen 7" />
     <!-- Add more images as needed -->
   </div>
 
-  <!-- Modal for enlarged photo -->
+  <!-- Modal for Enlarged Photo -->
   <div id="modal" class="modal">
     <span class="close">&times;</span>
-    <img class="modal-content" id="modal-img" />
+    <img class="modal-content" id="modal-img" alt="Enlarged image" />
     <div id="caption"></div>
   </div>
 
   <script>
-    // Wait for the document to load
     document.addEventListener('DOMContentLoaded', function() {
       const modal = document.getElementById('modal');
       const modalImg = document.getElementById('modal-img');
@@ -114,16 +170,16 @@
       const closeBtn = document.querySelector('.close');
       const images = document.querySelectorAll('.gallery img');
       
-      // Add click event to each gallery image
+      // Open modal when an image is clicked
       images.forEach(image => {
         image.addEventListener('click', function() {
-          modal.style.display = 'flex'; // Use flex to center content
+          modal.style.display = 'flex';
           modalImg.src = this.src;
           captionText.textContent = this.alt;
         });
       });
       
-      // Close the modal when the close button is clicked
+      // Close modal when the close button is clicked
       closeBtn.addEventListener('click', function() {
         modal.style.display = 'none';
       });
