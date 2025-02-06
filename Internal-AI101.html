@@ -9,21 +9,24 @@
   <style>
     :root {
       --primary-color: #333;
-      /* New blue gradient with deeper blue tones */
+      /* New deeper blue gradient background */
       --background-color: linear-gradient(135deg, #1e3c72, #2a5298);
       --accent-color: #007BFF;
       --modal-bg: rgba(0, 0, 0, 0.9);
     }
     
-    /* Global Reset */
-    * {
-      box-sizing: border-box;
+    /* Ensure the gradient covers the entire viewport and remains fixed */
+    html {
+      height: 100%;
+      background: var(--background-color);
+      background-attachment: fixed;
+      margin: 0;
     }
     
     body {
+      min-height: 100vh;
       margin: 0;
       font-family: 'Roboto', sans-serif;
-      background: var(--background-color);
       color: var(--primary-color);
       line-height: 1.6;
     }
