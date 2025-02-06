@@ -9,7 +9,7 @@
   <style>
     :root {
       --primary-color: #333;
-      --background-color: #f4f4f4;
+      --background-color: #e0f7fa; /* New blue shade for the background */
       --accent-color: #007BFF;
       --modal-bg: rgba(0, 0, 0, 0.9);
     }
@@ -86,6 +86,13 @@
       to { opacity: 1; }
     }
     
+    /* Modal body wraps the image and its caption so they stack vertically */
+    .modal-body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
     .modal-content {
       max-width: 90%;
       max-height: 80%;
@@ -127,10 +134,10 @@
     #caption {
       text-align: center;
       color: #fff;
-      padding: 10px 0;
+      padding: 10px 15px;
       font-size: 1rem;
       max-width: 90%;
-      margin: 10px auto;
+      margin-top: 15px;
       background: rgba(0, 0, 0, 0.5);
       border-radius: 5px;
     }
@@ -145,21 +152,22 @@
   <!-- Photo Gallery -->
   <div class="gallery">
     <!-- Replace these src paths with your own image file paths -->
-    <img src="AI101/AI101-1.png" alt="Screen 1" />
-    <img src="AI101/AI101-2.png" alt="Screen 2" />
-    <img src="AI101/AI101-3.png" alt="Screen 3" />
-    <img src="AI101/AI101-4.png" alt="Screen 4" />
-    <img src="AI101/AI101-5.png" alt="Screen 5" />
-    <img src="AI101/AI101-6.png" alt="Screen 6" />
-    <img src="AI101/AI101-7.png" alt="Screen 7" />
-    <!-- Add more images as needed -->
+    <img src="AI101/AI101-1.png" alt="Screen 1">
+    <img src="AI101/AI101-2.png" alt="Screen 2">
+    <img src="AI101/AI101-3.png" alt="Screen 3">
+    <img src="AI101/AI101-4.png" alt="Screen 4">
+    <img src="AI101/AI101-5.png" alt="Screen 5">
+    <img src="AI101/AI101-6.png" alt="Screen 6">
+    <img src="AI101/AI101-7.png" alt="Screen 7">
   </div>
 
   <!-- Modal for Enlarged Photo -->
   <div id="modal" class="modal">
     <span class="close">&times;</span>
-    <img class="modal-content" id="modal-img" alt="Enlarged image" />
-    <div id="caption"></div>
+    <div class="modal-body">
+      <img class="modal-content" id="modal-img" alt="Enlarged image">
+      <div id="caption"></div>
+    </div>
   </div>
 
   <script>
@@ -184,7 +192,7 @@
         modal.style.display = 'none';
       });
       
-      // Also close the modal if the user clicks outside the image
+      // Close modal if clicking outside the modal body
       modal.addEventListener('click', function(event) {
         if (event.target === modal) {
           modal.style.display = 'none';
