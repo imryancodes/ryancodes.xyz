@@ -3,12 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ryancodes</title>
+  <title>Ryancodes.xyz</title>
+  <!-- Optional Google Font -->
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
     rel="stylesheet"
   />
   <style>
+    /* ====== Reset & Base Styles ====== */
     * {
       margin: 0;
       padding: 0;
@@ -20,6 +22,7 @@
       color: #fafafa;
       scroll-behavior: smooth;
     }
+    /* ====== Header & Navigation Pills ====== */
     header {
       position: fixed;
       top: 0;
@@ -88,6 +91,7 @@
       margin-bottom: 1rem;
       line-height: 1.5;
     }
+    /* Make About Me text less wide */
     #about p {
       max-width: 600px;
       margin: 0 auto 1rem;
@@ -95,6 +99,7 @@
     .highlight {
       color: #ffcc00;
     }
+    /* ====== Typed Text & Blinking Cursor ====== */
     .typed-container {
       font-size: 2rem;
       display: flex;
@@ -116,6 +121,7 @@
       0%, 50% { opacity: 1; }
       50.01%, 100% { opacity: 0; }
     }
+    /* ====== Project Card Styles ====== */
     .project-list {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -134,6 +140,7 @@
     .project-card:hover {
       transform: translateY(-5px);
     }
+    /* ====== Project Button ====== */
     .project-btn {
       display: inline-block;
       margin-top: 1rem;
@@ -185,7 +192,6 @@
     /* ====== Skills Section ====== */
     #skills {}
     .skills-grid {
-      /* Using flex layout to ensure rows are centered */
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -206,38 +212,59 @@
       padding: 1rem;
     }
     /* ====== Custom Scrollbar Styling ====== */
-    ::-webkit-scrollbar {
-      width: 12px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #101010;
-    }
+    ::-webkit-scrollbar { width: 12px; }
+    ::-webkit-scrollbar-track { background: #101010; }
     ::-webkit-scrollbar-thumb {
       background-color: #ffcc00;
       border-radius: 6px;
       border: 3px solid #101010;
     }
-    html {
-      scrollbar-width: thin;
-      scrollbar-color: #ffcc00 #101010;
+    html { scrollbar-width: thin; scrollbar-color: #ffcc00 #101010; }
+    /* ====== Modal Popup Styles ====== */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.8);
+      align-items: center;
+      justify-content: center;
     }
+    .modal-content {
+      background-color: #1c1c1c;
+      padding: 30px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 400px;
+      text-align: center;
+      border-radius: 8px;
+      color: #fafafa;
+      animation: fadeIn 0.5s ease;
+    }
+    .modal-content p {
+      margin: 1rem 0;
+      line-height: 1.6;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .close {
+      color: #ffcc00;
+      float: right;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .close:hover { color: #fff; }
     /* ====== Responsive Styles ====== */
     @media (max-width: 768px) {
-      body {
-        font-size: 16px;
-      }
-      section {
-        padding: 1rem;
-      }
-      h1, h2 {
-        font-size: 1.5rem;
-      }
-      p {
-        font-size: 1rem;
-        max-width: 90%;
-        margin: 0 auto 1rem;
-      }
-      /* Make navbar wrap and center on mobile, with row gap */
+      body { font-size: 16px; }
+      section { padding: 1rem; }
+      h1, h2 { font-size: 1.5rem; }
+      p { font-size: 1rem; max-width: 90%; margin: 0 auto 1rem; }
       .nav-wrapper {
         flex-wrap: wrap;
         justify-content: center;
@@ -248,17 +275,9 @@
         gap: 0.3rem;
         font-size: 0.9rem;
       }
-      /* Further reduce typed text and home text size for mobile */
-      .typed-container {
-        font-size: 1.2rem;
-      }
-      #home p {
-        font-size: 0.9rem;
-      }
-      .skills-grid img {
-        width: 80px;
-        height: 80px;
-      }
+      .typed-container { font-size: 1.2rem; }
+      #home p { font-size: 0.9rem; }
+      .skills-grid img { width: 80px; height: 80px; }
     }
   </style>
 </head>
@@ -389,6 +408,14 @@
     </section>
   </main>
 
+  <!-- ====== Modal Popup ====== -->
+  <div id="mobile-popup" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <p>Terminal is not available on mobile.</p>
+    </div>
+  </div>
+
   <!-- ====== Footer ====== -->
   <footer>
     <p>&copy; Ryan Kiapour 2025</p>
@@ -454,9 +481,69 @@
         setTimeout(typeLetter, typingSpeed);
       }
     }
+    
     window.addEventListener('DOMContentLoaded', () => {
       typeLetter();
+      
+      // Check if URL hash is "#mobile" and display modal popup if so
+      if (window.location.hash === "#mobile") {
+        document.getElementById("mobile-popup").style.display = "flex";
+      }
+      
+      // Close modal when user clicks the close button
+      document.querySelector(".modal .close").addEventListener("click", function() {
+        document.getElementById("mobile-popup").style.display = "none";
+      });
+      
+      // Close modal if user clicks anywhere outside the modal content
+      window.addEventListener("click", function(e) {
+        const modal = document.getElementById("mobile-popup");
+        if (e.target === modal) {
+          modal.style.display = "none";
+        }
+      });
     });
   </script>
+  <!-- ====== Modal Popup Styles (moved here for convenience) ====== -->
+  <style>
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.8);
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      background-color: #1c1c1c;
+      padding: 30px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 400px;
+      text-align: center;
+      border-radius: 8px;
+      color: #fafafa;
+      animation: fadeIn 0.5s ease;
+    }
+    .modal-content p {
+      margin: 1rem 0;
+      line-height: 1.6;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .close {
+      color: #ffcc00;
+      float: right;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .close:hover { color: #fff; }
+  </style>
 </body>
 </html>
