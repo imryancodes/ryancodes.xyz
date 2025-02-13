@@ -34,7 +34,7 @@
             font-family: 'Roboto', sans-serif;
             font-size: 5rem;
             color: #006400;
-            animation: changeColor 2s forwards, fadeOut 2s 2s forwards; /* Shortened color change animation with fade-out */
+            animation: changeColor 2s forwards, fadeOut 2s 2s forwards;
         }
 
         @keyframes changeColor {
@@ -147,7 +147,7 @@
                 simulateTypeEffect("Welcome to the Ryancodes Terminal! | Type 'HELP' for a list of commands | Click anywhere to enter full screen", helpMsg, true, () => {
                     document.getElementById("commandInput").focus();
                 });
-            }, 4000); // Adjusted for the faster transition
+            }, 4000);
         });
 
         // Function to request fullscreen
@@ -155,15 +155,13 @@
             const docEl = document.documentElement;
             if (docEl.requestFullscreen) {
                 docEl.requestFullscreen();
-            } else if (docEl.mozRequestFullScreen) { // Firefox
+            } else if (docEl.mozRequestFullScreen) {
                 docEl.mozRequestFullScreen();
-            } else if (docEl.webkitRequestFullscreen) { // Chrome, Safari, and Opera
+            } else if (docEl.webkitRequestFullscreen) {
                 docEl.webkitRequestFullscreen();
-            } else if (docEl.msRequestFullscreen) { // IE/Edge
+            } else if (docEl.msRequestFullscreen) {
                 docEl.msRequestFullscreen();
             }
-
-            // Remove the event listener after fullscreen is triggered
             document.body.removeEventListener('click', requestFullscreen);
         }
 
@@ -188,7 +186,6 @@
                         if (urlEnd === -1) urlEnd = text.length;
                         let url = text.substring(index, urlEnd);
                         
-                        // Create a new span for the link
                         let linkSpan = document.createElement('span');
                         linkSpan.className = 'typing-link';
                         outputElement.appendChild(linkSpan);
@@ -198,7 +195,6 @@
                                 linkSpan.textContent += url[linkIndex];
                                 setTimeout(() => typeLink(linkIndex + 1), 100);
                             } else {
-                                // Convert span to actual link when finished typing
                                 outputElement.innerHTML = outputElement.innerHTML.replace(
                                     `<span class="typing-link">${url}</span>`,
                                     `<a href="${url}" target="_blank" style="color: #00ff00;">${url}</a>`
@@ -229,6 +225,13 @@
 
                 if (command === "CLEAR") {
                     terminal.querySelectorAll('.output').forEach(e => e.remove());
+                } else if (command === "LEAVE") {
+                    const output = document.createElement("div");
+                    output.className = "output";
+                    terminal.insertBefore(output, terminal.lastElementChild);
+                    simulateTypeEffect("Returning to the main site...", output, true, () => {
+                        window.location.href = "https://ryancodes.xyz";
+                    });
                 } else {
                     const output = document.createElement("div");
                     output.className = "output";
@@ -238,7 +241,7 @@
                     if (command !== "") {
                         switch (command) {
                             case "WHOAMI":
-                                response = "Hi my name is Ryan, I'm 13 and I Love coding. In my time coding, I have learned how to make apps, how to make websites, how to make artificial intelligence using Python, how to build cool projects with Arduinos, how to develop for a Minecraft server (Developed at 75,000+ member server), how to run a tech support firm, and finaly how to make games using Godot and Unreal Engine.";
+                                response = "Hi my name is Ryan, I'm 13 and I Love coding. In my time coding, I have learned how to make apps, how to make websites, how to make artificial intelligence using Python, how to build cool projects with Arduinos, how to develop for a Minecraft server (Developed at 75,000+ member server), how to run a tech support firm, and finally how to make games using Godot and Unreal Engine.";
                                 break;
                             case "CONTACT":
                                 response = "Go to https://ryancodes.xyz/contact to get in touch.";
@@ -247,7 +250,7 @@
                                 response = "https://ryancodes.xyz/apps";
                                 break;
                             case "HELP":
-                                response = "Available commands: WHOAMI, CONTACT, CLEAR, MATRIX, IZTECH, MYAPPS, MYGAMES, PRIVACY-POLICY, HELP.";
+                                response = "Available commands: WHOAMI, CONTACT, CLEAR, MATRIX, IZTECH, MYAPPS, MYGAMES, PRIVACY-POLICY, HELP, LEAVE.";
                                 break;
                             case "PRIVACY-POLICY":
                                 response = "https://ryancodes.xyz/privacy-policy";
