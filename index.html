@@ -5,10 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Ryancodes.xyz</title>
   <!-- Optional Google Font -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     /* ====== Reset & Base Styles ====== */
     * {
@@ -58,6 +55,12 @@
     .nav-pill:hover {
       background-color: #333333;
       transform: scale(1.05);
+    }
+    /* Ensure pill text wraps nicely if needed */
+    .nav-pill span {
+      line-height: 1.2;
+      text-align: center;
+      white-space: normal;
     }
     /* Increase the icon size in nav pills */
     .nav-pill svg {
@@ -315,8 +318,8 @@
           <span>Skills</span>
         </a>
       </div>
-      <!-- ENTER TERMINAL Pill with Colored Terminal Icon -->
-      <a href="https://ryancodes.xyz/terminal" class="nav-pill nav-terminal" target="_blank" aria-label="Enter Terminal">
+      <!-- ENTER TERMINAL Pill with Colored Terminal Icon (opens in same tab) -->
+      <a href="https://ryancodes.xyz/terminal" class="nav-pill nav-terminal" aria-label="Enter Terminal">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
           <!-- Dark rounded rectangle -->
           <rect x="2" y="3" width="20" height="18" rx="2" ry="2" fill="#1e1e1e"/>
