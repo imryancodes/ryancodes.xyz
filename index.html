@@ -456,12 +456,11 @@
       });
     });
 
-    // Typed text functionality for "Hi, my name is Ryan and I'm a coder"
     const typedTextSpan = document.getElementById('typed-text');
-    const fullText = "Hi, my name is Ryan and I'm a coder";
+    const fullText = "Hi, my name is Ryan and I'm a Full-Stack Developer";
     const typingSpeed = 100;
     let charIndex = 0;
-    const highlightWord = "coder";
+    const highlightWord = "Full-Stack Developer";
     const coderStart = fullText.indexOf(highlightWord);
     const coderEnd = coderStart + highlightWord.length;
     function typeLetter() {
