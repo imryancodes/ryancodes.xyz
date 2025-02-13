@@ -82,6 +82,10 @@
       transition: opacity 1.5s ease, transform 1.5s ease;
       text-align: center;
     }
+    /* Remove extra top space on the home section */
+    #home {
+      scroll-margin-top: 0;
+    }
     section.in-view {
       opacity: 1;
       transform: translateY(0);
@@ -105,20 +109,23 @@
     /* ====== Typed Text & Blinking Cursor ====== */
     .typed-container {
       font-size: 2rem;
-      display: flex;
-      align-items: center;
-      gap: 6px;
       margin-bottom: 1rem;
-      flex-wrap: wrap; /* Allow children to wrap when needed */
+      text-align: center;
     }
-    .typed-text {
-      white-space: normal; /* Allow wrapping on small screens */
+    /* The typed text and its attached cursor (via pseudo‑element) */
+    #typed-text {
+      display: inline;
+      white-space: pre-wrap;
     }
-    .cursor {
-      width: 2px;
-      background-color: #ffcc00;
+    /* Pseudo‑element for the blinking cursor */
+    #typed-text::after {
+      content: "";
       display: inline-block;
-      height: 1em;  /* Let the cursor's height match the font size */
+      width: 2px;
+      height: 1em;
+      background-color: #ffcc00;
+      vertical-align: middle;
+      margin-left: 4px;
       animation: blink 1s infinite;
     }
     @keyframes blink {
@@ -280,8 +287,6 @@
         font-size: 0.9rem;
       }
       .typed-container { font-size: 1.2rem; }
-      /* Allow typed text to wrap on smaller screens */
-      .typed-text { white-space: normal; }
       #home p { font-size: 0.9rem; }
       .skills-grid img { width: 80px; height: 80px; }
     }
@@ -340,8 +345,8 @@
   <main>
     <section id="home">
       <div class="typed-container">
-        <span class="typed-text" id="typed-text"></span>
-        <span class="cursor"></span>
+        <!-- Only the typed text; the cursor is attached via pseudo‑element -->
+        <span id="typed-text"></span>
       </div>
       <p>Welcome to my website. Scroll or click the chips on top to see more!</p>
     </section>
@@ -460,7 +465,10 @@
         const anchorHash = pill.getAttribute('href');
         const targetSection = document.querySelector(anchorHash);
         targetSection.scrollIntoView({ behavior: 'smooth' });
-        history.pushState(null, null, anchorHash);
+        // Only update the URL hash if it's not already the current hash.
+        if (window.location.hash !== anchorHash) {
+          history.pushState(null, null, anchorHash);
+        }
       });
     });
 
