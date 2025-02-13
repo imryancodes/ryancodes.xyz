@@ -109,15 +109,16 @@
       align-items: center;
       gap: 6px;
       margin-bottom: 1rem;
+      flex-wrap: wrap; /* Allow children to wrap when needed */
     }
     .typed-text {
-      white-space: nowrap;
+      white-space: normal; /* Allow wrapping on small screens */
     }
     .cursor {
       width: 2px;
       background-color: #ffcc00;
       display: inline-block;
-      height: 2rem;
+      height: 1em;  /* Let the cursor's height match the font size */
       animation: blink 1s infinite;
     }
     @keyframes blink {
