@@ -117,6 +117,10 @@
     </style>
 </head>
 <body>
+    <div class="startup-screen" id="startupScreen">
+        <h1>Welcome to the terminal!</h1>
+    </div>
+
     <div class="terminal" id="terminal">
         <div class="matrix-effect" id="matrixEffect"></div>
         <div class="command-line">
@@ -131,6 +135,7 @@
             document.body.addEventListener('click', requestFullscreen);
 
             setTimeout(() => {
+                document.getElementById("startupScreen").style.display = "none";
                 document.getElementById("terminal").style.display = "block";
                 const welcomeMsg = document.createElement("div");
                 welcomeMsg.className = "output";
