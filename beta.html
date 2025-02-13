@@ -192,7 +192,7 @@
     /* ====== Skills Section ====== */
     #skills {}
     .skills-grid {
-      /* Use flex layout to center each row of icons */
+      /* Using flex layout to ensure rows are centered */
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -244,9 +244,16 @@
         max-width: 90%;
         margin: 0 auto 1rem;
       }
+      /* Make navbar wrap and center on mobile, with row gap */
+      .nav-wrapper {
+        flex-wrap: wrap;
+        justify-content: center;
+        row-gap: 1rem;
+      }
       .nav-pill {
-        padding: 0.3rem 0.8rem;
+        padding: 0.2rem 0.5rem;
         gap: 0.3rem;
+        font-size: 0.9rem;
       }
       .skills-grid img {
         width: 80px;
@@ -292,7 +299,7 @@
           <span>Skills</span>
         </a>
       </div>
-      <!-- ENTER TERMINAL Pill with Colored Terminal Icon) -->
+      <!-- ENTER TERMINAL Pill with Colored Terminal Icon -->
       <a href="https://ryancodes.xyz/terminal" class="nav-pill nav-terminal" target="_blank" aria-label="Enter Terminal">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
           <!-- Dark rounded rectangle -->
