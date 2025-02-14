@@ -133,16 +133,27 @@
       background-color: #1c1c1c;
       padding: 1.5rem;
       border-radius: 8px;
-      transition: transform 0.3s;
+      transition: transform 0.3s, box-shadow 0.3s;
       box-shadow: 0 3px 8px rgba(0,0,0,0.4);
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
     }
     .project-card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-8px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    }
+    /* Placeholder image styling */
+    .project-img {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+      margin-bottom: 1rem;
     }
     .project-btn {
       display: inline-block;
-      margin-top: 1rem;
+      margin-top: auto;
       padding: 0.5rem 1rem;
       background-color: #ffcc00;
       color: #101010;
@@ -154,6 +165,13 @@
     .project-btn:hover {
       background-color: #e6b800;
       transform: scale(1.05);
+    }
+    /* Project Section Heading Style */
+    #projects h2 {
+      border-bottom: 2px solid #ffcc00;
+      display: inline-block;
+      padding-bottom: 0.3rem;
+      margin-bottom: 1.5rem;
     }
     .social-buttons {
       display: flex;
@@ -197,10 +215,41 @@
       max-width: 1000px;
       margin-top: 1.5rem;
     }
+    /* Wrap each skill icon in a container for tooltip support */
+    .skill-item {
+      position: relative;
+      display: inline-block;
+    }
     .skills-grid img {
       width: 100px;
       height: 100px;
       object-fit: contain;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+    .skills-grid img:hover {
+      transform: scale(1.1) rotate(5deg);
+      filter: brightness(1.2);
+    }
+    /* Tooltip styling for skills */
+    .skill-item::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 120%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 4px;
+      opacity: 0;
+      white-space: nowrap;
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      font-size: 0.8rem;
+    }
+    .skill-item:hover::after {
+      opacity: 1;
+      transform: translate(-50%, -5px);
     }
     footer {
       background-color: #1c1c1c;
@@ -216,7 +265,7 @@
     }
     html { scrollbar-width: thin; scrollbar-color: #ffcc00 #101010; }
     .modal {
-      display: none; /* Hidden by default */
+      display: none;
       position: fixed;
       z-index: 2000;
       left: 0;
@@ -253,6 +302,15 @@
       cursor: pointer;
     }
     .close:hover { color: #fff; }
+    /* Location Info Styling */
+    .location-info {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+      margin-top: 1rem;
+      color: #ffcc00;
+    }
     /* ====== Responsive Styles ====== */
     @media (max-width: 768px) {
       body { font-size: 16px; }
@@ -309,14 +367,11 @@
           <span>Skills</span>
         </a>
       </div>
-      <!-- ENTER TERMINAL Pill with Colored Terminal Icon (opens in same tab) -->
+      <!-- ENTER TERMINAL Pill with Colored Terminal Icon -->
       <a href="https://ryancodes.xyz/terminal" class="nav-pill nav-terminal" aria-label="Enter Terminal">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
-          <!-- Dark rounded rectangle -->
           <rect x="2" y="3" width="20" height="18" rx="2" ry="2" fill="#1e1e1e"/>
-          <!-- Green arrow -->
           <polygon points="6,8 10,12 6,16" fill="#0f0"/>
-          <!-- Green command line -->
           <rect x="12" y="10" width="6" height="2" fill="#0f0"/>
         </svg>
         <span>ENTER TERMINAL</span>
@@ -328,26 +383,35 @@
   <main>
     <section id="home">
       <div class="typed-container">
-        <!-- Only the typed text; the cursor is attached via pseudo‑element -->
         <span id="typed-text"></span>
       </div>
       <p>Welcome to my website. Scroll or click the chips on top to see more!</p>
+      <!-- Home Location Info -->
+      <div class="location-info">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="#ffcc00" viewBox="0 0 24 24" width="20" height="20">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
+        </svg>
+        <span>MA, United States</span>
+      </div>
     </section>
 
     <section id="projects">
       <h2>My Projects</h2>
       <div class="project-list">
         <div class="project-card">
+          <img src="/Portfolio/War.png" alt="War Card Game" class="project-img">
           <h3>War Card Game</h3>
           <p>A simple war card game I made for iOS using Swift.</p>
           <a href="https://apps.apple.com/us/app/war-card-game/id6478232396" class="project-btn" target="_blank">View Project</a>
         </div>
         <div class="project-card">
+          <img src="/Portfolio/Avg_platformer.png" alt="Average Platformer" class="project-img">
           <h3>Average Platformer</h3>
           <p>A platformer I created using Godot.</p>
           <a href="https://ryancodes.itch.io/platformer" class="project-btn" target="_blank">View Project</a>
         </div>
         <div class="project-card">
+          <img src="/Portfolio/Iztech.png" alt="Iztech" class="project-img">
           <h3>Iztech</h3>
           <p>A free tech support firm I created.</p>
           <a href="https://iztech.xyz" class="project-btn" target="_blank">View Project</a>
@@ -360,9 +424,15 @@
       <p>
         Hi my name is Ryan, I'm 13 years old, and I love coding. In my time coding, I have learned how to make apps, how to build websites, how to create artificial intelligence using Python, how to build cool projects with Arduinos, how to develop for a Minecraft server (developed at a 75,000+ member server), how to run a tech support firm, and finally how to make games using Godot and Unreal Engine.
       </p>
-      <!-- Social Buttons After the Bio -->
+      <!-- About Section Location Info -->
+      <div class="location-info">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="#ffcc00" viewBox="0 0 24 24" width="20" height="20">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
+        </svg>
+        <span>MA, United States</span>
+      </div>
+      <!-- Social Buttons -->
       <div class="social-buttons">
-        <!-- GitHub Button -->
         <a href="https://github.com/imryancodes" class="social-button" target="_blank" aria-label="GitHub">
           <svg viewBox="0 0 16 16" aria-hidden="true">
             <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8a8 8 0 005.47 7.59c.4.07.55-.17.55-.38
@@ -373,7 +443,6 @@
             1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
           </svg>
         </a>
-        <!-- Email Button -->
         <a href="mailto:contact@ryancodes.xyz" class="social-button" aria-label="Email">
           <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M502.3 190.8L327.4 338.7c-25.2 21.6-61.7 21.6-86.9 
@@ -390,20 +459,48 @@
       <h2>Skills</h2>
       <h4>These are the coding languages and software I use on a day-to-day basis.</h4>
       <div class="skills-grid">
-        <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Swift.svg" alt="Swift" />
-        <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/JavaScript.svg" alt="JavaScript" />
-        <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/CSS.svg" alt="CSS" />
-        <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/HTML.svg" alt="HTML" />
-        <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Python-Dark.svg" alt="Python" />
-        <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/NodeJS-Dark.svg" alt="Node.JS" />
-        <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/VSCode-Dark.svg" alt="VSCode" />
-        <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/UnrealEngine.svg" alt="Unreal Engine" />
-        <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Godot-Dark.svg" alt="Godot" />
-        <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Arduino.svg" alt="Arduino" />
-        <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Figma-Dark.svg" alt="Figma" />
-        <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Notion-Dark.svg" alt="Notion" />
-        <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Apple-Dark.svg" alt="Apple macOS" />
-        <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Windows-Dark.svg" alt="Windows" />
+        <div class="skill-item" data-tooltip="Swift: Powerful iOS language">
+          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Swift.svg" alt="Swift" />
+        </div>
+        <div class="skill-item" data-tooltip="JavaScript: Dynamic web language">
+          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/JavaScript.svg" alt="JavaScript" />
+        </div>
+        <div class="skill-item" data-tooltip="CSS: Styling for the web">
+          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/CSS.svg" alt="CSS" />
+        </div>
+        <div class="skill-item" data-tooltip="HTML: Markup for web content">
+          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/HTML.svg" alt="HTML" />
+        </div>
+        <div class="skill-item" data-tooltip="Python: Versatile scripting language">
+          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Python-Dark.svg" alt="Python" />
+        </div>
+        <div class="skill-item" data-tooltip="Node.JS: Server-side JavaScript">
+          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/NodeJS-Dark.svg" alt="Node.JS" />
+        </div>
+        <div class="skill-item" data-tooltip="VSCode: Popular code editor">
+          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/VSCode-Dark.svg" alt="VSCode" />
+        </div>
+        <div class="skill-item" data-tooltip="Unreal Engine: Advanced game engine">
+          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/UnrealEngine.svg" alt="Unreal Engine" />
+        </div>
+        <div class="skill-item" data-tooltip="Godot: Open-source game engine">
+          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Godot-Dark.svg" alt="Godot" />
+        </div>
+        <div class="skill-item" data-tooltip="Arduino: Microcontroller platform">
+          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Arduino.svg" alt="Arduino" />
+        </div>
+        <div class="skill-item" data-tooltip="Figma: Collaborative design tool">
+          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Figma-Dark.svg" alt="Figma" />
+        </div>
+        <div class="skill-item" data-tooltip="Notion: All-in-one workspace">
+          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Notion-Dark.svg" alt="Notion" />
+        </div>
+        <div class="skill-item" data-tooltip="Apple macOS: Apple's operating system">
+          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Apple-Dark.svg" alt="Apple macOS" />
+        </div>
+        <div class="skill-item" data-tooltip="Windows: Popular PC OS">
+          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Windows-Dark.svg" alt="Windows" />
+        </div>
       </div>
     </section>
   </main>
@@ -439,14 +536,13 @@
     }, options);
     sections.forEach(section => observer.observe(section));
 
-    // Pill scrolling behavior for internal links only
+    // Pill scrolling for internal links
     document.querySelectorAll('.nav-pill[href^="#"]').forEach(pill => {
       pill.addEventListener('click', (e) => {
         e.preventDefault();
         const anchorHash = pill.getAttribute('href');
         const targetSection = document.querySelector(anchorHash);
         targetSection.scrollIntoView({ behavior: 'smooth' });
-        // Only update the URL hash if it's not already the current hash.
         if (window.location.hash !== anchorHash) {
           history.pushState(null, null, anchorHash);
         }
@@ -485,18 +581,12 @@
     
     window.addEventListener('DOMContentLoaded', () => {
       typeLetter();
-      
-      // Check if URL hash is "#mobile" and display modal popup if so
       if (window.location.hash === "#mobile") {
         document.getElementById("mobile-popup").style.display = "flex";
       }
-      
-      // Close modal when user clicks the close button
       document.querySelector(".modal .close").addEventListener("click", function() {
         document.getElementById("mobile-popup").style.display = "none";
       });
-      
-      // Close modal if user clicks anywhere outside the modal content
       window.addEventListener("click", function(e) {
         const modal = document.getElementById("mobile-popup");
         if (e.target === modal) {
