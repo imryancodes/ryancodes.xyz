@@ -84,7 +84,7 @@
       opacity: 1;
       transform: translateY(0);
     }
-    h1, h2 {
+    h1, h2, h3 {
       margin-bottom: 1rem;
       font-weight: 600;
     }
@@ -205,28 +205,37 @@
     .social-button img {
       object-fit: contain;
     }
+    /* ====== Skills Section ====== */
     #skills {}
+    .skills-category {
+      width: 100%;
+      max-width: 1000px;
+      margin-top: 1.5rem;
+      text-align: center; /* Center category text */
+    }
+    .skills-category h3 {
+      margin-bottom: 0.5rem;
+      color: #ffcc00;
+    }
     .skills-grid {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 1rem;
-      width: 100%;
-      max-width: 1000px;
-      margin-top: 1.5rem;
+      margin-bottom: 2rem;
     }
-    /* Wrap each skill icon in a container for tooltip support */
+    /* Each skill icon with tooltip */
     .skill-item {
       position: relative;
       display: inline-block;
     }
-    .skills-grid img {
+    .skill-item img {
       width: 100px;
       height: 100px;
       object-fit: contain;
       transition: transform 0.3s ease, filter 0.3s ease;
     }
-    .skills-grid img:hover {
+    .skill-item img:hover {
       transform: scale(1.1) rotate(5deg);
       filter: brightness(1.2);
     }
@@ -315,7 +324,7 @@
     @media (max-width: 768px) {
       body { font-size: 16px; }
       section { padding: 1rem; }
-      h1, h2 { font-size: 1.5rem; }
+      h1, h2, h3 { font-size: 1.5rem; }
       p { font-size: 1rem; max-width: 90%; margin: 0 auto 1rem; }
       .nav-wrapper {
         flex-wrap: wrap;
@@ -329,7 +338,7 @@
       }
       .typed-container { font-size: 1.2rem; }
       #home p { font-size: 0.9rem; }
-      .skills-grid img { width: 80px; height: 80px; }
+      .skill-item img { width: 80px; height: 80px; }
     }
   </style>
 </head>
@@ -422,7 +431,7 @@
     <section id="about">
       <h2>About Me</h2>
       <p>
-        Hi my name is Ryan, I'm 13 years old, and I love coding. In my time coding, I have learned how to make apps, how to build websites, how to create artificial intelligence using Python, how to build cool projects with Arduinos, how to develop for a Minecraft server (developed at a 75,000+ member server), how to run a tech support firm, and finally how to make games using Godot and Unreal Engine.
+        Hi my name is Ryan, I'm 13 years old, and I love coding. In my time coding, I have learned how to make apps, build websites, create artificial intelligence using Python, build cool projects with Arduinos, develop for a Minecraft server (75,000+ members), run a tech support firm, and make games using Godot and Unreal Engine.
       </p>
       <!-- About Section Location Info -->
       <div class="location-info">
@@ -458,50 +467,78 @@
     <section id="skills">
       <h2>Skills</h2>
       <h4>These are the coding languages and software I use on a day-to-day basis.</h4>
-      <div class="skills-grid">
-        <div class="skill-item" data-tooltip="Swift: Powerful iOS language">
-          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Swift.svg" alt="Swift" />
-        </div>
-        <div class="skill-item" data-tooltip="JavaScript: Dynamic web language">
-          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/JavaScript.svg" alt="JavaScript" />
-        </div>
-        <div class="skill-item" data-tooltip="CSS: Styling for the web">
-          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/CSS.svg" alt="CSS" />
-        </div>
-        <div class="skill-item" data-tooltip="HTML: Markup for web content">
-          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/HTML.svg" alt="HTML" />
-        </div>
-        <div class="skill-item" data-tooltip="Python: Versatile scripting language">
-          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Python-Dark.svg" alt="Python" />
-        </div>
-        <div class="skill-item" data-tooltip="Node.JS: Server-side JavaScript">
-          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/NodeJS-Dark.svg" alt="Node.JS" />
-        </div>
-        <div class="skill-item" data-tooltip="VSCode: Popular code editor">
-          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/VSCode-Dark.svg" alt="VSCode" />
-        </div>
-        <div class="skill-item" data-tooltip="Unreal Engine: Advanced game engine">
-          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/UnrealEngine.svg" alt="Unreal Engine" />
-        </div>
-        <div class="skill-item" data-tooltip="Godot: Open-source game engine">
-          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Godot-Dark.svg" alt="Godot" />
-        </div>
-        <div class="skill-item" data-tooltip="Arduino: Microcontroller platform">
-          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Arduino.svg" alt="Arduino" />
-        </div>
-        <div class="skill-item" data-tooltip="Figma: Collaborative design tool">
-          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Figma-Dark.svg" alt="Figma" />
-        </div>
-        <div class="skill-item" data-tooltip="Notion: All-in-one workspace">
-          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Notion-Dark.svg" alt="Notion" />
-        </div>
-        <div class="skill-item" data-tooltip="Apple macOS: Apple's operating system">
-          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Apple-Dark.svg" alt="Apple macOS" />
-        </div>
-        <div class="skill-item" data-tooltip="Windows: Popular PC OS">
-          <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Windows-Dark.svg" alt="Windows" />
+      
+      <!-- Programming & Scripting -->
+      <div class="skills-category">
+        <h3>Programming &amp; Scripting</h3>
+        <div class="skills-grid">
+          <div class="skill-item" data-tooltip="Swift: Powerful iOS language">
+            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Swift.svg" alt="Swift" />
+          </div>
+          <div class="skill-item" data-tooltip="JavaScript: Dynamic web language">
+            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/JavaScript.svg" alt="JavaScript" />
+          </div>
+          <div class="skill-item" data-tooltip="CSS: Styling for the web">
+            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/CSS.svg" alt="CSS" />
+          </div>
+          <div class="skill-item" data-tooltip="HTML: Markup for web content">
+            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/HTML.svg" alt="HTML" />
+          </div>
+          <div class="skill-item" data-tooltip="Python: Versatile scripting language">
+            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Python-Dark.svg" alt="Python" />
+          </div>
+          <div class="skill-item" data-tooltip="Node.JS: Server-side JavaScript">
+            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/NodeJS-Dark.svg" alt="Node.JS" />
+          </div>
         </div>
       </div>
+      
+      <!-- Game Development & Hardware -->
+      <div class="skills-category">
+        <h3>Game Development &amp; Hardware</h3>
+        <div class="skills-grid">
+          <div class="skill-item" data-tooltip="Unreal Engine: Advanced game engine">
+            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/UnrealEngine.svg" alt="Unreal Engine" />
+          </div>
+          <div class="skill-item" data-tooltip="Godot: Open-source game engine">
+            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Godot-Dark.svg" alt="Godot" />
+          </div>
+          <div class="skill-item" data-tooltip="Arduino: Microcontroller platform">
+            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Arduino.svg" alt="Arduino" />
+          </div>
+        </div>
+      </div>
+      
+      <!-- Design & Productivity -->
+      <div class="skills-category">
+        <h3>Design &amp; Productivity</h3>
+        <div class="skills-grid">
+          <div class="skill-item" data-tooltip="Figma: Collaborative design tool">
+            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Figma-Dark.svg" alt="Figma" />
+          </div>
+          <div class="skill-item" data-tooltip="Notion: All-in-one workspace">
+            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Notion-Dark.svg" alt="Notion" />
+          </div>
+          <div class="skill-item" data-tooltip="VSCode: Popular code editor">
+            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/VSCode-Dark.svg" alt="VSCode" />
+          </div>
+        </div>
+      </div>
+      
+      <!-- Learning -->
+      <div class="skills-category">
+        <h3>Learning</h3>
+        <div class="skills-grid">
+          <div class="skill-item" data-tooltip="React: AWS: Amazon Web Services, a comprehensive cloud platform offering scalable, secure, and flexible computing services for modern applications">
+            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/AWS-Dark.svg" alt="AWS" />
+          </div>
+          <div class="skill-item" data-tooltip="React: UI library for modern web apps">
+            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/React-Dark.svg" alt="React" />
+          </div>
+
+        </div>
+      </div>
+      
     </section>
   </main>
 
