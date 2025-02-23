@@ -1,69 +1,61 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 Not Found</title>
-    <style>
-        body {
-            background-color: #1e1e1e;
-            color: #ffffff;
-            font-family: 'Courier New', monospace;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        h1 {
-            font-size: 8em;
-            margin: 0;
-            letter-spacing: 2px;
-        }
-
-        p {
-            font-size: 1.5em;
-            margin: 0;
-            margin-top: 20px;
-        }
-
-        a {
-            color: #4caf50;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .terminal {
-            background-color: #2a2a2a;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
-        }
-
-        .command {
-            color: #4caf50;
-        }
-
-        .output {
-            color: #ffffff;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 Not Found</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #101010;
+      color: #fafafa;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 1rem;
+    }
+    .container {
+      background-color: #1c1c1c;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      max-width: 600px;
+    }
+    .container h1 {
+      font-size: 4rem;
+      margin-bottom: 0.5rem;
+      color: #ffcc00;
+    }
+    .container p {
+      font-size: 1.25rem;
+      margin-bottom: 2rem; /* Increased spacing for text */
+      line-height: 1.6;
+    }
+    .container a {
+      text-decoration: none;
+      background-color: #ffcc00;
+      color: #101010;
+      padding: 1rem 2rem; /* Increased padding for more spacing in the button */
+      border-radius: 5px;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+      display: inline-block;
+      margin-top: 1rem; /* Additional margin to separate from text */
+    }
+    .container a:hover {
+      background-color: #e6b800;
+    }
+  </style>
 </head>
 <body>
-    <div class="terminal">
-        <div class="command">$ 404 Not Found</div>
-        <div class="output">
-            <h1>ERROR</h1>
-            <p>Oops! It seems like the page you are looking for doesn't exist.</p>
-            <p>Return to <a href="https://ryancodes.xyz/">home</a> or try a different command.</p>
-        </div>
-    </div>
+  <div class="container">
+    <h1>404</h1>
+    <p>Oops! The page you're looking for doesn't exist.</p>
+    <a href="https://ryancodes.xyz/">Return Home</a>
+  </div>
 </body>
 </html>
