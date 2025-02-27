@@ -193,7 +193,7 @@
 
         if (command === "CLEAR") {
           terminal.querySelectorAll('.output').forEach(e => e.remove());
-        } else if (command === "LEAVE") {
+        } else if (command === "QUIT") {
           const output = document.createElement("div");
           output.className = "output";
           terminal.insertBefore(output, terminal.lastElementChild);
@@ -218,7 +218,7 @@
                 response = "https://ryancodes.xyz/apps";
                 break;
               case "HELP":
-                response = "Available commands: WHOAMI, CONTACT, CLEAR, IZTECH, MYAPPS, MYGAMES, HELP, LEAVE.";
+                response = "Available commands: WHOAMI, CONTACT, CLEAR, IZTECH, MYAPPS, MYGAMES, HELP, QUIT.";
                 break;
               case "PRIVACY-POLICY":
                 response = "https://ryancodes.xyz/privacy-policy";
