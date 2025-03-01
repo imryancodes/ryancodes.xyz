@@ -6,7 +6,9 @@
   <title>Ryancodes.xyz</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <style>
+    /* Universal rule to hide default cursor on all elements */
     * {
+      cursor: none !important;
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -16,7 +18,6 @@
       background-color: #101010;
       color: #fafafa;
       scroll-behavior: smooth;
-      cursor: none; /* Hide the default cursor */
     }
     header {
       position: fixed;
@@ -61,7 +62,7 @@
       position: relative;
       z-index: 1;
       overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), 
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3),
                   inset 0 1px 1px rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.05);
     }
@@ -336,7 +337,7 @@
       width: 100%;
       max-width: 1000px;
       margin-top: 1.5rem;
-      text-align: center; /* Center category text */
+      text-align: center;
     }
     .skills-category h3 {
       margin-bottom: 0.5rem;
@@ -465,7 +466,7 @@
     @media (max-width: 768px) {
       body { 
         font-size: 16px;
-        overflow-x: hidden; /* Prevent horizontal scrolling */
+        overflow-x: hidden;
         width: 100%;
       }
       section { 
@@ -482,12 +483,10 @@
         justify-content: center;
         margin-bottom: 0.5rem;
       }
-      /* Ensure content doesn't overflow on mobile */
       .project-list, .skills-grid {
         width: 100%;
         max-width: 100%;
       }
-      /* Other existing mobile styles */
       h1, h2, h3 { font-size: 1.5rem; }
       p { font-size: 1rem; max-width: 90%; margin: 0 auto 1rem; }
       .nav-pill {
@@ -509,7 +508,6 @@
         margin: 0.5rem auto;
       }
     }
-    /* Ensure the page doesn't have unwanted margins */
     html, body {
       width: 100%;
       max-width: 100%;
@@ -636,12 +634,12 @@
       pointer-events: none;
     }
     .floating-code {
-      position: absolute;
+      position: fixed;
       color: rgba(255, 204, 0, 0.1);
       font-family: monospace;
       font-size: 14px;
       white-space: nowrap;
-      z-index: -1;
+      z-index: -2;
       pointer-events: none;
       animation: floatUpFade 20s linear infinite;
     }
@@ -1149,12 +1147,10 @@
         const anchorHash = pill.getAttribute('href');
         const targetSection = document.querySelector(anchorHash);
         
-        // Fix for clicking the same chip multiple times
         // Only scroll if we're not already at the target position
         const currentPosition = window.scrollY;
         const targetPosition = targetSection.getBoundingClientRect().top + currentPosition;
-        const threshold = 50; // Small threshold to avoid unnecessary scrolling
-        
+        const threshold = 50;
         if (Math.abs(currentPosition - targetPosition) > threshold) {
           targetSection.scrollIntoView({ behavior: 'smooth' });
         }
@@ -1213,24 +1209,17 @@
 
     // Create static background elements (no animations)
     function createStaticBackground() {
-      // Add static accent lines
       const accentLines = document.getElementById('accent-lines');
-      const lineCount = 5; // Number of accent lines
-      
+      const lineCount = 5;
       for (let i = 0; i < lineCount; i++) {
         const line = document.createElement('div');
         line.classList.add('accent-line');
-        
-        // Position lines at different heights
-        const posY = 10 + (i * 20); // 10%, 30%, 50%, 70%, 90%
+        const posY = 10 + (i * 20);
         line.style.top = `${posY}%`;
         line.style.left = '0';
         line.style.width = '100%';
-        
         accentLines.appendChild(line);
       }
-      
-      // Add static code snippets
       const codeSnippets = [
         "function hello() { return world; }",
         "<div class='code'>Hello World</div>",
@@ -1241,42 +1230,28 @@
         "git commit -m 'Fixed everything'",
         "npm install future-skills"
       ];
-      
       const body = document.body;
-      const snippetCount = 6; // Fixed number of snippets
-      
+      const snippetCount = 6;
       for (let i = 0; i < snippetCount; i++) {
         const snippet = document.createElement('div');
         snippet.classList.add('floating-code');
         snippet.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
-        
-        // Static position
-        const posX = 5 + Math.floor(Math.random() * 90); // 5-95%
-        const posY = 5 + Math.floor(Math.random() * 90); // 5-95%
+        const posX = 5 + Math.floor(Math.random() * 90);
+        const posY = 5 + Math.floor(Math.random() * 90);
         snippet.style.left = `${posX}%`;
         snippet.style.top = `${posY}%`;
         snippet.style.opacity = 0.07 + (Math.random() * 0.05);
-        
         body.appendChild(snippet);
       }
     }
     
-    // Create the static background immediately
     document.addEventListener('DOMContentLoaded', function() {
-      // Create static background before anything else
       createStaticBackground();
-      
-      // Rest of the existing initialization
-      // ... existing code ...
     });
     
-    // Make sure the background is fully loaded before starting other animations
     window.addEventListener('load', function() {
-      // Add a small delay before showing content animations
       setTimeout(function() {
         document.querySelector('.loader').classList.add('hidden');
-        
-        // Start observing sections for animations after background is loaded
         const sections = document.querySelectorAll('section');
         sections.forEach(section => {
           observer.observe(section);
@@ -1284,7 +1259,7 @@
       }, 300);
     });
 
-    // Enhanced custom cursor implementation with click animation
+    // Enhanced custom cursor implementation with click animation and dynamic cursor enforcement
     document.addEventListener('DOMContentLoaded', function() {
       const cursorOuter = document.querySelector('.cursor-outer');
       const cursorInner = document.querySelector('.cursor-inner');
@@ -1298,8 +1273,21 @@
           el.style.cursor = 'none';
         });
       }
-      
       applyNoMouseCursor();
+      
+      // MutationObserver to ensure new elements also have no cursor
+      const cursorObserver = new MutationObserver((mutationsList) => {
+        for (let mutation of mutationsList) {
+          if (mutation.type === 'childList') {
+            mutation.addedNodes.forEach(node => {
+              if (node.nodeType === Node.ELEMENT_NODE) {
+                node.style.cursor = 'none';
+              }
+            });
+          }
+        }
+      });
+      cursorObserver.observe(document.body, { childList: true, subtree: true });
       
       // Track mouse movement
       document.addEventListener('mousemove', (e) => {
@@ -1308,8 +1296,6 @@
           cursorOuter.style.top = e.clientY + 'px';
           cursorInner.style.left = e.clientX + 'px';
           cursorInner.style.top = e.clientY + 'px';
-          
-          // Show cursor on first movement
           cursorOuter.style.opacity = '1';
           cursorInner.style.opacity = '1';
         });
@@ -1317,7 +1303,6 @@
       
       // Improved hover detection
       const interactiveElements = document.querySelectorAll('a, button, .nav-pill, .project-btn, .social-button, .skill-item');
-      
       interactiveElements.forEach(el => {
         el.addEventListener('mouseenter', () => {
           cursorOuter.classList.add('cursor-hover');
@@ -1325,7 +1310,6 @@
           cursorOuter.style.transform = 'translate(-50%, -50%) scale(1.5)';
           cursorInner.style.transform = 'translate(-50%, -50%) scale(1.5)';
         });
-        
         el.addEventListener('mouseleave', () => {
           cursorOuter.classList.remove('cursor-hover');
           cursorInner.classList.remove('cursor-hover');
@@ -1334,12 +1318,11 @@
         });
       });
       
-      // Global click animation: add the .click-animation class on mousedown and remove it after the animation ends.
+      // Global click animation: add the .click-animation class on mousedown and remove it on animation end.
       document.addEventListener('mousedown', () => {
         cursorOuter.classList.add('click-animation');
         cursorInner.classList.add('click-animation');
       });
-      
       cursorOuter.addEventListener('animationend', () => {
         cursorOuter.classList.remove('click-animation');
       });
