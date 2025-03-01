@@ -19,13 +19,19 @@
     }
     header {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background-color: #1c1c1c;
+      top: 0.6rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 1.2rem);
+      max-width: 1200px;
+      background-color: rgba(28, 28, 28, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       z-index: 999;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
       padding: 0.6rem 1rem;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
     .nav-wrapper {
       display: flex;
@@ -381,9 +387,17 @@
       transform: translate(-50%, -5px);
     }
     footer {
-      background-color: #1c1c1c;
+      background-color: rgba(28, 28, 28, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       text-align: center;
-      padding: 1rem;
+      padding: 1.2rem;
+      margin: 1rem auto;
+      width: calc(100% - 2rem);
+      max-width: 1200px;
+      border-radius: 16px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
     ::-webkit-scrollbar { width: 12px; }
     ::-webkit-scrollbar-track { background: #101010; }
@@ -492,6 +506,17 @@
       .typed-container { font-size: 1.2rem; }
       #home p { font-size: 0.9rem; }
       .skill-item img { width: 80px; height: 80px; }
+      header {
+        top: 0.4rem;
+        width: calc(100% - 0.8rem);
+        border-radius: 12px;
+      }
+      
+      footer {
+        border-radius: 12px;
+        width: calc(100% - 1.2rem);
+        margin: 0.5rem auto;
+      }
     }
     
     /* Ensure the page doesn't have unwanted margins */
@@ -767,6 +792,13 @@
     .nav-left .nav-pill:nth-child(3) { animation-delay: 0.4s; }
     .nav-left .nav-pill:nth-child(4) { animation-delay: 0.6s; }
     .nav-terminal { animation-delay: 0.8s; }
+
+    /* Add this to ensure compatibility with Safari */
+    @supports not (backdrop-filter: blur(10px)) {
+      header, footer {
+        background-color: rgba(28, 28, 28, 0.9);
+      }
+    }
   </style>
 </head>
 <body>
