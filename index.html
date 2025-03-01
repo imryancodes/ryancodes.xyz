@@ -320,15 +320,35 @@
     }
     /* ====== Responsive Styles ====== */
     @media (max-width: 768px) {
-      body { font-size: 16px; }
-      section { padding: 1rem; }
-      h1, h2, h3 { font-size: 1.5rem; }
-      p { font-size: 1rem; max-width: 90%; margin: 0 auto 1rem; }
+      body { 
+        font-size: 16px;
+        overflow-x: hidden; /* Prevent horizontal scrolling */
+        width: 100%;
+      }
+      
+      section { 
+        padding: 1rem;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      
       .nav-wrapper {
         flex-wrap: wrap;
         justify-content: center;
         row-gap: 1rem;
+        width: 100%;
+        padding: 0;
       }
+      
+      /* Ensure content doesn't overflow on mobile */
+      .project-list, .skills-grid {
+        width: 100%;
+        max-width: 100%;
+      }
+      
+      /* Other existing mobile styles */
+      h1, h2, h3 { font-size: 1.5rem; }
+      p { font-size: 1rem; max-width: 90%; margin: 0 auto 1rem; }
       .nav-pill {
         padding: 0.2rem 0.5rem;
         gap: 0.3rem;
@@ -337,6 +357,13 @@
       .typed-container { font-size: 1.2rem; }
       #home p { font-size: 0.9rem; }
       .skill-item img { width: 80px; height: 80px; }
+    }
+    
+    /* Ensure the page doesn't have unwanted margins */
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
     }
   </style>
 </head>
@@ -575,7 +602,17 @@
         e.preventDefault();
         const anchorHash = pill.getAttribute('href');
         const targetSection = document.querySelector(anchorHash);
-        targetSection.scrollIntoView({ behavior: 'smooth' });
+        
+        // Fix for clicking the same chip multiple times
+        // Only scroll if we're not already at the target position
+        const currentPosition = window.scrollY;
+        const targetPosition = targetSection.getBoundingClientRect().top + currentPosition;
+        const threshold = 50; // Small threshold to avoid unnecessary scrolling
+        
+        if (Math.abs(currentPosition - targetPosition) > threshold) {
+          targetSection.scrollIntoView({ behavior: 'smooth' });
+        }
+        
         if (window.location.hash !== anchorHash) {
           history.pushState(null, null, anchorHash);
         }
