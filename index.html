@@ -16,6 +16,7 @@
       background-color: #101010;
       color: #fafafa;
       scroll-behavior: smooth;
+      cursor: none; /* Hide the default cursor */
     }
     header {
       position: fixed;
@@ -74,6 +75,9 @@
     .nav-pill span {
       font-weight: 500;
       letter-spacing: 0.3px;
+      line-height: 1.2;
+      text-align: center;
+      white-space: normal;
     }
     .nav-pill::before {
       content: "";
@@ -454,42 +458,35 @@
       .nav-wrapper {
         justify-content: center;
       }
-      
       .nav-terminal {
         margin-top: 0.5rem;
       }
     }
-    
     @media (max-width: 768px) {
       body { 
         font-size: 16px;
         overflow-x: hidden; /* Prevent horizontal scrolling */
         width: 100%;
       }
-      
       section { 
         padding: 1rem;
         width: 100%;
         box-sizing: border-box;
       }
-      
       .nav-wrapper {
         flex-direction: column;
         align-items: center;
         padding: 0.5rem;
       }
-      
       .nav-left {
         justify-content: center;
         margin-bottom: 0.5rem;
       }
-      
       /* Ensure content doesn't overflow on mobile */
       .project-list, .skills-grid {
         width: 100%;
         max-width: 100%;
       }
-      
       /* Other existing mobile styles */
       h1, h2, h3 { font-size: 1.5rem; }
       p { font-size: 1rem; max-width: 90%; margin: 0 auto 1rem; }
@@ -506,21 +503,18 @@
         width: calc(100% - 0.8rem);
         border-radius: 12px;
       }
-      
       footer {
         border-radius: 12px;
         width: calc(100% - 1.2rem);
         margin: 0.5rem auto;
       }
     }
-    
     /* Ensure the page doesn't have unwanted margins */
     html, body {
       width: 100%;
       max-width: 100%;
       overflow-x: hidden;
     }
-    
     /* Fixed Background Animation Elements */
     .bg-animation {
       position: absolute;
@@ -529,7 +523,6 @@
       pointer-events: none;
       z-index: -1;
     }
-    
     /* Fixed Scroll Indicator */
     .scroll-indicator {
       position: absolute;
@@ -541,7 +534,6 @@
       align-items: center;
       transition: opacity 0.5s ease;
     }
-    
     .scroll-text {
       color: #ffcc00;
       font-size: 12px;
@@ -549,7 +541,6 @@
       margin-bottom: 8px;
       text-transform: uppercase;
     }
-    
     .scroll-mouse {
       width: 26px;
       height: 40px;
@@ -559,7 +550,6 @@
       display: flex;
       justify-content: center;
     }
-    
     .scroll-wheel {
       position: absolute;
       top: 8px;
@@ -569,14 +559,12 @@
       border-radius: 2px;
       animation: scrollAnim 1.5s infinite;
     }
-    
     .scroll-arrows {
       display: flex;
       flex-direction: column;
       align-items: center;
       margin-top: 8px;
     }
-    
     .scroll-arrow {
       width: 10px;
       height: 10px;
@@ -586,23 +574,19 @@
       margin-top: -5px;
       animation: arrowFade 2s infinite;
     }
-    
     .scroll-arrow:nth-child(2) {
       animation-delay: 0.5s;
     }
-    
     @keyframes scrollAnim {
       0% { top: 8px; opacity: 1; }
       75% { top: 22px; opacity: 0; }
       100% { top: 8px; opacity: 0; }
     }
-    
     @keyframes arrowFade {
       0% { opacity: 0; transform: rotate(45deg) translate(0, 0); }
       50% { opacity: 1; transform: rotate(45deg) translate(5px, 5px); }
       100% { opacity: 0; transform: rotate(45deg) translate(8px, 8px); }
     }
-    
     /* Replace Background Circles with Tech Grid */
     .tech-grid {
       position: absolute;
@@ -618,7 +602,6 @@
       opacity: 0.15;
       pointer-events: none;
     }
-    
     .node {
       position: absolute;
       width: 6px;
@@ -628,7 +611,6 @@
       z-index: -1;
       pointer-events: none;
     }
-    
     .node::before {
       content: '';
       position: absolute;
@@ -641,12 +623,10 @@
       border-radius: 50%;
       animation: pulse 4s infinite ease-in-out;
     }
-    
     @keyframes pulse {
       0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
       50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.1; }
     }
-    
     .connection {
       position: absolute;
       height: 1px;
@@ -655,7 +635,6 @@
       z-index: -1;
       pointer-events: none;
     }
-    
     .floating-code {
       position: absolute;
       color: rgba(255, 204, 0, 0.1);
@@ -666,14 +645,12 @@
       pointer-events: none;
       animation: floatUpFade 20s linear infinite;
     }
-    
     @keyframes floatUpFade {
       0% { transform: translateY(100px); opacity: 0; }
       10% { opacity: 0.2; }
       90% { opacity: 0.2; }
       100% { transform: translateY(-100px); opacity: 0; }
     }
-    
     /* Hexagon Background Pattern */
     .hexagon-background {
       position: fixed;
@@ -687,7 +664,6 @@
       pointer-events: none;
       background-color: transparent;
     }
-    
     .hexagon-grid {
       position: absolute;
       top: 0;
@@ -707,7 +683,6 @@
       transform: rotate(30deg) scale(2);
       opacity: 0.4;
     }
-    
     .hexagon {
       position: absolute;
       width: 60px;
@@ -716,7 +691,6 @@
       border-radius: 5px;
       transform: rotate(30deg);
     }
-    
     .hexagon::before,
     .hexagon::after {
       content: '';
@@ -726,15 +700,12 @@
       background-color: rgba(255, 204, 0, 0.05);
       border-radius: 5px;
     }
-    
     .hexagon::before {
       transform: rotate(60deg);
     }
-    
     .hexagon::after {
       transform: rotate(-60deg);
     }
-    
     /* Circuit Board Pattern */
     .circuit-pattern {
       position: fixed;
@@ -752,7 +723,6 @@
       background-size: 50px 50px, 25px 25px, 25px 25px;
       background-position: 0 0;
     }
-    
     /* Accent Lines */
     .accent-lines {
       position: fixed;
@@ -764,13 +734,11 @@
       opacity: 0.1;
       pointer-events: none;
     }
-    
     .accent-line {
       position: absolute;
       height: 1px;
       background: linear-gradient(90deg, transparent, rgba(255, 204, 0, 0.5), transparent);
     }
-    
     .floating-code {
       position: fixed;
       color: rgba(255, 204, 0, 0.1);
@@ -780,23 +748,152 @@
       z-index: -2;
       pointer-events: none;
     }
-    
     /* Staggered animation for buttons */
     .nav-left .nav-pill:nth-child(1) { animation-delay: 0s; }
     .nav-left .nav-pill:nth-child(2) { animation-delay: 0.2s; }
     .nav-left .nav-pill:nth-child(3) { animation-delay: 0.4s; }
     .nav-left .nav-pill:nth-child(4) { animation-delay: 0.6s; }
     .nav-terminal { animation-delay: 0.8s; }
-
     /* Add this to ensure compatibility with Safari */
     @supports not (backdrop-filter: blur(10px)) {
       header, footer {
         background-color: rgba(28, 28, 28, 0.9);
       }
     }
+    /* Custom Cursor Styles */
+    .cursor-outer {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #ffcc00;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, border-color 0.2s;
+      mix-blend-mode: difference;
+      opacity: 0; /* Initially hide cursor */
+    }
+    .cursor-inner {
+      position: fixed;
+      width: 5px;
+      height: 5px;
+      background-color: #ffcc00;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.1s, height 0.1s, background-color 0.1s;
+      opacity: 0; /* Initially hide cursor */
+    }
+    /* Cursor hover state for buttons and links */
+    .cursor-hover .cursor-outer {
+      width: 30px;
+      height: 30px;
+      border-color: #ffcc00;
+      background-color: rgba(255, 204, 0, 0.5);
+      opacity: 0.9;
+    }
+    .cursor-hover .cursor-inner {
+      width: 10px;
+      height: 10px;
+      background-color: #ffcc00;
+      opacity: 1;
+    }
+    /* Add these classes to all clickable elements */
+    a, button, .nav-pill, .project-btn, .social-button, .skill-item {
+      cursor: none;
+    }
+    /* More comprehensive cursor hiding */
+    html, body, * {
+      cursor: none !important;
+    }
+    /* Ensuring all potential interactive elements have cursor: none */
+    a, button, .nav-pill, .project-btn, .social-button, .skill-item, 
+    input, select, textarea, [role="button"], [tabindex="0"], .clickable {
+      cursor: none !important;
+    }
+    /* Most aggressive cursor hiding possible */
+    * {
+      cursor: none !important;
+    }
+    *::before,
+    *::after {
+      cursor: none !important;
+    }
+    /* Add this to prevent browser default cursors from showing */
+    a:hover,
+    button:hover,
+    input:hover,
+    select:hover,
+    [role="button"]:hover,
+    .clickable:hover {
+      cursor: none !important;
+    }
+    /* Disable pointer events on the custom cursor elements */
+    .cursor-outer,
+    .cursor-inner {
+      pointer-events: none !important;
+    }
+    /* Fix for Safari and Firefox */
+    @media screen and (-webkit-min-device-pixel-ratio:0) {
+      * { cursor: none !important; }
+    }
+    @-moz-document url-prefix() {
+      * { cursor: none !important; }
+    }
+    /* Button Animation Styles */
+    .project-btn,
+    .nav-pill,
+    .social-button {
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    }
+    .project-btn:hover,
+    .nav-pill:hover,
+    .social-button:hover {
+      transform: translateY(-4px) scale(1.05); /* Lift and scale effect */
+      box-shadow: 0 8px 20px rgba(255, 204, 0, 0.4); /* Shadow effect */
+      background-color: rgba(255, 204, 0, 0.1); /* Light background color on hover */
+    }
+    /* Add a pulse effect on hover */
+    .project-btn:hover::before,
+    .nav-pill:hover::before,
+    .social-button:hover::before {
+      animation: pulse 0.6s infinite; /* Pulse animation */
+    }
+    /* Click effect */
+    .project-btn:active,
+    .nav-pill:active,
+    .social-button:active {
+      transform: scale(0.95); /* Scale down on click */
+    }
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+    /* --- New Click Animation --- */
+    @keyframes clickAnimation {
+      0% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(0.8); }
+      100% { transform: translate(-50%, -50%) scale(1); }
+    }
+    .click-animation {
+      animation: clickAnimation 0.2s ease;
+    }
   </style>
 </head>
 <body>
+  <!-- Add cursor elements at the beginning of body -->
+  <div class="cursor-outer"></div>
+  <div class="cursor-inner"></div>
+  
   <!-- Static Background (Added at the very beginning) -->
   <div class="hexagon-background">
     <div class="hexagon-grid"></div>
@@ -1008,9 +1105,6 @@
           <div class="skill-item" data-tooltip="Flutter: A cross-platform UI toolkit that is designed to allow code reuse across operating systems such as iOS and Android,">
             <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Flutter-Dark.svg" alt="Flutter" />
           </div>
-          
-
-          
         </div>
       </div>
       
@@ -1188,6 +1282,70 @@
           observer.observe(section);
         });
       }, 300);
+    });
+
+    // Enhanced custom cursor implementation with click animation
+    document.addEventListener('DOMContentLoaded', function() {
+      const cursorOuter = document.querySelector('.cursor-outer');
+      const cursorInner = document.querySelector('.cursor-inner');
+      
+      // Apply cursor: none to all elements via JavaScript
+      function applyNoMouseCursor() {
+        document.documentElement.style.cursor = 'none !important';
+        document.body.style.cursor = 'none !important';
+        const allElements = document.querySelectorAll('*');
+        allElements.forEach(el => {
+          el.style.cursor = 'none';
+        });
+      }
+      
+      applyNoMouseCursor();
+      
+      // Track mouse movement
+      document.addEventListener('mousemove', (e) => {
+        window.requestAnimationFrame(() => {
+          cursorOuter.style.left = e.clientX + 'px';
+          cursorOuter.style.top = e.clientY + 'px';
+          cursorInner.style.left = e.clientX + 'px';
+          cursorInner.style.top = e.clientY + 'px';
+          
+          // Show cursor on first movement
+          cursorOuter.style.opacity = '1';
+          cursorInner.style.opacity = '1';
+        });
+      });
+      
+      // Improved hover detection
+      const interactiveElements = document.querySelectorAll('a, button, .nav-pill, .project-btn, .social-button, .skill-item');
+      
+      interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          cursorOuter.classList.add('cursor-hover');
+          cursorInner.classList.add('cursor-hover');
+          cursorOuter.style.transform = 'translate(-50%, -50%) scale(1.5)';
+          cursorInner.style.transform = 'translate(-50%, -50%) scale(1.5)';
+        });
+        
+        el.addEventListener('mouseleave', () => {
+          cursorOuter.classList.remove('cursor-hover');
+          cursorInner.classList.remove('cursor-hover');
+          cursorOuter.style.transform = 'translate(-50%, -50%) scale(1)';
+          cursorInner.style.transform = 'translate(-50%, -50%) scale(1)';
+        });
+      });
+      
+      // Global click animation: add the .click-animation class on mousedown and remove it after the animation ends.
+      document.addEventListener('mousedown', () => {
+        cursorOuter.classList.add('click-animation');
+        cursorInner.classList.add('click-animation');
+      });
+      
+      cursorOuter.addEventListener('animationend', () => {
+        cursorOuter.classList.remove('click-animation');
+      });
+      cursorInner.addEventListener('animationend', () => {
+        cursorInner.classList.remove('click-animation');
+      });
     });
   </script>
 </body>
