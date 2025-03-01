@@ -885,6 +885,31 @@
     .click-animation {
       animation: clickAnimation 0.2s ease;
     }
+
+    /* ================================
+       New CSS for the Mouse Trail
+    =================================== */
+    .cursor-trail {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border: 3px solid #ffcc00;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      animation: trailFade 0.5s forwards;
+    }
+    @keyframes trailFade {
+      from {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+      to {
+        transform: translate(-50%, -50%) scale(1.5);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1299,6 +1324,16 @@
           cursorOuter.style.opacity = '1';
           cursorInner.style.opacity = '1';
         });
+
+        // Create a trail element at the current mouse position
+        const trail = document.createElement('div');
+        trail.className = 'cursor-trail';
+        trail.style.left = `${e.clientX}px`;
+        trail.style.top = `${e.clientY}px`;
+        document.body.appendChild(trail);
+        setTimeout(() => {
+          trail.remove();
+        }, 500);
       });
       
       // Improved hover detection
