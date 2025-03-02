@@ -885,7 +885,6 @@
     .click-animation {
       animation: clickAnimation 0.2s ease;
     }
-
     /* ================================
        New CSS for the Mouse Trail
     =================================== */
@@ -908,6 +907,14 @@
       to {
         transform: translate(-50%, -50%) scale(1.5);
         opacity: 0;
+      }
+    }
+    /* Hide custom cursor on mobile devices */
+    @media (hover: none) and (pointer: coarse) {
+      .cursor-outer,
+      .cursor-inner,
+      .cursor-trail {
+        display: none !important;
       }
     }
   </style>
