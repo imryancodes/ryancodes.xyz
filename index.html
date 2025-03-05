@@ -788,6 +788,126 @@
     @-moz-document url-prefix() {
       * { cursor: none !important; }
     }
+    /* ====== About Section Styles ====== */
+    .about-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 900px;
+      margin: 0 auto;
+      gap: 2rem;
+    }
+    .about-text {
+      text-align: left;
+      width: 100%;
+    }
+    .about-intro {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+    .about-journey p {
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    .about-list {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 0.8rem;
+      margin: 1rem 0;
+    }
+    .about-list li {
+      background: rgba(28, 28, 28, 0.7);
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .about-list li:hover {
+      transform: translateY(-5px) rotate(2deg);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      border-color: rgba(255, 204, 0, 0.3);
+    }
+    .about-list li span.highlight {
+      font-size: 1.2rem;
+    }
+    .about-philosophy {
+      font-size: 1.1rem;
+      font-style: italic;
+      margin-top: 1.5rem;
+      padding: 1rem;
+      border-left: 3px solid #ffcc00;
+      background: rgba(255, 204, 0, 0.05);
+      border-radius: 0 8px 8px 0;
+    }
+    .about-stats {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .stat-item {
+      background: linear-gradient(145deg, #313131, #232323);
+      padding: 1.2rem;
+      border-radius: 12px;
+      min-width: 120px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .stat-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      border-color: rgba(255, 204, 0, 0.3);
+    }
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #ffcc00;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+    .stat-label {
+      font-size: 0.9rem;
+      color: #fafafa;
+      font-weight: 500;
+    }
+    
+    /* Responsive styles for about section */
+    @media (max-width: 768px) {
+      .about-container {
+        gap: 1.5rem;
+      }
+      .about-list {
+        grid-template-columns: 1fr;
+      }
+      .about-stats {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+      }
+      .stat-item {
+        min-width: 100px;
+        padding: 1rem;
+      }
+      .stat-number {
+        font-size: 2rem;
+      }
+      .about-philosophy {
+        font-size: 1rem;
+      }
+    }
+    /* ====== Responsive Styles ====== */
   </style>
 </head>
 <body>
@@ -905,9 +1025,37 @@
 
     <section id="about">
       <h2>About Me</h2>
-      <p>
-        Hi my name is Ryan, I'm 13 years old, and I love coding. In my time coding, I have learned how to make apps, build websites, create artificial intelligence using Python, build cool projects with Arduinos, develop for a Minecraft server (75,000+ members), run a tech support firm, and make games using Godot and Unreal Engine.
-      </p>
+      <div class="about-container">
+        <div class="about-text">
+          <p class="about-intro">
+            <span class="highlight">Hey there!</span> I'm <span class="highlight">Ryan</span>, a <span class="highlight">13-year-old</span> developer with a passion for turning ideas into digital reality.
+          </p>
+          <div class="about-journey">
+            <p>My coding journey has taken me through multiple tech landscapes:</p>
+            <ul class="about-list">
+              <li><span class="highlight">📱</span> Building iOS apps with Swift</li>
+              <li><span class="highlight">🌐</span> Crafting responsive websites</li>
+              <li><span class="highlight">🤖</span> Creating AI solutions with Python</li>
+              <li><span class="highlight">⚡</span> Developing Arduino-powered projects</li>
+              <li><span class="highlight">🎮</span> Designing games in Godot and Unreal Engine</li>
+              <li><span class="highlight">🔧</span> Running a tech support firm (Iztech)</li>
+              <li><span class="highlight">🧱</span> Contributing to a Minecraft server with 75,000+ members</li>
+        </div>
+        <div class="about-stats">
+          <div class="stat-item">
+            <div class="stat-number">3+</div>
+            <div class="stat-label">Years Coding</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">10+</div>
+            <div class="stat-label">Projects Completed</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">7+</div>
+            <div class="stat-label">Technologies</div>
+          </div>
+        </div>
+      </div>
       <!-- Social Buttons -->
       <div class="social-buttons">
         <a href="https://github.com/imryancodes" class="social-button" target="_blank" aria-label="GitHub">
