@@ -1,0 +1,110 @@
+/* New CSS for the Mouse Trail */
+.cursor-trail {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #ffcc00;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  animation: trailFade 0.5s forwards;
+}
+
+@keyframes trailFade {
+  from {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* Hide custom cursor on mobile devices */
+@media (hover: none) and (pointer: coarse) {
+  .cursor-outer,
+  .cursor-inner,
+  .cursor-trail {
+    display: none !important;
+  }
+}
+
+/* Custom Cursor Styles */
+.cursor-outer {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ffcc00;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease;
+  mix-blend-mode: difference;
+  opacity: 0;
+}
+
+.cursor-inner {
+  position: fixed;
+  width: 5px;
+  height: 5px;
+  background-color: #ffcc00;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease;
+  opacity: 0;
+}
+
+/* Add these classes to all clickable elements */
+a, button, .nav-pill, .project-btn, .social-button, .skill-item {
+  cursor: none;
+  /* Add slight padding to improve hover detection areas */
+  padding: calc(0.4rem + 2px) calc(1.1rem + 2px);
+  margin: -2px;
+  transition: transform 0.3s ease 0.05s, filter 0.3s ease 0.05s;
+}
+
+/* Apply the extended hover area to specific elements as needed */
+.project-btn {
+  padding: calc(0.6rem + 2px) calc(1.5rem + 2px);
+  margin: -2px;
+}
+
+.social-button {
+  margin: -3px;
+}
+
+.skill-item {
+  margin: -3px;
+  padding: 3px;
+}
+
+/* More comprehensive cursor hiding */
+html, body, * {
+  cursor: none !important;
+}
+
+/* Ensuring all potential interactive elements have cursor: none */
+a, button, .nav-pill, .project-btn, .social-button, .skill-item,
+input, select, textarea, [role="button"], [tabindex="0"], .clickable {
+  cursor: none !important;
+}
+
+/* Disable pointer events on the custom cursor elements */
+.cursor-outer,
+.cursor-inner {
+  pointer-events: none !important;
+}
+
+/* Fix for Safari and Firefox */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  * { cursor: none !important; }
+}
+
+@-moz-document url-prefix() {
+  * { cursor: none !important; }
+} 
