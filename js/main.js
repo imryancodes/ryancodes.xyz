@@ -81,7 +81,7 @@ function createStaticBackground() {
   const codeSnippets = [
     "function hello() { return world; }",
     "<div class='code'>Hello World</div>",
-    "const life = 42;",
+    "const life = 13;",
     "import { future } from 'dreams';",
     "while(true) { keepCoding(); }",
     "class Developer extends Human { }",
