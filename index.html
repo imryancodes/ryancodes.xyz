@@ -126,30 +126,56 @@
 
     <section id="projects">
       <h2>My Projects</h2>
-      <div class="project-list">
-        <div class="project-card">
-          <img src="/Portfolio/War.png" alt="War Card Game" class="project-img" loading="lazy">
-          <h3>War Card Game</h3>
-          <p>A simple war card game I made for iOS using Swift.</p>
-          <a href="https://apps.apple.com/us/app/war-card-game/id6478232396" class="project-btn" target="_blank">View Project</a>
+      
+      <!-- Project Carousel -->
+      <div class="carousel-container">
+        <div class="carousel-track">
+          <div class="project-card">
+            <img src="/Portfolio/War.png" alt="War Card Game" class="project-img" loading="lazy">
+            <h3>War Card Game</h3>
+            <p>A simple war card game I made for iOS using Swift.</p>
+            <a href="https://apps.apple.com/us/app/war-card-game/id6478232396" class="project-btn" target="_blank">View Project</a>
+          </div>
+          <div class="project-card">
+            <img src="/Portfolio/Avg_platformer.png" alt="Average Platformer" class="project-img" loading="lazy">
+            <h3>Average Platformer</h3>
+            <p>A platformer I created using Godot.</p>
+            <a href="https://ryancodes.itch.io/platformer" class="project-btn" target="_blank">View Project</a>
+          </div>
+          <div class="project-card">
+            <img src="/Portfolio/Iztech.png" alt="Iztech" class="project-img" loading="lazy">
+            <h3>Iztech</h3>
+            <p>A free tech support firm I created.</p>
+            <a href="https://iztech.xyz" class="project-btn" target="_blank">View Project</a>
+          </div>
+          <div class="project-card">
+            <img src="/Portfolio/EE.png" alt="Eco Educator" class="project-img" loading="lazy">
+            <h3>Eco Educator | Testflight</h3>
+            <p>An IOS app I created for learning how to recycle for the 2025 Swift Student Challenge.</p>
+            <a class="project-btn" target="_blank">Coming Soon</a>
+          </div>
         </div>
-        <div class="project-card">
-          <img src="/Portfolio/Avg_platformer.png" alt="Average Platformer" class="project-img" loading="lazy">
-          <h3>Average Platformer</h3>
-          <p>A platformer I created using Godot.</p>
-          <a href="https://ryancodes.itch.io/platformer" class="project-btn" target="_blank">View Project</a>
-        </div>
-        <div class="project-card">
-          <img src="/Portfolio/Iztech.png" alt="Iztech" class="project-img" loading="lazy">
-          <h3>Iztech</h3>
-          <p>A free tech support firm I created.</p>
-          <a href="https://iztech.xyz" class="project-btn" target="_blank">View Project</a>
-        </div>
-        <div class="project-card">
-          <img src="/Portfolio/EE.png" alt="Eco Educator" class="project-img" loading="lazy">
-          <h3>Eco Educator | Testflight</h3>
-          <p>An IOS app I created for learning how to recycle for the 2025 Swift Student Challenge.</p>
-          <a class="project-btn" target="_blank">Coming Soon</a>
+        
+        <!-- Carousel Navigation -->
+        <div class="carousel-nav">
+          <button class="carousel-prev" aria-label="Previous project">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+              <path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+            </svg>
+            <span>Prev</span>
+          </button>
+          <div class="carousel-dots">
+            <button class="carousel-dot active" data-index="0" aria-label="Project 1"></button>
+            <button class="carousel-dot" data-index="1" aria-label="Project 2"></button>
+            <button class="carousel-dot" data-index="2" aria-label="Project 3"></button>
+            <button class="carousel-dot" data-index="3" aria-label="Project 4"></button>
+          </div>
+          <button class="carousel-next" aria-label="Next project">
+            <span>Next</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+              <path fill="currentColor" d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+            </svg>
+          </button>
         </div>
       </div>
     </section>
