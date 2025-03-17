@@ -103,10 +103,68 @@ function createStaticBackground() {
   }
 }
 
+// Counter Animation for About Me stats
+function animateCounters() {
+  const statNumbers = document.querySelectorAll('.stat-number');
+  
+  statNumbers.forEach(numberElement => {
+    const originalText = numberElement.textContent;
+    const target = parseInt(originalText, 10);
+    const duration = 1800; // Reduced duration for faster animation
+    const shouldAddPlus = originalText.includes('+') || numberElement.getAttribute('data-plus') === 'true';
+    
+    // Start from 0
+    numberElement.textContent = '0';
+    
+    let startTime = null;
+    
+    function easeOutCubic(t) {
+      return 1 - Math.pow(1 - t, 3); // Less aggressive easing for more consistent speed
+    }
+    
+    function updateCounter(timestamp) {
+      if (!startTime) startTime = timestamp;
+      
+      const elapsedTime = timestamp - startTime;
+      const progress = Math.min(elapsedTime / duration, 1);
+      const easedProgress = easeOutCubic(progress);
+      
+      // Calculate the current value with easing (keeping decimals for smoother animation)
+      const exactValue = easedProgress * target; 
+      
+      // For display purposes, round to nearest integer
+      const displayValue = Math.round(exactValue);
+      
+      // Add the + sign if needed
+      numberElement.textContent = shouldAddPlus ? displayValue + '+' : displayValue;
+      
+      if (progress < 1) {
+        window.requestAnimationFrame(updateCounter);
+      } else {
+        // Ensure we end at exactly the target value
+        numberElement.textContent = shouldAddPlus ? target + '+' : target;
+      }
+    }
+    
+    // Use IntersectionObserver to trigger the animation when counters come into view
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          window.requestAnimationFrame(updateCounter);
+          observer.unobserve(entry.target); // Only animate once
+        }
+      });
+    }, { threshold: 0.5 });
+    
+    observer.observe(numberElement);
+  });
+}
+
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
   typeLetter();
   createStaticBackground();
+  animateCounters();
   
   // Handle mobile modal popup
   if (window.location.hash === "#mobile") {

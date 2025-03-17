@@ -163,6 +163,11 @@ header {
   box-shadow: 0 8px 15px rgba(0,0,0,0.4), 
               0 0 12px rgba(255,204,0,0.3);
 }
+/* Add this to make text black on hover */
+.nav-pill:hover {
+  color: #000;
+  font-weight: 600;
+}
 /* Special hover effect for project buttons */
 .project-btn:hover {
   color: #101010;
@@ -922,5 +927,99 @@ html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
     transform: none;
     filter: brightness(1.05);
     box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+  }
+}
+
+/* Social Links Styles */
+.social-links {
+  display: flex;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(145deg, #313131, #232323);
+  border-radius: 9999px;
+  padding: 0.5rem 1.2rem;
+  color: #fafafa;
+  text-decoration: none;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3),
+              inset 0 1px 1px rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.05);
+  transition: transform 0.3s ease, filter 0.3s ease;
+  opacity: 0;
+  animation: pillAppear 0.5s ease forwards;
+  animation-delay: 0.8s;
+}
+
+.social-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,204,0,0.8), #ffcc00);
+  transition: left 0.5s ease;
+  z-index: -1;
+}
+
+.social-btn:hover::before {
+  left: 0;
+  animation: shimmer 1.5s infinite;
+}
+
+.social-btn svg {
+  width: 22px;
+  height: 22px;
+  transition: transform 0.3s ease;
+}
+
+.social-btn:hover svg {
+  transform: scale(1.1);
+}
+
+.social-btn.github svg {
+  fill: #6e5494;
+}
+
+.social-btn.twitter svg {
+  fill: #1DA1F2;
+}
+
+.social-btn.email svg {
+  fill: #ffcc00;
+}
+
+.social-btn:hover {
+  transform: translateY(-3px);
+  color: #000;
+  font-weight: 600;
+}
+
+/* Media queries for social buttons */
+@media (max-width: 768px) {
+  .social-links {
+    gap: 0.5rem;
+    margin: 1rem 0;
+  }
+  
+  .social-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+  
+  .social-btn svg {
+    width: 18px;
+    height: 18px;
   }
 } 
