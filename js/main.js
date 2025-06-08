@@ -382,6 +382,24 @@ function initProjectCarousel() {
   }
 }
 
+// Add archive banner for archived versions
+function addArchiveBanner() {
+  const hostname = window.location.hostname;
+  if (hostname.includes('alpha.ryancodes.xyz') || 
+      hostname.includes('v1.ryancodes.xyz') || 
+      hostname.includes('v2.ryancodes.xyz')) {
+    
+    // Create banner element
+    const banner = document.createElement('div');
+    banner.className = 'archive-banner';
+    banner.innerHTML = '⚠️ This is an archived version of the site. <a href="https://ryancodes.xyz" target="_blank">View the current version</a>';
+    
+    // Add banner to the page
+    document.body.insertBefore(banner, document.body.firstChild);
+    document.body.classList.add('has-archive-banner');
+  }
+}
+
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
   typeLetter();
@@ -407,6 +425,9 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Initialize the section observers
   sections.forEach(section => observer.observe(section));
+  
+  // Call the function when the page loads
+  addArchiveBanner();
 });
 
 // Handle page load

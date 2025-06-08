@@ -1,0 +1,233 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Alpha</title>
+    <style>
+        body {
+            background-color: #222;
+            color: #fff;
+            font-family: Consolas, monospace;
+            font-size: 14px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .terminal {
+            width: 600px;
+            height: 400px;
+            background-color: #000;
+            border: 2px solid #1f618d;
+            border-radius: 4px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            overflow: auto;
+        }
+
+        .output {
+            color: #00ff00; /* Green color */
+            margin-bottom: 10px;
+        }
+
+        .command-line {
+            display: flex;
+            align-items: baseline;
+        }
+
+        .command-prompt {
+            color: #00ff00; /* Green color */
+            margin-right: 5px;
+        }
+
+        .command-input {
+            background-color: transparent;
+            border: none;
+            outline: none;
+            color: #00ff00; /* Green color */
+            font-family: inherit;
+            font-size: inherit;
+            flex-grow: 1;
+            caret-color: #00ff00; /* Green color */
+        }
+
+        /* Archive Banner Styles */
+        .archive-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(
+                90deg,
+                #ffd700,
+                #ffa500,
+                #ff8c00,
+                #ffa500,
+                #ffd700
+            );
+            background-size: 200% 100%;
+            color: #000;
+            padding: 1rem;
+            text-align: center;
+            z-index: 9999;
+            font-weight: 600;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            animation: slideDown 0.5s ease-out, gradientMove 8s linear infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .archive-banner .warning-icon {
+            font-size: 1.2rem;
+            animation: pulse 2s infinite;
+        }
+
+        .archive-banner .message {
+            font-size: 1.1rem;
+        }
+
+        .archive-banner a {
+            color: #000;
+            text-decoration: underline;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            margin-left: 0.5rem;
+            padding: 0.3rem 0.8rem;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        .archive-banner a:hover {
+            color: #fff;
+            background: rgba(0, 0, 0, 0.2);
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @media (max-width: 768px) {
+            .archive-banner {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+                flex-direction: column;
+                gap: 0.3rem;
+            }
+            
+            .archive-banner .message {
+                font-size: 0.9rem;
+            }
+            
+            .archive-banner a {
+                margin-left: 0;
+                margin-top: 0.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="archive-banner">
+        <span class="warning-icon">⚠️</span>
+        <span class="message">This is an archived version of the site.</span>
+        <a href="https://ryancodes.xyz" target="_blank">View the current version</a>
+    </div>
+    <div class="terminal" id="terminal">
+        <!-- Dynamic content will be added here -->
+        <div class="command-line">
+            <div class="command-prompt">></div>
+            <input id="commandInput" class="command-input" type="text" onkeydown="handleCommand(event)">
+        </div>
+    </div>
+
+    <script>
+        function simulateTypeEffect(text, outputElement, callback) {
+            let index = 0;
+            outputElement.textContent = ""; // Clear the element first
+            function type() {
+                if (index < text.length) {
+                    outputElement.textContent += text.charAt(index++);
+                    setTimeout(type, 30); // Adjust typing speed
+                } else if (callback) {
+                    callback();
+                }
+            }
+            type();
+        }
+
+        function handleCommand(event) {
+            if (event.keyCode === 13) { // Enter key is pressed
+                const commandInput = document.getElementById("commandInput");
+                const command = commandInput.value.trim().toUpperCase();
+                const terminal = document.getElementById("terminal");
+
+                if (command === "CLEAR") {
+                    // Removes all output elements
+                    terminal.querySelectorAll('.output').forEach(e => e.remove());
+                } else {
+                    const output = document.createElement("div");
+                    output.className = "output";
+                    terminal.insertBefore(output, terminal.lastElementChild);
+
+                    let response = "Command not found. Type 'HELP' to see the available commands.";
+                    switch (command) {
+                        case "SKILLS":
+                            response = "These are my skills: HTML, CSS, JavaScript, Python, and Swift.";
+                            break;
+                        case "ABOUT":
+                            response = "I am a web developer with experience in building interactive websites.";
+                            break;
+                        case "CONTACT":
+                            response = "You can reach me at ryan@ryancodes.xyz";
+                            break;
+                        case "HELP":
+                            response = "Available commands: SKILLS, ABOUT, CONTACT, CLEAR, HELP.";
+                            break;
+                    }
+
+                    simulateTypeEffect(response, output, () => {
+                        terminal.scrollTop = terminal.scrollHeight;
+                    });
+                }
+
+                commandInput.value = ""; // Clear the input
+            }
+        }
+
+        function initialMessages() {
+            const terminal = document.getElementById("terminal");
+            const welcomeMsg = document.createElement("div");
+            welcomeMsg.className = "output";
+            terminal.insertBefore(welcomeMsg, terminal.firstChild);
+
+            simulateTypeEffect("Welcome to ryancodes.xyz", welcomeMsg, () => {
+                const helpMsg = document.createElement("div");
+                helpMsg.className = "output";
+                terminal.insertBefore(helpMsg, terminal.children[1]); // Ensure it's the second message
+                simulateTypeEffect("Type 'SKILLS', 'CONTACT', 'CLEAR', or 'HELP' to execute commands.", helpMsg, () => {
+                    document.getElementById("commandInput").focus();
+                });
+            });
+        }
+
+        // Ensure the DOM is fully loaded before executing
+        document.addEventListener("DOMContentLoaded", initialMessages);
+    </script>
+</body>
+</html>
