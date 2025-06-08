@@ -376,16 +376,6 @@
             document.body.removeEventListener('click', requestFullscreen);
         }
 
-        function redirectIfPhone() {
-            const userAgent = navigator.userAgent.toLowerCase();
-            const isMobile = /iphone|ipad|ipod|android|blackberry|iemobile|opera mini/i.test(userAgent);
-            if (isMobile) {
-                window.location.href = 'https://ryancodes.xyz/mobile';
-            }
-        }
-
-        redirectIfPhone();
-
         function simulateTypeEffect(text, outputElement, prepend = false, callback) {
             let index = 0;
             outputElement.innerHTML = prepend ? "<span style='color: #00ff00;'>code@ryancodes.xyz:~$ </span>" : "";
