@@ -166,9 +166,70 @@
                 margin-top: 0.3rem;
             }
         }
+
+        /* Mobile Warning Popup */
+        .mobile-warning {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .mobile-warning-content {
+            background: #1c1c1c;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 90%;
+            border: 1px solid rgba(255, 204, 0, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .mobile-warning h2 {
+            color: #ffcc00;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .mobile-warning p {
+            color: #fff;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .mobile-warning-button {
+            background: linear-gradient(90deg, #ffd700, #ffa500);
+            color: #000;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .mobile-warning-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 204, 0, 0.3);
+        }
     </style>
 </head>
 <body>
+    <div class="mobile-warning" id="mobileWarning">
+        <div class="mobile-warning-content">
+            <h2>⚠️ Mobile Warning</h2>
+            <p>This archived version of the site is not optimized for mobile devices. The experience may not be ideal on smaller screens.</p>
+            <button class="mobile-warning-button" onclick="continueToSite()">Continue Anyway</button>
+        </div>
+    </div>
     <div class="archive-banner">
         <span class="warning-icon">⚠️</span>
         <span class="message">This is an archived version of the site.</span>
@@ -343,7 +404,22 @@
             });
         }
 
-        document.addEventListener("DOMContentLoaded", initialMessages);
+        function checkMobile() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            const isMobile = /iphone|ipad|ipod|android|blackberry|iemobile|opera mini/i.test(userAgent);
+            if (isMobile) {
+                document.getElementById('mobileWarning').style.display = 'flex';
+            }
+        }
+
+        function continueToSite() {
+            document.getElementById('mobileWarning').style.display = 'none';
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            checkMobile();
+            initialMessages();
+        });
     </script>
 </body>
 </html>

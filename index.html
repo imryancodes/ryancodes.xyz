@@ -15,6 +15,61 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/cursor.css">
+  <style>
+    /* Mobile Warning Popup */
+    .mobile-warning {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 10000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .mobile-warning-content {
+      background: #1c1c1c;
+      padding: 2rem;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 90%;
+      border: 1px solid rgba(255, 204, 0, 0.3);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .mobile-warning h2 {
+      color: #ffcc00;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .mobile-warning p {
+      color: #fff;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+
+    .mobile-warning-button {
+      background: linear-gradient(90deg, #ffd700, #ffa500);
+      color: #000;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+
+    .mobile-warning-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 204, 0, 0.3);
+    }
+  </style>
 </head>
 <body>
   <!-- Custom Cursor Elements -->
@@ -31,6 +86,15 @@
   <!-- Loading Animation -->
   <div class="loader">
     <div class="loader-animation"></div>
+  </div>
+
+  <!-- Mobile Warning Popup -->
+  <div class="mobile-warning" id="mobileWarning">
+    <div class="mobile-warning-content">
+      <h2>⚠️ Mobile Warning</h2>
+      <p>This version of the site is not optimized for mobile devices. The experience may not be ideal on smaller screens.</p>
+      <button class="mobile-warning-button" onclick="continueToSite()">Continue Anyway</button>
+    </div>
   </div>
 
   <!-- Header & Navigation -->
@@ -361,7 +425,7 @@
         </div>
       </div>
     </div>
-    <p class="timeline-note">* There have been many more website updates (almost 300 as of 6/8/25!), but these are the major milestones in the journey.</p>
+    <p class="timeline-note">* There have been many more website updates (almost 300 as of 6/8/25!), but these are the major milestones in the journey. Also, please note that the above website versions are not necessarily mobile friendly.</p>
   </section>
 
   <!-- Modal Popup -->
@@ -392,6 +456,24 @@
           behavior: 'instant'
         });
       });
+    });
+
+    function checkMobile() {
+      const userAgent = navigator.userAgent.toLowerCase();
+      const isMobile = /iphone|ipad|ipod|android|blackberry|iemobile|opera mini/i.test(userAgent);
+      if (isMobile) {
+        document.getElementById('mobileWarning').style.display = 'flex';
+      }
+    }
+
+    function continueToSite() {
+      document.getElementById('mobileWarning').style.display = 'none';
+    }
+
+    // Add this to your existing DOMContentLoaded event listener
+    document.addEventListener("DOMContentLoaded", function() {
+      checkMobile();
+      // Your existing initialization code
     });
   </script>
 </body>
