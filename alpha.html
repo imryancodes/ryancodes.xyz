@@ -141,7 +141,7 @@
             }
         }
 
-        /* Mobile Warning Popup */
+        /* Mobile Warning Modal */
         .mobile-warning {
             display: none;
             position: fixed;
@@ -153,17 +153,18 @@
             z-index: 10000;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 1rem;
         }
 
         .mobile-warning-content {
             background: #1c1c1c;
             padding: 2rem;
             border-radius: 12px;
-            text-align: center;
-            max-width: 90%;
             border: 1px solid rgba(255, 204, 0, 0.3);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            max-width: 90%;
+            width: 400px;
+            text-align: center;
+            animation: modalFadeIn 0.3s ease-out;
         }
 
         .mobile-warning h2 {
@@ -178,37 +179,73 @@
             line-height: 1.5;
         }
 
-        .mobile-warning-button {
-            background: linear-gradient(90deg, #ffd700, #ffa500);
-            color: #000;
+        .mobile-warning-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .mobile-warning-btn {
+            padding: 0.8rem 1.5rem;
             border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 25px;
+            border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 1rem;
         }
 
-        .mobile-warning-button:hover {
+        .mobile-warning-btn.continue {
+            background: #ffcc00;
+            color: #000;
+        }
+
+        .mobile-warning-btn.continue:hover {
+            background: #ffd700;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(255, 204, 0, 0.3);
+        }
+
+        .mobile-warning-btn.leave {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .mobile-warning-btn.leave:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body>
-    <div class="mobile-warning" id="mobileWarning">
-        <div class="mobile-warning-content">
-            <h2>⚠️ Mobile Warning</h2>
-            <p>This archived version of the site is not optimized for mobile devices. The experience may not be ideal on smaller screens.</p>
-            <button class="mobile-warning-button" onclick="continueToSite()">Continue Anyway</button>
-        </div>
-    </div>
     <div class="archive-banner">
         <span class="warning-icon">⚠️</span>
         <span class="message">This is an archived version of the site.</span>
         <a href="https://ryancodes.xyz" target="_blank">View the current version</a>
     </div>
+
+    <!-- Mobile Warning Modal -->
+    <div class="mobile-warning" id="mobileWarning">
+        <div class="mobile-warning-content">
+            <h2>⚠️ Mobile Warning</h2>
+            <p>This is an archived version of the site that may not be optimized for mobile devices. You might experience some display issues or limited functionality.</p>
+            <div class="mobile-warning-buttons">
+                <button class="mobile-warning-btn continue" onclick="continueToSite()">Continue Anyway</button>
+                <button class="mobile-warning-btn leave" onclick="goToCurrentSite()">Go to Current Site</button>
+            </div>
+        </div>
+    </div>
+
     <div class="terminal" id="terminal">
         <!-- Dynamic content will be added here -->
         <div class="command-line">
@@ -218,18 +255,6 @@
     </div>
 
     <script>
-        function checkMobile() {
-            const userAgent = navigator.userAgent.toLowerCase();
-            const isMobile = /iphone|ipad|ipod|android|blackberry|iemobile|opera mini/i.test(userAgent);
-            if (isMobile) {
-                document.getElementById('mobileWarning').style.display = 'flex';
-            }
-        }
-
-        function continueToSite() {
-            document.getElementById('mobileWarning').style.display = 'none';
-        }
-
         function simulateTypeEffect(text, outputElement, callback) {
             let index = 0;
             outputElement.textContent = ""; // Clear the element first
@@ -297,6 +322,23 @@
                     document.getElementById("commandInput").focus();
                 });
             });
+        }
+
+        // Add this at the beginning of your script
+        function checkMobile() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            const isMobile = /iphone|ipad|ipod|android|blackberry|iemobile|opera mini/i.test(userAgent);
+            if (isMobile) {
+                document.getElementById('mobileWarning').style.display = 'flex';
+            }
+        }
+
+        function continueToSite() {
+            document.getElementById('mobileWarning').style.display = 'none';
+        }
+
+        function goToCurrentSite() {
+            window.location.href = 'https://ryancodes.xyz';
         }
 
         // Call checkMobile when the page loads
