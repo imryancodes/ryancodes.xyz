@@ -327,7 +327,7 @@
             <h3>Alpha Version</h3>
             <p class="timeline-date">Late 2023</p>
             <p class="timeline-description">The initial version of my website, marking the beginning of my web development journey.</p>
-            <a href="https://ryancodes.xyz/alpha" class="timeline-link">View Alpha Version</a>
+            <a href="https://ryancodes.xyz/alpha" class="timeline-link" target="_blank">View Alpha Version</a>
           </div>
         </div>
         
@@ -337,7 +337,7 @@
             <h3>Version 1.0</h3>
             <p class="timeline-date">Mid 2024</p>
             <p class="timeline-description">A significant upgrade with improved design and functionality.</p>
-            <a href="https://ryancodes.xyz/v1" class="timeline-link">View Version 1.0</a>
+            <a href="https://ryancodes.xyz/v1" class="timeline-link" target="_blank">View Version 1.0</a>
           </div>
         </div>
         
@@ -347,7 +347,7 @@
             <h3>Version 2.0</h3>
             <p class="timeline-date">Late 2024</p>
             <p class="timeline-description">Added a fullscreen terminal experience, enhancing the UI of the site. This was later adapted to be the current terminal experience on the site.</p>
-            <a href="https://ryancodes.xyz/v2" class="timeline-link">View Version 2.0</a>
+            <a href="https://ryancodes.xyz/v2" class="timeline-link" target="_blank">View Version 2.0</a>
           </div>
         </div>
         
@@ -365,13 +365,10 @@
   </section>
 
   <!-- Modal Popup -->
-  <div id="mobile-popup" class="mobile-warning">
-    <div class="mobile-warning-content">
-      <h2>⚠️ Mobile Warning</h2>
-      <p>Terminal is not available on mobile devices. Please visit on a desktop device for the full experience.</p>
-      <div class="mobile-warning-buttons">
-        <button class="mobile-warning-btn leave" onclick="closeMobilePopup()">Close</button>
-      </div>
+  <div id="mobile-popup" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <p>Terminal is not available on mobile.</p>
     </div>
   </div>
 
@@ -396,10 +393,6 @@
         });
       });
     });
-
-    function closeMobilePopup() {
-      document.getElementById('mobile-popup').style.display = 'none';
-    }
   </script>
 </body>
 </html>
