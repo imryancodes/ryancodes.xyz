@@ -1901,4 +1901,79 @@ body.has-archive-banner header {
   body.has-archive-banner header {
     top: 6.6rem;
   }
+}
+
+/* Mobile Warning Modal */
+.mobile-warning {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.mobile-warning-content {
+    background: #1c1c1c;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 204, 0, 0.3);
+    max-width: 90%;
+    width: 400px;
+    text-align: center;
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+.mobile-warning h2 {
+    color: #ffcc00;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.mobile-warning p {
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+.mobile-warning-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.mobile-warning-btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mobile-warning-btn.leave {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.mobile-warning-btn.leave:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 } 
