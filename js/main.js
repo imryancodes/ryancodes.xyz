@@ -1,16 +1,20 @@
 // Intersection Observer for section animations
 const options = { 
-  threshold: 0.15, 
-  rootMargin: "0px 0px -30% 0px"
+  threshold: [0.1, 0.2, 0.3, 0.4, 0.5], 
+  rootMargin: "0px 0px -10% 0px"
 };
 
 const sections = document.querySelectorAll('section');
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      entry.target.classList.add('in-view');
+      requestAnimationFrame(() => {
+        entry.target.classList.add('in-view');
+      });
     } else {
-      entry.target.classList.remove('in-view');
+      requestAnimationFrame(() => {
+        entry.target.classList.remove('in-view');
+      });
     }
   });
 }, options);
