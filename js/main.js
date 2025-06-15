@@ -27,9 +27,20 @@ document.querySelectorAll('.nav-pill[href^="#"]').forEach(pill => {
     const targetSection = document.querySelector(anchorHash);
     const currentPosition = window.scrollY;
     const targetPosition = targetSection.getBoundingClientRect().top + currentPosition;
+    
     if (Math.abs(currentPosition - targetPosition) > 50) {
-      targetSection.scrollIntoView({ behavior: 'smooth' });
+      // Use smooth scroll only on desktop devices
+      if (window.innerWidth >= 1024) {
+        targetSection.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        // On mobile devices, use instant scroll
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'instant'
+        });
+      }
     }
+    
     if (window.location.hash !== anchorHash) {
       history.pushState(null, null, anchorHash);
     }
