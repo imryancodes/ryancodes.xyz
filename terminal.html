@@ -46,16 +46,25 @@
       height: 100%;
       background-color: #0a0a0a;
       border: 3px solid #000;
-      overflow: hidden;
+      overflow-y: auto;
+      overflow-x: hidden;
       box-shadow: 
         inset 0 0 100px rgba(0, 255, 0, 0.1),
         0 0 20px rgba(0, 255, 0, 0.2);
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE and Edge */
+    }
+
+    .monitor-screen::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
     }
 
     .scanlines {
       position: absolute;
       top: 0;
       left: 0;
+      right: 0;
+      bottom: 0;
       width: 100%;
       height: 100%;
       background: repeating-linear-gradient(
@@ -83,6 +92,8 @@
       position: absolute;
       top: 0;
       left: 0;
+      right: 0;
+      bottom: 0;
       width: 100%;
       height: 100%;
       background: rgba(0, 255, 0, 0.03);
@@ -103,12 +114,12 @@
     .terminal {
       position: relative;
       width: 100%;
-      height: 100%;
+      min-height: 100%;
       background-color: #000;
       border: none;
       padding: 60px 20px 20px 20px;
       box-shadow: none;
-      overflow: auto;
+      overflow: visible;
       display: block;
       text-shadow: 
         0 0 5px rgba(0, 255, 0, 0.5),
@@ -157,6 +168,31 @@
       max-width: 90%;
       word-wrap: break-word;
       overflow-wrap: break-word;
+      position: relative;
+    }
+
+    .thick-cursor {
+      position: absolute;
+      width: 3px;
+      height: 1.2em;
+      background-color: #00ff00;
+      box-shadow: 
+        0 0 5px rgba(0, 255, 0, 0.8),
+        0 0 10px rgba(0, 255, 0, 0.4);
+      animation: blink 1s infinite;
+      pointer-events: none;
+      display: none;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    @keyframes blink {
+      0%, 49% {
+        opacity: 1;
+      }
+      50%, 100% {
+        opacity: 0;
+      }
     }
 
     .command-prompt {
@@ -181,6 +217,17 @@
         0 0 10px rgba(0, 255, 0, 0.4);
     }
 
+    /* Make caret thicker for browsers that support it (Firefox) */
+    @supports (caret-width: 3px) {
+      .command-input {
+        caret-width: 3px;
+      }
+    }
+
+    .command-input::selection {
+      background-color: rgba(0, 255, 0, 0.2);
+    }
+
     .monitor-brand {
       position: absolute;
       bottom: -35px;
@@ -191,6 +238,9 @@
       font-family: Arial, sans-serif;
       letter-spacing: 2px;
       text-transform: uppercase;
+      white-space: nowrap;
+      margin: 0;
+      padding: 0;
     }
 
     .monitor-controls {
@@ -246,7 +296,6 @@
         </div>
       </div>
     </div>
-    <div class="monitor-brand">RYANCODES TERMINAL</div>
     <div class="monitor-controls">
       <div class="monitor-button"></div>
       <div class="monitor-button"></div>
@@ -273,9 +322,72 @@
         helpMsg,
         true,
         () => {
-          document.getElementById("commandInput").focus();
+          const input = document.getElementById("commandInput");
+          input.focus();
+          setupThickCursor(input);
         }
       );
+
+      function setupThickCursor(input) {
+        // Only use custom cursor for browsers that don't support caret-width (Chrome, Safari, Edge)
+        if (!CSS.supports('caret-width', '3px')) {
+          // Keep native caret visible as fallback, but we'll overlay a custom one
+          const commandLine = input.parentElement;
+          const prompt = commandLine.querySelector('.command-prompt');
+          
+          // Check if cursor already exists
+          let cursor = commandLine.querySelector('.thick-cursor');
+          if (!cursor) {
+            cursor = document.createElement('div');
+            cursor.className = 'thick-cursor';
+            commandLine.appendChild(cursor);
+          }
+          
+          function updateCursor() {
+            if (!cursor) return;
+            
+            const textBeforeCursor = input.value.substring(0, input.selectionStart);
+            
+            // Create a mirror element to measure text width accurately
+            const mirror = document.createElement('span');
+            const inputStyle = getComputedStyle(input);
+            mirror.style.cssText = `
+              position: absolute;
+              visibility: hidden;
+              white-space: pre;
+              font: ${inputStyle.font};
+              letter-spacing: ${inputStyle.letterSpacing};
+              padding: 0;
+              margin: 0;
+            `;
+            mirror.textContent = textBeforeCursor;
+            document.body.appendChild(mirror);
+            const textWidth = mirror.offsetWidth;
+            document.body.removeChild(mirror);
+            
+            // Calculate position: prompt width + text width + small offset
+            const promptWidth = prompt ? prompt.offsetWidth + 5 : 0;
+            cursor.style.left = (promptWidth + textWidth) + 'px';
+            cursor.style.display = (document.activeElement === input) ? 'block' : 'none';
+          }
+          
+          // Hide native caret for browsers without caret-width support
+          input.style.caretColor = 'transparent';
+          
+          // Update cursor position on various events
+          const events = ['input', 'keyup', 'keydown', 'click', 'focus'];
+          events.forEach(event => {
+            input.addEventListener(event, updateCursor);
+          });
+          
+          input.addEventListener('blur', () => {
+            if (cursor) cursor.style.display = 'none';
+          });
+          
+          // Initial positioning
+          setTimeout(updateCursor, 50);
+        }
+      }
     });
 
     // Function to request fullscreen
