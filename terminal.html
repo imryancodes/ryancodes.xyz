@@ -64,9 +64,8 @@
       top: 0;
       left: 0;
       right: 0;
-      bottom: 0;
       width: 100%;
-      height: 100%;
+      min-height: 100%;
       background: repeating-linear-gradient(
         0deg,
         rgba(0, 0, 0, 0.15),
@@ -93,9 +92,8 @@
       top: 0;
       left: 0;
       right: 0;
-      bottom: 0;
       width: 100%;
-      height: 100%;
+      min-height: 100%;
       background: rgba(0, 255, 0, 0.03);
       pointer-events: none;
       z-index: 9;
@@ -310,6 +308,45 @@
 
       const terminal = document.getElementById("terminal");
       terminal.style.display = "block";
+      
+      // Update flicker and scanlines to cover full scrollable height
+      function updateScreenEffects() {
+        const monitorScreen = document.querySelector('.monitor-screen');
+        const screenFlicker = document.querySelector('.screen-flicker');
+        const scanlines = document.querySelector('.scanlines');
+        const terminal = document.getElementById("terminal");
+        
+        if (monitorScreen && screenFlicker && scanlines && terminal) {
+          // Get the actual content height (terminal's scrollHeight)
+          const terminalHeight = terminal.scrollHeight;
+          const screenHeight = monitorScreen.clientHeight;
+          
+          // Check if there's actually content to scroll
+          const needsScroll = terminalHeight > screenHeight;
+          
+          if (needsScroll) {
+            // There's scrollable content - enable scrolling and cover it all
+            monitorScreen.style.overflowY = 'auto';
+            screenFlicker.style.height = terminalHeight + 'px';
+            scanlines.style.height = terminalHeight + 'px';
+          } else {
+            // No scrollable content - disable scrolling and match viewport exactly
+            monitorScreen.style.overflowY = 'hidden';
+            screenFlicker.style.height = screenHeight + 'px';
+            scanlines.style.height = screenHeight + 'px';
+          }
+        }
+      }
+      
+      // Update on content changes
+      const observer = new MutationObserver(updateScreenEffects);
+      if (terminal) {
+        observer.observe(terminal, { childList: true, subtree: true });
+      }
+      
+      // Initial update and periodic updates
+      updateScreenEffects();
+      setInterval(updateScreenEffects, 500);
       const welcomeMsg = document.createElement("div");
       welcomeMsg.className = "output";
       terminal.insertBefore(welcomeMsg, terminal.firstChild);
