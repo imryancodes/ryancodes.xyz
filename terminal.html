@@ -6,10 +6,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
   <style>
     body {
-      background-color: #1a1a1a;
+      background-color: #0a0a0a;
       background-image: 
-        radial-gradient(circle at 20% 50%, #0a0a0a 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, #0a0a0a 0%, transparent 50%);
+        radial-gradient(circle at 20% 50%, #050505 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, #050505 0%, transparent 50%),
+        repeating-linear-gradient(
+          0deg,
+          rgba(0, 0, 0, 0.1) 0px,
+          rgba(0, 0, 0, 0.1) 1px,
+          transparent 1px,
+          transparent 20px
+        );
       color: #fff;
       font-family: Consolas, monospace;
       font-size: 16px;
@@ -27,17 +34,54 @@
       height: 80vh;
       max-width: 1600px;
       max-height: 750px;
-      background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-      border: 25px solid #1a1a1a;
-      border-radius: 8px;
+      background: 
+        linear-gradient(145deg, #3a3a3a 0%, #2a2a2a 50%, #1a1a1a 100%),
+        repeating-linear-gradient(
+          0deg,
+          rgba(0, 0, 0, 0.1) 0px,
+          rgba(0, 0, 0, 0.1) 1px,
+          transparent 1px,
+          transparent 4px
+        );
+      border: 30px solid #1a1a1a;
+      border-top: 35px solid #1a1a1a;
+      border-bottom: 40px solid #1a1a1a;
+      border-radius: 12px;
       box-shadow: 
-        0 0 0 3px #0a0a0a,
-        inset 0 0 50px rgba(0, 0, 0, 0.8),
-        0 20px 60px rgba(0, 0, 0, 0.6),
-        inset 0 0 100px rgba(0, 255, 0, 0.05);
-      padding: 15px;
+        0 0 0 4px #0a0a0a,
+        inset 0 0 80px rgba(0, 0, 0, 0.9),
+        0 25px 80px rgba(0, 0, 0, 0.8),
+        inset 0 2px 4px rgba(255, 255, 255, 0.1),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.5);
+      padding: 20px;
       display: flex;
       flex-direction: column;
+    }
+
+    .monitor-frame::before {
+      content: '';
+      position: absolute;
+      top: -35px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 8px;
+      background: linear-gradient(90deg, #1a1a1a, #2a2a2a, #1a1a1a);
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .monitor-frame::after {
+      content: '';
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 15px;
+      background: linear-gradient(180deg, #1a1a1a, #0a0a0a);
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
     }
 
     .monitor-screen {
@@ -45,14 +89,21 @@
       width: 100%;
       height: 100%;
       background-color: #0a0a0a;
-      border: 3px solid #000;
+      border: 4px solid #000;
+      border-radius: 8px;
       overflow-y: auto;
       overflow-x: hidden;
       box-shadow: 
-        inset 0 0 100px rgba(0, 255, 0, 0.1),
-        0 0 20px rgba(0, 255, 0, 0.2);
+        inset 0 0 150px rgba(0, 255, 0, 0.15),
+        inset 0 0 80px rgba(0, 255, 0, 0.08),
+        0 0 30px rgba(0, 255, 0, 0.3),
+        inset -10px -10px 100px rgba(0, 0, 0, 0.5),
+        inset 10px 10px 100px rgba(0, 0, 0, 0.5);
       scrollbar-width: none; /* Firefox */
       -ms-overflow-style: none; /* IE and Edge */
+      /* CRT screen curvature effect */
+      transform: perspective(1000px) rotateX(2deg);
+      transform-style: preserve-3d;
     }
 
     .monitor-screen::-webkit-scrollbar {
@@ -68,14 +119,32 @@
       min-height: 100%;
       background: repeating-linear-gradient(
         0deg,
-        rgba(0, 0, 0, 0.15),
-        rgba(0, 0, 0, 0.15) 1px,
+        rgba(0, 0, 0, 0.25),
+        rgba(0, 0, 0, 0.25) 1px,
         transparent 1px,
         transparent 2px
       );
       pointer-events: none;
       z-index: 10;
       animation: scanline 8s linear infinite;
+      opacity: 0.8;
+    }
+
+    .scanlines::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        rgba(0, 255, 0, 0.03),
+        rgba(0, 255, 0, 0.03) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      pointer-events: none;
     }
 
     @keyframes scanline {
@@ -94,10 +163,25 @@
       right: 0;
       width: 100%;
       min-height: 100%;
-      background: rgba(0, 255, 0, 0.03);
+      background: 
+        radial-gradient(ellipse at center, rgba(0, 255, 0, 0.05) 0%, transparent 70%),
+        radial-gradient(ellipse at 30% 30%, rgba(0, 255, 0, 0.02) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 70%, rgba(0, 255, 0, 0.02) 0%, transparent 50%);
       pointer-events: none;
       z-index: 9;
       animation: flicker 0.15s infinite;
+    }
+
+    .screen-flicker::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(ellipse 80% 50% at 50% 50%, transparent 40%, rgba(0, 0, 0, 0.3) 100%);
+      pointer-events: none;
     }
 
     @keyframes flicker {
@@ -120,8 +204,12 @@
       overflow: visible;
       display: block;
       text-shadow: 
-        0 0 5px rgba(0, 255, 0, 0.5),
-        0 0 10px rgba(0, 255, 0, 0.3);
+        0 0 3px rgba(0, 255, 0, 0.8),
+        0 0 6px rgba(0, 255, 0, 0.6),
+        0 0 9px rgba(0, 255, 0, 0.4),
+        0 0 12px rgba(0, 255, 0, 0.2);
+      /* Phosphor glow effect */
+      filter: contrast(1.1) brightness(1.05);
     }
 
     .matrix-effect {
@@ -143,8 +231,10 @@
       color: #00ff00;
       margin-bottom: 10px;
       text-shadow: 
-        0 0 5px rgba(0, 255, 0, 0.8),
-        0 0 10px rgba(0, 255, 0, 0.4);
+        0 0 3px rgba(0, 255, 0, 1),
+        0 0 6px rgba(0, 255, 0, 0.8),
+        0 0 9px rgba(0, 255, 0, 0.6),
+        0 0 12px rgba(0, 255, 0, 0.4);
       max-width: 90%;
       word-wrap: break-word;
       overflow-wrap: break-word;
@@ -175,8 +265,9 @@
       height: 1.2em;
       background-color: #00ff00;
       box-shadow: 
-        0 0 5px rgba(0, 255, 0, 0.8),
-        0 0 10px rgba(0, 255, 0, 0.4);
+        0 0 4px rgba(0, 255, 0, 1),
+        0 0 8px rgba(0, 255, 0, 0.8),
+        0 0 12px rgba(0, 255, 0, 0.6);
       animation: blink 1s infinite;
       pointer-events: none;
       display: none;
@@ -197,8 +288,10 @@
       color: #00ff00;
       margin-right: 5px;
       text-shadow: 
-        0 0 5px rgba(0, 255, 0, 0.8),
-        0 0 10px rgba(0, 255, 0, 0.4);
+        0 0 3px rgba(0, 255, 0, 1),
+        0 0 6px rgba(0, 255, 0, 0.8),
+        0 0 9px rgba(0, 255, 0, 0.6),
+        0 0 12px rgba(0, 255, 0, 0.4);
     }
 
     .command-input {
@@ -211,8 +304,10 @@
       flex-grow: 1;
       caret-color: #00ff00;
       text-shadow: 
-        0 0 5px rgba(0, 255, 0, 0.8),
-        0 0 10px rgba(0, 255, 0, 0.4);
+        0 0 3px rgba(0, 255, 0, 1),
+        0 0 6px rgba(0, 255, 0, 0.8),
+        0 0 9px rgba(0, 255, 0, 0.6),
+        0 0 12px rgba(0, 255, 0, 0.4);
     }
 
     /* Make caret thicker for browsers that support it (Firefox) */
@@ -228,33 +323,62 @@
 
     .monitor-brand {
       position: absolute;
-      bottom: -35px;
+      bottom: -50px;
       left: 50%;
       transform: translateX(-50%);
       color: #666;
-      font-size: 12px;
+      font-size: 11px;
       font-family: Arial, sans-serif;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
       text-transform: uppercase;
       white-space: nowrap;
       margin: 0;
       padding: 0;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
     }
 
     .monitor-controls {
       position: absolute;
-      bottom: -35px;
+      bottom: -50px;
       right: 20px;
       display: flex;
-      gap: 8px;
+      gap: 10px;
+      align-items: center;
     }
 
     .monitor-button {
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background: #333;
-      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+      background: linear-gradient(145deg, #444, #222);
+      box-shadow: 
+        inset 0 1px 3px rgba(0, 0, 0, 0.6),
+        0 1px 2px rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(0, 0, 0, 0.3);
+    }
+
+    .monitor-button:first-child {
+      background: linear-gradient(145deg, #0a0, #050);
+      box-shadow: 
+        inset 0 1px 3px rgba(0, 0, 0, 0.6),
+        0 0 8px rgba(0, 255, 0, 0.4),
+        0 1px 2px rgba(255, 255, 255, 0.1);
+      animation: powerPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes powerPulse {
+      0%, 100% {
+        box-shadow: 
+          inset 0 1px 3px rgba(0, 0, 0, 0.6),
+          0 0 8px rgba(0, 255, 0, 0.4),
+          0 1px 2px rgba(255, 255, 255, 0.1);
+      }
+      50% {
+        box-shadow: 
+          inset 0 1px 3px rgba(0, 0, 0, 0.6),
+          0 0 12px rgba(0, 255, 0, 0.6),
+          0 1px 2px rgba(255, 255, 255, 0.1);
+      }
     }
 
     /* Fullscreen mode */
@@ -293,11 +417,6 @@
           <input id="commandInput" class="command-input" type="text" onkeydown="handleCommand(event)">
         </div>
       </div>
-    </div>
-    <div class="monitor-controls">
-      <div class="monitor-button"></div>
-      <div class="monitor-button"></div>
-      <div class="monitor-button"></div>
     </div>
   </div>
 
