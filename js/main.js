@@ -49,7 +49,7 @@ document.querySelectorAll('.nav-pill[href^="#"]').forEach(pill => {
 
 // Typing effect for the hero text
 const typedTextSpan = document.getElementById('typed-text');
-const fullText = "Hi, my name is Ryan and I'm a Front-End Developer";
+const fullText = "Hi, my name is Ryan Kiapour and I'm a Front-End Developer";
 const typingSpeed = 100;
 let charIndex = 0;
 const highlightWord = "Front-End Developer";

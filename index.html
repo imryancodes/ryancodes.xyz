@@ -40,42 +40,60 @@
       <div class="nav-left">
         <!-- Home Pill -->
         <a href="#home" class="nav-pill">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="#fafafa" viewBox="0 0 24 24">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
             <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
           </svg>
           <span>Home</span>
         </a>
-        <!-- My Projects Pill -->
-        <a href="#projects" class="nav-pill">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="#fafafa" viewBox="0 0 24 24">
-            <path d="M10 4H2v16h20V6H12l-2-2z"/>
-          </svg>
-          <span>My Public Projects</span>
-        </a>
         <!-- About Me Pill -->
         <a href="#about" class="nav-pill">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="#fafafa" viewBox="0 0 24 24">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
             <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8V22h19.2v-2.8c0-3.2-6.4-4.8-9.6-4.8z"/>
           </svg>
           <span>About Me</span>
         </a>
+        <!-- My Projects Pill -->
+        <a href="#projects" class="nav-pill">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M10 4H2v16h20V6H12l-2-2z"/>
+          </svg>
+          <span>My Public Projects</span>
+        </a>
         <!-- Skills Pill -->
         <a href="#skills" class="nav-pill">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="#fafafa" viewBox="0 0 24 24">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
             <path d="M8.59 16.34L13.17 12 8.59 7.66 10 6.25l6 5.75-6 5.75z"/>
           </svg>
           <span>Skills</span>
         </a>
+        <!-- Archive Pill -->
+        <a href="#timeline" class="nav-pill">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/>
+          </svg>
+          <span>Archive</span>
+        </a>
+        <!-- Cursor Toggle Pill -->
+        <div class="nav-pill cursor-toggle" title="Toggle Custom Cursor">
+          <svg class="cursor-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M7 2l12 11.2l-5.8 0.5l3.3 7.3-2.2 1-3.2-7.4L7 18.5V2z"/>
+          </svg>
+          <span class="toggle-label">Cursor</span>
+          <label class="switch">
+            <input type="checkbox" checked>
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <!-- Terminal Pill -->
+        <a href="https://ryancodes.xyz/terminal" class="nav-pill nav-terminal" aria-label="Enter Terminal">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+            <rect x="2" y="3" width="20" height="18" rx="2" ry="2" fill="#1e1e1e"/>
+            <polygon points="6,8 10,12 6,16" fill="#0f0"/>
+            <rect x="12" y="10" width="6" height="2" fill="#0f0"/>
+          </svg>
+          <span>ENTER TERMINAL</span>
+        </a>
       </div>
-      <!-- Terminal Pill -->
-      <a href="https://ryancodes.xyz/terminal" class="nav-pill nav-terminal" aria-label="Enter Terminal">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
-          <rect x="2" y="3" width="20" height="18" rx="2" ry="2" fill="#1e1e1e"/>
-          <polygon points="6,8 10,12 6,16" fill="#0f0"/>
-          <rect x="12" y="10" width="6" height="2" fill="#0f0"/>
-        </svg>
-        <span>ENTER TERMINAL</span>
-      </a>
     </div>
   </header>
 
@@ -121,6 +139,42 @@
         <div class="scroll-arrows">
           <div class="scroll-arrow"></div>
           <div class="scroll-arrow"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <h2>About Me</h2>
+      <div class="about-container">
+        <div class="about-text">
+          <p class="about-intro">
+            <span class="highlight">Hey there!</span> I'm <span class="highlight">Ryan</span>, a <span class="highlight">14-year-old</span> developer with a passion for turning ideas into reality.
+          </p>
+          <div class="about-journey">
+            <p>My coding journey has taken me through multiple tech landscapes:</p>
+            <ul class="about-list">
+              <li><span class="highlight">📱</span> Building iOS apps with Swift</li>
+              <li><span class="highlight">🌐</span> Crafting responsive websites</li>
+              <li><span class="highlight">🤖</span> Creating AI solutions with Python</li>
+              <li><span class="highlight">⚡</span> Developing Arduino-powered projects</li>
+              <li><span class="highlight">🎮</span> Designing games in Godot and Unreal Engine</li>
+              <li><span class="highlight">🔧</span> Running a tech support firm (Iztech)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="about-stats">
+          <div class="stat-item">
+            <div class="stat-number" data-plus="true">4</div>
+            <div class="stat-label">Years Coding</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-plus="true">11</div>
+            <div class="stat-label">Projects Completed</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-plus="true">7</div>
+            <div class="stat-label">Technologies</div>
+          </div>
         </div>
       </div>
     </section>
@@ -199,42 +253,6 @@
           </button>
         </div>
       </div>
-    </section>
-
-    <section id="about">
-      <h2>About Me</h2>
-      <div class="about-container">
-        <div class="about-text">
-          <p class="about-intro">
-            <span class="highlight">Hey there!</span> I'm <span class="highlight">Ryan</span>, a <span class="highlight">14-year-old</span> developer with a passion for turning ideas into reality.
-          </p>
-          <div class="about-journey">
-            <p>My coding journey has taken me through multiple tech landscapes:</p>
-            <ul class="about-list">
-              <li><span class="highlight">📱</span> Building iOS apps with Swift</li>
-              <li><span class="highlight">🌐</span> Crafting responsive websites</li>
-              <li><span class="highlight">🤖</span> Creating AI solutions with Python</li>
-              <li><span class="highlight">⚡</span> Developing Arduino-powered projects</li>
-              <li><span class="highlight">🎮</span> Designing games in Godot and Unreal Engine</li>
-              <li><span class="highlight">🔧</span> Running a tech support firm (Iztech)</li>
-              <li><span class="highlight">🧱</span> Contributing to a Minecraft server with 75,000+ members</li>
-            </ul>
-          </div>
-        </div>
-        <div class="about-stats">
-          <div class="stat-item">
-            <div class="stat-number" data-plus="true">4</div>
-            <div class="stat-label">Years Coding</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number" data-plus="true">11</div>
-            <div class="stat-label">Projects Completed</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number" data-plus="true">7</div>
-            <div class="stat-label">Technologies</div>
-          </div>
-        </div>
     </section>
 
     <section id="skills">
@@ -372,7 +390,7 @@
       </div>
     </div>
     <p class="timeline-disclaimer">⚠️ <strong>Disclaimer:</strong> The links inside the archived versions above may not work as expected since they could be outdated or no longer maintained.</p>
-    <p class="timeline-note">* There have been many more website updates (almost 300 as of 6/8/25!), but these are the major milestones in the journey. Also, please note that the above website versions are not necessarily mobile friendly.</p>
+    <p class="timeline-note">* There have been many more website updates (almost 300 as of 6/8/25!), but these are the major milestones in the journey. Also, please note that the above website versions are not necessarily mobile-friendly.</p>
   </section>
 
   <!-- Modal Popup -->

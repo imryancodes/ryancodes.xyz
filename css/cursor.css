@@ -62,36 +62,66 @@
 /* Add these classes to all clickable elements */
 a, button, .nav-pill, .project-btn, .social-button, .skill-item {
   cursor: none;
-  /* Add slight padding to improve hover detection areas */
-  padding: calc(0.4rem + 2px) calc(1.1rem + 2px);
-  margin: -2px;
   transition: transform 0.3s ease 0.05s, filter 0.3s ease 0.05s;
 }
 
 /* Apply the extended hover area to specific elements as needed */
 .project-btn {
-  padding: calc(0.6rem + 2px) calc(1.5rem + 2px);
-  margin: -2px;
+  /* Removed padding/margin that messed up layout */
 }
 
 .social-button {
-  margin: -3px;
+  /* Removed padding/margin that messed up layout */
 }
 
 .skill-item {
-  margin: -3px;
-  padding: 3px;
+  /* Removed padding/margin that messed up layout */
 }
 
-/* More comprehensive cursor hiding */
-html, body, * {
+/* More comprehensive cursor hiding - only when not disabled */
+body:not(.custom-cursor-disabled), 
+body:not(.custom-cursor-disabled) html, 
+body:not(.custom-cursor-disabled) * {
   cursor: none !important;
 }
 
-/* Ensuring all potential interactive elements have cursor: none */
-a, button, .nav-pill, .project-btn, .social-button, .skill-item,
-input, select, textarea, [role="button"], [tabindex="0"], .clickable {
+/* Ensuring all potential interactive elements have cursor: none - only when not disabled */
+body:not(.custom-cursor-disabled) a, 
+body:not(.custom-cursor-disabled) button, 
+body:not(.custom-cursor-disabled) .nav-pill, 
+body:not(.custom-cursor-disabled) .project-btn, 
+body:not(.custom-cursor-disabled) .social-button, 
+body:not(.custom-cursor-disabled) .skill-item,
+body:not(.custom-cursor-disabled) input, 
+body:not(.custom-cursor-disabled) select, 
+body:not(.custom-cursor-disabled) textarea, 
+body:not(.custom-cursor-disabled) [role="button"], 
+body:not(.custom-cursor-disabled) [tabindex="0"], 
+body:not(.custom-cursor-disabled) .clickable {
   cursor: none !important;
+}
+
+/* Hide custom cursor elements when disabled */
+body.custom-cursor-disabled .cursor-outer,
+body.custom-cursor-disabled .cursor-inner,
+body.custom-cursor-disabled .cursor-trail {
+  display: none !important;
+}
+
+/* Revert to default cursor when disabled */
+body.custom-cursor-disabled,
+body.custom-cursor-disabled * {
+  cursor: auto !important;
+}
+
+body.custom-cursor-disabled a,
+body.custom-cursor-disabled button,
+body.custom-cursor-disabled .nav-pill,
+body.custom-cursor-disabled .project-btn,
+body.custom-cursor-disabled .social-button,
+body.custom-cursor-disabled .skill-item,
+body.custom-cursor-disabled .clickable {
+  cursor: pointer !important;
 }
 
 /* Disable pointer events on the custom cursor elements */
@@ -100,11 +130,11 @@ input, select, textarea, [role="button"], [tabindex="0"], .clickable {
   pointer-events: none !important;
 }
 
-/* Fix for Safari and Firefox */
+/* Fix for Safari and Firefox - only when not disabled */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-  * { cursor: none !important; }
+  body:not(.custom-cursor-disabled) * { cursor: none !important; }
 }
 
 @-moz-document url-prefix() {
-  * { cursor: none !important; }
-} 
+  body:not(.custom-cursor-disabled) * { cursor: none !important; }
+}
