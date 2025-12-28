@@ -397,9 +397,201 @@
       max-height: 100vh;
       border: 30px solid #1a1a1a;
     }
+
+    /* Archive Banner Styles */
+    .archive-banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(
+        90deg,
+        #ffd700,
+        #ffa500,
+        #ff8c00,
+        #ffa500,
+        #ffd700
+      );
+      background-size: 200% 100%;
+      color: #000;
+      padding: 1rem;
+      text-align: center;
+      z-index: 9999;
+      font-weight: 600;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      animation: slideDown 0.5s ease-out, gradientMove 8s linear infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .archive-banner .warning-icon {
+      font-size: 1.2rem;
+      animation: pulse 2s infinite;
+    }
+
+    .archive-banner .message {
+      font-size: 1.1rem;
+    }
+
+    .archive-banner a {
+      color: #000;
+      text-decoration: underline;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      margin-left: 0.5rem;
+      padding: 0.3rem 0.8rem;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+    }
+
+    .archive-banner a:hover {
+      color: #fff;
+      background: rgba(0, 0, 0, 0.2);
+      text-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); }
+      to { transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @media (max-width: 768px) {
+      .archive-banner {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+        flex-direction: column;
+        gap: 0.3rem;
+      }
+
+      .archive-banner .message {
+        font-size: 0.9rem;
+      }
+
+      .archive-banner a {
+        margin-left: 0;
+        margin-top: 0.3rem;
+      }
+    }
+
+    /* Mobile Warning Modal */
+    .mobile-warning {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 10000;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+
+    .mobile-warning-content {
+      background: #1c1c1c;
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 204, 0, 0.3);
+      max-width: 90%;
+      width: 400px;
+      text-align: center;
+      animation: modalFadeIn 0.3s ease-out;
+    }
+
+    .mobile-warning h2 {
+      color: #ffcc00;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .mobile-warning p {
+      color: #fff;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+
+    .mobile-warning-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .mobile-warning-btn {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-warning-btn.continue {
+      background: #ffcc00;
+      color: #000;
+    }
+
+    .mobile-warning-btn.continue:hover {
+      background: #ffd700;
+      transform: translateY(-2px);
+    }
+
+    .mobile-warning-btn.leave {
+      background: transparent;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .mobile-warning-btn.leave:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 <body>
+  <div class="archive-banner">
+    <span class="warning-icon">⚠️</span>
+    <span class="message">This is an archived version of the site.</span>
+    <a href="https://ryancodes.xyz">View the current version</a>
+  </div>
+
+  <!-- Mobile Warning Modal -->
+  <div class="mobile-warning" id="mobileWarning">
+    <div class="mobile-warning-content">
+      <h2>⚠️ Mobile Warning</h2>
+      <p>This is an archived version of the site that may not be optimized for mobile devices. You might experience some display issues or limited functionality.</p>
+      <div class="mobile-warning-buttons">
+        <button class="mobile-warning-btn continue" onclick="continueToSite()">Continue Anyway</button>
+        <button class="mobile-warning-btn leave" onclick="goToCurrentSite()">Go to Current Site</button>
+      </div>
+    </div>
+  </div>
+
   <div class="monitor-frame">
     <div class="monitor-screen">
       <div class="screen-flicker"></div>
@@ -580,15 +772,6 @@
       document.body.removeEventListener('click', requestFullscreen);
     }
 
-    function redirectIfPhone() {
-      const userAgent = navigator.userAgent.toLowerCase();
-      const isMobile = /iphone|ipad|ipod|android|blackberry|iemobile|opera mini/i.test(userAgent);
-      if (isMobile) {
-        window.location.href = 'https://ryancodes.xyz/#mobile';
-      }
-    }
-
-    redirectIfPhone();
 
     function simulateTypeEffect(text, outputElement, prepend = false, callback) {
       let index = 0;
@@ -691,6 +874,25 @@
         commandInput.value = ""; // Clear the input
       }
     }
+
+    function checkMobile() {
+      const userAgent = navigator.userAgent.toLowerCase();
+      const isMobile = /iphone|ipad|ipod|android|blackberry|iemobile|opera mini/i.test(userAgent);
+      if (isMobile) {
+        document.getElementById('mobileWarning').style.display = 'flex';
+      }
+    }
+
+    function continueToSite() {
+      document.getElementById('mobileWarning').style.display = 'none';
+    }
+
+    function goToCurrentSite() {
+      window.location.href = 'https://ryancodes.xyz';
+    }
+
+    // Check for mobile devices on page load
+    checkMobile();
   </script>
 </body>
 </html>
