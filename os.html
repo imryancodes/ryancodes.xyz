@@ -590,11 +590,35 @@
             
             let newLeft = e.clientX - dragOffsetX;
             let newTop = e.clientY - dragOffsetY;
+
+            // --- BOUNDARIES ---
+            // Get dimensions
+            const rect = dragItem.getBoundingClientRect();
+            const winWidth = rect.width;
+            const winHeight = rect.height;
+            const screenW = window.innerWidth;
+            const screenH = window.innerHeight;
+
+            // 1. Left Edge (0)
+            if (newLeft < 0) {
+                newLeft = 0;
+            }
             
-            // Constraints
-            if (newTop < 32) newTop = 32; // Top Bar
-            if (newTop > window.innerHeight - 40) newTop = window.innerHeight - 40; // Don't lose bottom
+            // 2. Right Edge (Screen Width - Window Width)
+            if (newLeft + winWidth > screenW) {
+                newLeft = screenW - winWidth;
+            }
             
+            // 3. Top Edge (32px for Top Bar)
+            if (newTop < 32) {
+                newTop = 32;
+            }
+            
+            // 4. Bottom Edge (Screen Height - Window Height)
+            if (newTop + winHeight > screenH) {
+                newTop = screenH - winHeight;
+            }
+
             dragItem.style.left = newLeft + 'px';
             dragItem.style.top = newTop + 'px';
         }
