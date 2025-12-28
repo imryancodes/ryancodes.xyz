@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="google" content="notranslate">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ryan Kiapour - Liquid Glass OS</title>
+    
+    <script>
+        if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+            window.location.href = "https://ryancodes.xyz/#mobile";
+        }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Consolas&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS VARIABLES --- */
+        :root {
+            --mac-bg: url('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?q=80&w=2074&auto=format&fit=crop');
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --liquid-filter: blur(25px) saturate(200%);
+            --dock-bg: rgba(255, 255, 255, 0.35);
+            --text-color: #333;
+            --accent: #007aff;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            height: 100vh; width: 100vw; overflow: hidden;
+            background-image: var(--mac-bg); background-size: cover; background-position: center;
+            transition: background-image 0.5s ease-in-out; color: var(--text-color);
+        }
+
+        /* --- LOGIN SCREEN --- */
+        #login-screen {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.1); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 9999; transition: opacity 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+        }
+        .user-avatar {
+            width: 100px; height: 100px; background: rgba(255,255,255,0.8); border-radius: 50%;
+            margin-bottom: 15px; background-image: url('https://cdn-icons-png.flaticon.com/512/3135/3135715.png');
+            background-size: cover; box-shadow: 0 8px 20px rgba(0,0,0,0.15); border: 2px solid rgba(255,255,255,0.8);
+        }
+        .user-name { color: white; font-size: 24px; font-weight: 600; margin-bottom: 20px; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .password-wrapper { position: relative; }
+        input[type="password"] {
+            background: rgba(255, 255, 255, 0.25); border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 20px; padding: 10px 20px; color: white; outline: none; width: 200px;
+            text-align: center; transition: all 0.3s; backdrop-filter: blur(10px); font-size: 14px;
+            box-shadow: inset 0 1px 4px rgba(0,0,0,0.1);
+        }
+        input[type="password"]::placeholder { color: rgba(255,255,255,0.8); }
+        input[type="password"]:focus { background: rgba(255, 255, 255, 0.45); width: 220px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
+        @keyframes shake { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
+        .hint-text { margin-top: 15px; color: rgba(255,255,255,0.9); font-size: 12px; background: rgba(0,0,0,0.3); padding: 6px 12px; border-radius: 20px; backdrop-filter: blur(5px); visibility: hidden; }
+
+        /* --- DESKTOP --- */
+        #desktop { width: 100%; height: 100%; display: none; position: relative; }
+        .top-bar {
+            width: 100%; height: 32px; background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(20px) saturate(150%); -webkit-backdrop-filter: blur(20px) saturate(150%);
+            border-bottom: 1px solid rgba(255,255,255,0.3); display: flex; justify-content: space-between;
+            align-items: center; padding: 0 20px; color: white; font-size: 13px; font-weight: 500;
+            z-index: 5000; position: relative; text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .logo-btn {
+            width: 20px; height: 20px; background: rgba(255,255,255,0.9); color: #333;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-family: sans-serif; font-size: 12px; margin-right: 18px;
+            cursor: pointer; box-shadow: 0 0 5px rgba(255,255,255,0.5); transition: transform 0.1s;
+        }
+        .logo-btn:hover { transform: scale(1.1); background: white; }
+        .logo-btn:active { transform: scale(0.95); }
+        .left-menu { display: flex; align-items: center; }
+        .left-menu span { margin-right: 18px; cursor: pointer; opacity: 0.9; }
+        .left-menu span:hover { opacity: 1; text-shadow: 0 0 5px rgba(255,255,255,0.5); }
+        .right-menu span { margin-left: 18px; }
+
+        #sticky-note {
+            position: absolute; top: 80px; right: 40px; width: 250px; padding: 25px 20px;
+            background: rgba(255, 245, 150, 0.85); backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            font-size: 15px; color: #444; font-family: 'Marker Felt', 'Comic Sans MS', sans-serif;
+            line-height: 1.4; transform: rotate(-2deg); z-index: 50; transition: opacity 0.3s; cursor: default;
+        }
+        .close-sticky {
+            position: absolute; top: 5px; left: 5px; cursor: pointer; font-size: 12px;
+            color: #888; font-family: sans-serif; width: 20px; height: 20px; display: flex;
+            align-items: center; justify-content: center; border-radius: 50%; transition: background 0.2s;
+        }
+        .close-sticky:hover { background: rgba(0,0,0,0.1); color: #000; }
+
+        .dock-container {
+            position: absolute; bottom: -100px; left: 50%; transform: translateX(-50%);
+            background: var(--dock-bg); backdrop-filter: var(--liquid-filter);
+            -webkit-backdrop-filter: var(--liquid-filter);
+            border: 1px solid var(--glass-border); border-top: 1px solid rgba(255,255,255,0.6);
+            border-radius: 24px; padding: 12px; display: flex; gap: 14px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2); z-index: 6000;
+            transition: bottom 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .app-icon {
+            width: 55px; height: 55px; border-radius: 14px; background: white;
+            display: flex; align-items: center; justify-content: center; font-size: 32px;
+            cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        .app-icon:hover { transform: scale(1.15) translateY(-15px); box-shadow: 0 15px 25px rgba(0,0,0,0.3); z-index: 10; }
+        .app-icon::after {
+            content: attr(data-name); position: absolute; top: -40px;
+            background: rgba(240,240,240,0.8); color: #333; padding: 5px 10px;
+            border-radius: 8px; font-size: 12px; opacity: 0; pointer-events: none;
+            transition: opacity 0.2s; white-space: nowrap; backdrop-filter: blur(10px);
+            font-weight: 500; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .app-icon:hover::after { opacity: 1; }
+        .app-icon.active-app::before {
+            content: ''; position: absolute; bottom: -8px; width: 4px; height: 4px;
+            background: #333; border-radius: 50%; opacity: 0.6;
+        }
+
+        /* --- WINDOWS --- */
+        .window {
+            position: absolute; 
+            width: 600px; height: 400px;
+            min-width: 300px; min-height: 200px; background: var(--glass-bg);
+            backdrop-filter: var(--liquid-filter); -webkit-backdrop-filter: var(--liquid-filter);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow), inset 0 0 0 1px rgba(255,255,255,0.2);
+            border-radius: 12px; display: flex; flex-direction: column; overflow: hidden;
+            display: none; resize: both; opacity: 0; transform: scale(0.95);
+        }
+        .window.maximized {
+            top: 32px !important; left: 0 !important; width: 100vw !important;
+            height: calc(100vh - 32px) !important; border-radius: 0 !important;
+            transform: translate(0,0) scale(1) !important; resize: none; border: none;
+        }
+        .window-header {
+            height: 38px; background: rgba(255, 255, 255, 0.4);
+            border-bottom: 1px solid rgba(0,0,0,0.05); display: flex; align-items: center;
+            padding-left: 16px; cursor: grab; flex-shrink: 0; user-select: none;
+        }
+        .window-header:active { cursor: grabbing; }
+        .traffic-lights { display: flex; gap: 8px; z-index: 10; }
+        .light { width: 12px; height: 12px; border-radius: 50%; position: relative; box-shadow: inset 0 1px 2px rgba(0,0,0,0.2); }
+        .light:hover::after {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 8px; color: rgba(0,0,0,0.5); font-family: sans-serif; font-weight: bold;
+        }
+        .red { background: #FF5F57; border: 1px solid #E0443E; } .red:hover::after { content: '✕'; }
+        .yellow { background: #FFBD2E; border: 1px solid #DEA123; } .yellow:hover::after { content: '-'; }
+        .green { background: #28C940; border: 1px solid #1AAB29; } .green:hover::after { content: '+'; }
+        .window-title {
+            flex-grow: 1; text-align: center; font-size: 13px; color: #444; font-weight: 600;
+            margin-right: 52px; pointer-events: none; text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+        }
+        .window-body {
+            flex: 1; padding: 25px; color: #333; overflow-y: auto;
+            font-family: -apple-system, sans-serif; position: relative;
+        }
+        .window::-webkit-scrollbar { width: 8px; height: 8px; }
+        .window::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 4px; }
+        .window::-webkit-resizer { background-color: transparent; background-image: linear-gradient(135deg, transparent 50%, rgba(0,0,0,0.2) 50%); }
+
+        /* --- APP SPECIFIC STYLES --- */
+        
+        /* TERMINAL (CRT) */
+        #win-projects { 
+            background: #0a0a0a;
+            background-image:
+                radial-gradient(circle at 20% 50%, #050505 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, #050505 0%, transparent 50%),
+                repeating-linear-gradient(0deg, rgba(0,0,0,0.1) 0px, rgba(0,0,0,0.1) 1px, transparent 1px, transparent 20px);
+            border: 1px solid #333; backdrop-filter: none;
+        }
+        #win-projects .window-header { background: #2a2a2a; border-bottom: 1px solid #333; }
+        #win-projects .window-title { color: #999; text-shadow: none; }
+        #win-projects .window-body { background: transparent; padding: 0; overflow: hidden; cursor: text; display: flex; flex-direction: column; }
+        .terminal {
+            flex: 1; padding: 20px; overflow-y: auto;
+            font-family: Consolas, monospace; font-size: 1.1rem; color: #fff;
+            text-shadow: 0 0 3px rgba(0, 255, 0, 0.8); filter: contrast(1.1) brightness(1.05);
+        }
+        .scanlines { position: absolute; top: 0; left: 0; right: 0; width: 100%; height: 100%; background: repeating-linear-gradient(0deg, rgba(0,0,0,0.25), rgba(0,0,0,0.25) 1px, transparent 1px, transparent 2px); pointer-events: none; z-index: 10; animation: scanline 8s linear infinite; opacity: 0.8; }
+        .screen-flicker { position: absolute; top: 0; left: 0; right: 0; width: 100%; height: 100%; background: radial-gradient(ellipse at center, rgba(0,255,0,0.05) 0%, transparent 70%); pointer-events: none; z-index: 9; animation: flicker 0.15s infinite; }
+        @keyframes scanline { 0% { transform: translateY(0); } 100% { transform: translateY(4px); } }
+        @keyframes flicker { 0%, 100% { opacity: 1; } 50% { opacity: 0.98; } }
+        .output { color: #00ff00; margin-bottom: 8px; word-wrap: break-word; line-height: 1.4; text-shadow: 0 0 3px rgba(0,255,0,1); }
+        .output a { color: #00ff00; text-decoration: underline; }
+        .command-line { display: flex; align-items: center; margin-top: 5px; position: relative; }
+        .prompt-user { color: #00ff00; margin-right: 8px; text-shadow: 0 0 3px rgba(0,255,0,1); }
+        .input-wrapper { position: relative; flex-grow: 1; height: 1.2em; }
+        .command-input, .ghost-input {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            font-family: inherit; font-size: inherit; border: none; outline: none;
+            background: transparent; padding: 0; margin: 0; caret-color: #00ff00;
+        }
+        .command-input { z-index: 2; color: #00ff00; text-shadow: 0 0 3px rgba(0,255,0,1); }
+        .ghost-input { z-index: 1; color: rgba(255,255,255,0.3); pointer-events: none; }
+
+        /* Paint */
+        .paint-toolbar { display: flex; gap: 10px; padding: 10px; background: rgba(255,255,255,0.5); border-bottom: 1px solid rgba(0,0,0,0.1); align-items: center; justify-content: center; }
+        .color-btn { width: 25px; height: 25px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.2); cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .color-btn.active { border: 2px solid #333; transform: scale(1.1); }
+        #canvas-container { flex: 1; background: rgba(255,255,255,0.9); cursor: crosshair; overflow: hidden; position: relative; }
+        canvas { display: block; }
+        
+        /* Calculator */
+        #win-calc { background: rgba(50, 50, 50, 0.9); backdrop-filter: blur(20px); border: 1px solid #555; }
+        #win-calc .window-header { background: #333; color: white; border-bottom: 1px solid #444; }
+        #win-calc .window-title { color: #ddd; text-shadow: none; }
+        .calc-body { display: flex; flex-direction: column; height: 100%; background: transparent; color: white; }
+        .calc-display { background: rgba(0,0,0,0.2); color: white; font-size: 40px; text-align: right; padding: 20px; font-weight: 300; border-bottom: 1px solid #444; flex-shrink: 0; }
+        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); flex: 1; gap: 1px; background: #444; }
+        .calc-btn { background: rgba(255,255,255,0.1); border: none; font-size: 22px; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.1s; }
+        .calc-btn:active { background: rgba(255,255,255,0.3); }
+        .calc-btn.orange { background: #fca00b; }
+        .calc-btn.orange:active { background: #d4860b; }
+        .calc-btn.wide { grid-column: span 2; }
+
+        /* Settings */
+        .settings-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 15px; }
+        .wallpaper-option { height: 80px; border-radius: 12px; cursor: pointer; border: 3px solid transparent; background-size: cover; background-position: center; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .wallpaper-option:hover { transform: scale(1.05); }
+        .wallpaper-option.selected { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(0,122,255,0.3); }
+
+        /* Music */
+        .music-player { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; background: linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.8) 100%); }
+        .album-art { width: 150px; height: 150px; background: #222; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 15px 30px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; font-size: 50px; color: white; position: relative; overflow: hidden; background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%); background-size: cover; background-position: center; }
+        .track-info { text-align: center; margin-bottom: 20px; }
+        .track-name { font-weight: bold; font-size: 18px; margin-bottom: 5px; color: #333; }
+        .artist-name { color: #666; font-size: 14px; }
+        .controls { display: flex; gap: 20px; align-items: center; }
+        .control-btn { background: none; border: none; font-size: 24px; cursor: pointer; color: #333; transition: transform 0.1s; }
+        .control-btn:active { transform: scale(0.9); }
+        .play-btn { font-size: 40px; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.1)); }
+        .progress-bar { width: 80%; height: 6px; background: rgba(0,0,0,0.1); border-radius: 5px; margin-top: 20px; position: relative; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.1s linear; }
+
+        .skill-tag { display: inline-block; background: var(--accent); color: white; padding: 6px 12px; border-radius: 20px; font-size: 12px; margin: 0 5px 5px 0; box-shadow: 0 2px 5px rgba(0,122,255,0.3); font-weight: 500; }
+        
+        iframe { border: none; width: 100%; height: 100%; }
+        .contact-btn { background: var(--accent); color: white; border: none; padding: 12px 24px; border-radius: 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,122,255,0.3); transition: transform 0.2s, background 0.2s; display: flex; align-items: center; gap: 8px; }
+        .contact-btn:hover { background: #0056b3; transform: scale(1.05); }
+        .contact-btn:active { transform: scale(0.95); }
+    </style>
+</head>
+<body>
+
+    <div id="login-screen">
+        <div class="user-avatar"></div>
+        <div class="user-name">Ryan Kiapour</div>
+        <div class="password-wrapper">
+            <input type="password" id="passwordInput" placeholder="Enter Password">
+        </div>
+        <div class="hint-text" id="hintMsg">Hint: ry@n$123</div>
+    </div>
+
+    <div id="desktop">
+        <div class="top-bar">
+            <div class="left-menu">
+                <div class="logo-btn" onclick="lockScreen()">R</div>
+                <span>Finder</span><span>File</span><span>Edit</span><span>View</span><span>Go</span><span>Window</span><span>Help</span>
+            </div>
+            <div class="right-menu">
+                <span>🔋 100%</span><span>📶 Wi-Fi</span><span id="clock">12:00 PM</span>
+            </div>
+        </div>
+
+        <div id="sticky-note">
+            <span class="close-sticky" onclick="closeSticky()">✕</span>
+            <p><strong>Welcome to my computer!</strong></p>
+            <p style="margin-top: 10px;">You can go back to my site at any time by opening it from the dock 🧭.</p>
+        </div>
+
+        <div class="window" id="win-projects" data-app-name="Terminal" style="top: 10%; left: 10%;">
+            <div class="window-header">
+                <div class="traffic-lights">
+                    <div class="light red" onclick="handleWindowAction('win-projects', 'close')"></div>
+                    <div class="light yellow" onclick="handleWindowAction('win-projects', 'minimize')"></div>
+                    <div class="light green" onclick="handleWindowAction('win-projects', 'maximize')"></div>
+                </div>
+                <div class="window-title">guest@RY-OS: ~</div>
+            </div>
+            <div class="window-body" onclick="document.getElementById('commandInput').focus()">
+                <div class="screen-flicker"></div>
+                <div class="scanlines"></div>
+                <div class="terminal" id="terminal">
+                    <div class="output">Welcome to RY-OS Terminal 2.0</div>
+                    <div class="output">Type 'help' for a list of commands.</div>
+                    
+                    <div class="command-line">
+                        <span class="prompt-user">guest@RY-OS</span>:
+                        <div class="input-wrapper">
+                            <input id="ghostInput" class="ghost-input" type="text" disabled>
+                            <input id="commandInput" class="command-input" type="text" autocomplete="off" spellcheck="false">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="window" id="win-contact" data-app-name="Contact" style="top: 15%; left: 15%;">
+            <div class="window-header">
+                <div class="traffic-lights">
+                    <div class="light red" onclick="handleWindowAction('win-contact', 'close')"></div>
+                    <div class="light yellow" onclick="handleWindowAction('win-contact', 'minimize')"></div>
+                    <div class="light green" onclick="handleWindowAction('win-contact', 'maximize')"></div>
+                </div>
+                <div class="window-title">Mail - New Message</div>
+            </div>
+            <div class="window-body" style="display: flex; flex-direction: column;">
+                <div style="border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 10px; margin-bottom: 10px;">
+                    <p><strong>To:</strong> Anyone reading this</p>
+                    <p><strong>From:</strong> Ryan Kiapour</p>
+                    <p><strong>Subject:</strong> Let's Connect!</p>
+                </div>
+                <div style="flex: 1; display: flex; align-items: center; justify-content: center;">
+                    <button class="contact-btn" onclick="window.open('mailto:contact@ryancodes.xyz', '_blank')">✉️ Send Email</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="window" id="win-paint" data-app-name="Paint" style="width: 700px; height: 500px; top: 5%; left: 25%;">
+            <div class="window-header">
+                <div class="traffic-lights">
+                    <div class="light red" onclick="handleWindowAction('win-paint', 'close')"></div>
+                    <div class="light yellow" onclick="handleWindowAction('win-paint', 'minimize')"></div>
+                    <div class="light green" onclick="handleWindowAction('win-paint', 'maximize')"></div>
+                </div>
+                <div class="window-title">Paint</div>
+            </div>
+            <div class="window-body" style="padding: 0; display: flex; flex-direction: column;">
+                <div class="paint-toolbar">
+                    <div class="color-btn active" style="background: black;" onclick="setColor('black')"></div>
+                    <div class="color-btn" style="background: #FF3B30;" onclick="setColor('#FF3B30')"></div>
+                    <div class="color-btn" style="background: #007AFF;" onclick="setColor('#007AFF')"></div>
+                    <div class="color-btn" style="background: #4CD964;" onclick="setColor('#4CD964')"></div>
+                    <div class="color-btn" style="background: #FFCC00;" onclick="setColor('#FFCC00')"></div>
+                    <div style="width: 1px; height: 20px; background: rgba(0,0,0,0.2); margin: 0 10px;"></div>
+                    <button onclick="clearCanvas()" style="padding: 6px 12px; cursor: pointer; border: 1px solid #ccc; border-radius: 6px; background: white;">Clear</button>
+                </div>
+                <div id="canvas-container"><canvas id="paintCanvas"></canvas></div>
+            </div>
+        </div>
+
+        <div class="window" id="win-calc" data-app-name="Calculator" style="width: 300px; height: 400px; min-width: 250px; top: 20%; left: 60%;">
+            <div class="window-header">
+                <div class="traffic-lights">
+                    <div class="light red" onclick="handleWindowAction('win-calc', 'close')"></div>
+                    <div class="light yellow" onclick="handleWindowAction('win-calc', 'minimize')"></div>
+                    <div class="light green" onclick="handleWindowAction('win-calc', 'maximize')"></div>
+                </div>
+                <div class="window-title">Calculator</div>
+            </div>
+            <div class="window-body" style="padding: 0;">
+                <div class="calc-body">
+                    <div class="calc-display" id="calcDisplay">0</div>
+                    <div class="calc-grid">
+                        <button class="calc-btn" onclick="calcInput('C')">AC</button>
+                        <button class="calc-btn" onclick="calcInput('+/-')">+/-</button>
+                        <button class="calc-btn" onclick="calcInput('%')">%</button>
+                        <button class="calc-btn orange" onclick="calcInput('/')">÷</button>
+                        <button class="calc-btn" onclick="calcInput('7')">7</button>
+                        <button class="calc-btn" onclick="calcInput('8')">8</button>
+                        <button class="calc-btn" onclick="calcInput('9')">9</button>
+                        <button class="calc-btn orange" onclick="calcInput('*')">×</button>
+                        <button class="calc-btn" onclick="calcInput('4')">4</button>
+                        <button class="calc-btn" onclick="calcInput('5')">5</button>
+                        <button class="calc-btn" onclick="calcInput('6')">6</button>
+                        <button class="calc-btn orange" onclick="calcInput('-')">-</button>
+                        <button class="calc-btn" onclick="calcInput('1')">1</button>
+                        <button class="calc-btn" onclick="calcInput('2')">2</button>
+                        <button class="calc-btn" onclick="calcInput('3')">3</button>
+                        <button class="calc-btn orange" onclick="calcInput('+')">+</button>
+                        <button class="calc-btn wide" onclick="calcInput('0')">0</button>
+                        <button class="calc-btn" onclick="calcInput('.')">.</button>
+                        <button class="calc-btn orange" onclick="calcInput('=')">=</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="window" id="win-settings" data-app-name="Settings" style="top: 25%; left: 30%;">
+            <div class="window-header">
+                <div class="traffic-lights">
+                    <div class="light red" onclick="handleWindowAction('win-settings', 'close')"></div>
+                    <div class="light yellow" onclick="handleWindowAction('win-settings', 'minimize')"></div>
+                    <div class="light green" onclick="handleWindowAction('win-settings', 'maximize')"></div>
+                </div>
+                <div class="window-title">System Preferences</div>
+            </div>
+            <div class="window-body">
+                <h2>Desktop Background</h2>
+                <p style="margin-bottom: 15px; color: #666;">Select a wallpaper to change your desktop.</p>
+                <div class="settings-grid">
+                    <div class="wallpaper-option selected" style="background-image: url('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?q=80&w=200&auto=format&fit=crop');" onclick="changeWallpaper(this, 'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?q=80&w=2074&auto=format&fit=crop')"></div>
+                    <div class="wallpaper-option" style="background-image: url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=200&auto=format&fit=crop');" onclick="changeWallpaper(this, 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop')"></div>
+                    <div class="wallpaper-option" style="background-image: url('https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=200&auto=format&fit=crop');" onclick="changeWallpaper(this, 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=2144&auto=format&fit=crop')"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="window" id="win-music" data-app-name="Music" style="width: 350px; height: 450px; top: 10%; left: 65%;">
+            <div class="window-header">
+                <div class="traffic-lights">
+                    <div class="light red" onclick="handleWindowAction('win-music', 'close')"></div>
+                    <div class="light yellow" onclick="handleWindowAction('win-music', 'minimize')"></div>
+                    <div class="light green" onclick="handleWindowAction('win-music', 'maximize')"></div>
+                </div>
+                <div class="window-title">Music</div>
+            </div>
+            <div class="window-body" style="padding: 0;">
+                <div class="music-player">
+                    <div class="album-art" id="albumArt">🎵</div>
+                    <div class="track-info">
+                        <div class="track-name" id="trackName">Algorithms</div>
+                        <div class="artist-name" id="artistName">Chad Crouch</div>
+                    </div>
+                    <div class="controls">
+                        <button class="control-btn" onclick="prevSong()">⏮</button>
+                        <button class="control-btn play-btn" onclick="toggleMusic()">▶</button>
+                        <button class="control-btn" onclick="nextSong()">⏭</button>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" id="musicProgress"></div></div>
+                </div>
+            </div>
+            <audio id="audioPlayer"></audio>
+        </div>
+
+        <div class="window" id="win-browser" data-app-name="Safari" style="width: 800px; height: 600px; top: 5%; left: 5%;">
+            <div class="window-header">
+                <div class="traffic-lights">
+                    <div class="light red" onclick="handleWindowAction('win-browser', 'close')"></div>
+                    <div class="light yellow" onclick="handleWindowAction('win-browser', 'minimize')"></div>
+                    <div class="light green" onclick="handleWindowAction('win-browser', 'maximize')"></div>
+                </div>
+                <div class="window-title">ryancodes.xyz</div>
+            </div>
+            <div class="window-body" style="padding: 0; background: white; position: relative;">
+                <iframe src="https://ryancodes.xyz" id="browser-frame"></iframe>
+                <div id="browser-overlay" style="position:absolute; top:0; left:0; width:100%; height:100%; display:none; z-index:99;"></div>
+            </div>
+        </div>
+
+        <div class="dock-container" id="dock">
+            <div class="app-icon" data-name="Terminal" style="background: #333; color: white;" onclick="toggleWindow('win-projects')"> >_ </div>
+            <div class="app-icon" data-name="Paint" onclick="toggleWindow('win-paint')">🎨</div>
+            <div class="app-icon" data-name="Calculator" onclick="toggleWindow('win-calc')">🧮</div>
+            <div class="app-icon" data-name="Settings" onclick="toggleWindow('win-settings')">⚙️</div>
+            <div class="app-icon" data-name="Music" onclick="toggleWindow('win-music')">🎵</div>
+            <div class="app-icon" data-name="Contact" style="background: var(--accent); color: white;" onclick="toggleWindow('win-contact')">✉️</div>
+            <div class="app-icon" data-name="Safari" style="background: white;" onclick="toggleWindow('win-browser')">🧭</div>
+        </div>
+    </div>
+
+    <script>
+        /* --- CORE LOGIC --- */
+        const correctPass = "ry@n$123";
+        const loginScreen = document.getElementById('login-screen');
+        const passwordInput = document.getElementById('passwordInput');
+        const hintMsg = document.getElementById('hintMsg');
+        const desktop = document.getElementById('desktop');
+        const dock = document.getElementById('dock');
+        let zIndex = 100;
+        const winTransition = "transform 0.5s cubic-bezier(0.2, 1, 0.2, 1), opacity 0.3s ease, width 0.3s, height 0.3s";
+
+        passwordInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') checkPassword(); });
+        function checkPassword() {
+            if (passwordInput.value === correctPass) {
+                loginScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loginScreen.style.display = 'none'; desktop.style.display = 'block';
+                    setTimeout(() => { dock.style.bottom = '15px'; }, 50);
+                }, 500);
+            } else {
+                passwordInput.classList.add('shake'); hintMsg.style.visibility = 'visible';
+                setTimeout(() => { passwordInput.classList.remove('shake'); passwordInput.value = ''; }, 500);
+            }
+        }
+        function lockScreen() {
+            desktop.style.display = 'none'; dock.style.bottom = '-100px';
+            loginScreen.style.display = 'flex'; setTimeout(() => { loginScreen.style.opacity = '1'; }, 10);
+            passwordInput.value = '';
+        }
+        function closeSticky() {
+            const note = document.getElementById('sticky-note');
+            note.style.opacity = '0'; setTimeout(() => { note.style.display = 'none'; }, 300);
+        }
+        setInterval(() => {
+            const now = new Date(); let h = now.getHours(), m = now.getMinutes(), ampm = h >= 12 ? 'PM' : 'AM';
+            h = h % 12 || 12; m = m < 10 ? '0'+m : m;
+            document.getElementById('clock').innerText = h + ':' + m + ' ' + ampm;
+        }, 1000);
+
+        function bringToFront(win) { win.style.zIndex = ++zIndex; }
+        function toggleWindow(id) {
+            const win = document.getElementById(id); const appName = win.getAttribute('data-app-name');
+            const dockIcon = document.querySelector(`.app-icon[data-name="${appName}"]`);
+            if (win.style.display === 'none' || win.style.display === '') {
+                win.style.display = 'flex'; win.style.transition = winTransition;
+                requestAnimationFrame(() => {
+                    win.style.opacity = '0'; win.style.transform = 'scale(0.95)';
+                    requestAnimationFrame(() => { win.style.opacity = '1'; win.style.transform = 'translate(0px, 0px) scale(1)'; });
+                });
+                bringToFront(win); dockIcon.classList.add('active-app');
+                if(id === 'win-paint') initPaint();
+            } else if (win.classList.contains('minimized')) { restoreWindow(win); bringToFront(win); }
+            else if (win.style.zIndex == zIndex) { minimizeWindow(win, dockIcon); }
+            else { bringToFront(win); }
+        }
+        function handleWindowAction(id, action) {
+            const win = document.getElementById(id);
+            if(action === 'close') {
+                win.style.opacity = '0'; win.style.transform = 'scale(0.9)'; 
+                setTimeout(() => {
+                    win.style.display = 'none'; win.classList.remove('minimized'); win.style.transform = ''; 
+                    const appName = win.getAttribute('data-app-name');
+                    const dockIcon = document.querySelector(`.app-icon[data-name="${appName}"]`);
+                    if(dockIcon) dockIcon.classList.remove('active-app');
+                }, 300);
+                if(id === 'win-music') { document.getElementById('audioPlayer').pause(); document.querySelector('.play-btn').innerText = '▶'; }
+            } else if (action === 'minimize') {
+                const appName = win.getAttribute('data-app-name');
+                const dockIcon = document.querySelector(`.app-icon[data-name="${appName}"]`);
+                minimizeWindow(win, dockIcon);
+            } else if (action === 'maximize') {
+                if (id === 'win-browser') { window.location.href = 'https://ryancodes.xyz'; return; }
+                win.classList.toggle('maximized'); bringToFront(win);
+            }
+        }
+        function minimizeWindow(win, dockIcon) {
+            if(!dockIcon) return; win.style.transition = winTransition;
+            const winRect = win.getBoundingClientRect(); const dockRect = dockIcon.getBoundingClientRect();
+            const transX = (dockRect.left + dockRect.width/2) - (winRect.left + winRect.width/2);
+            const transY = (dockRect.top + dockRect.height/2) - (winRect.top + winRect.height/2);
+            requestAnimationFrame(() => { win.style.transform = `translate(${transX}px, ${transY}px) scale(0)`; win.style.opacity = '0'; win.classList.add('minimized'); });
+        }
+        function restoreWindow(win) {
+            win.style.transition = winTransition;
+            requestAnimationFrame(() => { win.style.transform = 'translate(0px, 0px) scale(1)'; win.style.opacity = '1'; win.classList.remove('minimized'); });
+        }
+
+        /* --- DRAG LOGIC (ROBUST FIXED) --- */
+        let dragItem = null;
+        let dragOffsetX = 0;
+        let dragOffsetY = 0;
+
+        const windows = document.querySelectorAll('.window');
+        windows.forEach(win => {
+            // Click to front
+            win.addEventListener('mousedown', () => bringToFront(win));
+            
+            const header = win.querySelector('.window-header');
+            const overlay = win.querySelector('#browser-overlay');
+            
+            header.addEventListener('mousedown', (e) => {
+                if(e.target.classList.contains('light')) return;
+                e.preventDefault();
+                
+                dragItem = win;
+                const rect = win.getBoundingClientRect();
+                dragOffsetX = e.clientX - rect.left;
+                dragOffsetY = e.clientY - rect.top;
+                
+                // Disable transition for instant drag
+                win.style.transition = 'none';
+                
+                // Show iframe overlay
+                if(overlay) overlay.style.display = 'block';
+                
+                document.addEventListener('mousemove', onMouseMove);
+                document.addEventListener('mouseup', onMouseUp);
+            });
+        });
+
+        function onMouseMove(e) {
+            if (!dragItem) return;
+            if(dragItem.classList.contains('maximized')) return;
+            
+            e.preventDefault();
+            
+            let newLeft = e.clientX - dragOffsetX;
+            let newTop = e.clientY - dragOffsetY;
+            
+            // Constraints
+            if (newTop < 32) newTop = 32; // Top Bar
+            if (newTop > window.innerHeight - 40) newTop = window.innerHeight - 40; // Don't lose bottom
+            
+            dragItem.style.left = newLeft + 'px';
+            dragItem.style.top = newTop + 'px';
+        }
+
+        function onMouseUp() {
+            if (dragItem) {
+                // Restore transitions
+                dragItem.style.transition = winTransition;
+                
+                const overlay = dragItem.querySelector('#browser-overlay');
+                if(overlay) overlay.style.display = 'none';
+                
+                dragItem = null;
+            }
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+        }
+
+        /* --- TERMINAL LOGIC --- */
+        const commandInput = document.getElementById('commandInput');
+        const ghostInput = document.getElementById('ghostInput');
+        const terminal = document.getElementById('terminal');
+        const availableCommands = ['help', 'whoami', 'contact', 'weather', 'google', 'echo', 'date', 'sudo', 'clear', 'quit'];
+
+        commandInput.addEventListener('input', function() {
+            const val = this.value; ghostInput.value = '';
+            if (val.trim().length === 0) return;
+            const match = availableCommands.find(c => c.toLowerCase().startsWith(val.toLowerCase()));
+            if (match) ghostInput.value = match;
+        });
+
+        commandInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                if (ghostInput.value) { this.value = ghostInput.value; ghostInput.value = ''; }
+                return;
+            }
+            if (e.key === 'Enter') {
+                const rawInput = this.value.trim();
+                const parts = rawInput.split(' ');
+                const command = parts[0].toLowerCase();
+                const args = parts.slice(1);
+                this.value = ''; ghostInput.value = '';
+                
+                const historyLine = document.createElement('div');
+                historyLine.className = 'output';
+                historyLine.innerHTML = `<span class="prompt-user">guest@RY-OS</span>: ${rawInput}`;
+                terminal.insertBefore(historyLine, document.querySelector('.command-line'));
+
+                if (command === "clear") { terminal.querySelectorAll('.output').forEach(el => el.remove()); }
+                else if (command === "quit") {
+                    addToTerminal("Closing session...");
+                    setTimeout(() => handleWindowAction('win-projects', 'close'), 800);
+                } else {
+                    let response = "";
+                    switch(command) {
+                        case "": break;
+                        case "whoami": response = "Hi my name is Ryan, I'm 14 years old and I Love coding. I make apps, websites, and games."; break;
+                        case "contact": response = "Email me at ryan@ryancodes.xyz"; break;
+                        case "help": response = "Available: " + availableCommands.join(", "); break;
+                        case "sudo": response = "No way, im ok."; break;
+                        case "date": response = new Date().toString(); break;
+                        case "echo": response = args.join(' '); break;
+                        case "google": 
+                            if(args.length > 0) { window.open('https://google.com/search?q=' + encodeURIComponent(args.join(' ')), '_blank'); response = "Searching Google for: " + args.join(' '); }
+                            else { response = "Usage: google [query]"; } break;
+                        case "weather":
+                            if(args.length > 0) {
+                                const city = args.join(' ');
+                                response = "Fetching weather for " + city + "...";
+                                fetch(`https://wttr.in/${city}?format=3`)
+                                    .then(res => res.text())
+                                    .then(text => addToTerminal(text))
+                                    .catch(err => addToTerminal("Error fetching weather."));
+                            } else { response = "Usage: weather [city]"; } break;
+                        default: response = "Command not found. Type 'help' to see commands.";
+                    }
+                    if(response) simulateTypeEffect(response);
+                }
+                
+                // Force scroll immediate
+                setTimeout(() => { terminal.scrollTop = terminal.scrollHeight; }, 10);
+            }
+        });
+
+        function addToTerminal(text) {
+            const div = document.createElement('div'); div.className = 'output';
+            if(text.includes('http')) div.innerHTML = text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+            else div.innerText = text;
+            terminal.insertBefore(div, document.querySelector('.command-line'));
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+        function simulateTypeEffect(text) {
+            const div = document.createElement('div'); div.className = 'output';
+            terminal.insertBefore(div, document.querySelector('.command-line'));
+            if(text.includes('http')) {
+                div.innerHTML = text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+                terminal.scrollTop = terminal.scrollHeight;
+            } else {
+                let i = 0;
+                const interval = setInterval(() => {
+                    div.textContent += text.charAt(i); i++;
+                    // Aggressive Scroll Logic
+                    terminal.scrollTop = terminal.scrollHeight;
+                    if (i >= text.length) clearInterval(interval);
+                }, 5);
+            }
+        }
+
+        /* --- OTHER APPS --- */
+        let paintColor = 'black'; let isDrawing = false; let ctx;
+        function initPaint() {
+            const canvas = document.getElementById('paintCanvas'); const container = document.getElementById('canvas-container');
+            if(canvas.width !== container.clientWidth) { canvas.width = container.clientWidth; canvas.height = container.clientHeight; ctx = canvas.getContext('2d'); ctx.lineCap = 'round'; ctx.lineWidth = 5; }
+            canvas.addEventListener('mousedown', startDrawing); canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing); canvas.addEventListener('mouseout', stopDrawing);
+        }
+        function startDrawing(e) { isDrawing = true; draw(e); }
+        function draw(e) {
+            if (!isDrawing) return; const rect = e.target.getBoundingClientRect();
+            const x = e.clientX - rect.left; const y = e.clientY - rect.top;
+            if(!ctx) return; ctx.strokeStyle = paintColor; ctx.lineTo(x, y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x, y);
+        }
+        function stopDrawing() { isDrawing = false; if(ctx) ctx.beginPath(); }
+        function setColor(color) { paintColor = color; document.querySelectorAll('.color-btn').forEach(btn => btn.classList.remove('active')); event.target.classList.add('active'); }
+        function clearCanvas() { const canvas = document.getElementById('paintCanvas'); if(ctx) ctx.clearRect(0, 0, canvas.width, canvas.height); }
+
+        let calcVal = '0';
+        function calcInput(val) {
+            const display = document.getElementById('calcDisplay'); const operators = ['+', '-', '*', '/'];
+            if (val === 'C') { calcVal = '0'; } 
+            else if (val === '=') { try { calcVal = eval(calcVal).toString(); } catch { calcVal = 'Error'; } } 
+            else if (val === '+/-') { calcVal = (parseFloat(calcVal) * -1).toString(); } 
+            else if (val === '%') { calcVal = (parseFloat(calcVal) / 100).toString(); } 
+            else {
+                const lastChar = calcVal.slice(-1);
+                if (operators.includes(val)) { if (operators.includes(lastChar)) { calcVal = calcVal.slice(0, -1) + val; } else { calcVal += val; } }
+                else { if (calcVal === '0' && val !== '.') calcVal = val; else calcVal += val; }
+            }
+            display.innerText = calcVal.substring(0, 10);
+        }
+
+        function changeWallpaper(el, url) {
+            document.querySelectorAll('.wallpaper-option').forEach(opt => opt.classList.remove('selected'));
+            el.classList.add('selected'); document.body.style.backgroundImage = `url('${url}')`;
+        }
+
+        /* --- MUSIC PLAYER --- */
+        const audio = document.getElementById('audioPlayer');
+        const playBtn = document.querySelector('.play-btn');
+        const progressBar = document.getElementById('musicProgress');
+        const albumArt = document.getElementById('albumArt');
+        const trackName = document.getElementById('trackName');
+        const artistName = document.getElementById('artistName');
+        
+        let isPlaying = false;
+        let currentSongIndex = 0;
+
+        const songs = [
+            {
+                title: "Algorithms",
+                artist: "Chad Crouch",
+                src: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Algorithms.mp3",
+                art: "linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%)"
+            },
+            {
+                title: "Shipping Lanes",
+                artist: "Chad Crouch",
+                src: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Shipping_Lanes.mp3",
+                art: "linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%)"
+            },
+            {
+                title: "Elipsis",
+                artist: "Chad Crouch",
+                src: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Elipsis.mp3",
+                art: "linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%)"
+            }
+        ];
+
+        // Init
+        loadSong(currentSongIndex);
+
+        function loadSong(index) {
+            const song = songs[index];
+            audio.src = song.src;
+            trackName.innerText = song.title;
+            artistName.innerText = song.artist;
+            albumArt.style.backgroundImage = song.art;
+            progressBar.style.width = '0%';
+        }
+
+        function toggleMusic() {
+            if (isPlaying) { audio.pause(); playBtn.innerText = '▶'; } 
+            else { audio.play(); playBtn.innerText = '⏸'; }
+            isPlaying = !isPlaying;
+        }
+
+        function nextSong() {
+            currentSongIndex = (currentSongIndex + 1) % songs.length;
+            loadSong(currentSongIndex);
+            if(isPlaying) audio.play();
+        }
+
+        function prevSong() {
+            currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+            loadSong(currentSongIndex);
+            if(isPlaying) audio.play();
+        }
+
+        audio.addEventListener('timeupdate', () => {
+            if(audio.duration) {
+                const percent = (audio.currentTime / audio.duration) * 100;
+                progressBar.style.width = percent + '%';
+            }
+        });
+        audio.addEventListener('ended', () => { nextSong(); });
+
+    </script>
+</body>
+</html>
