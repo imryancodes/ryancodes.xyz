@@ -10,6 +10,13 @@
         if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
             window.location.href = "https://ryancodes.xyz/#mobile";
         }
+
+        // Prevent loading OS within iframe to avoid infinite nesting
+        if (window !== window.top) {
+            // If we're in an iframe, show message and redirect parent to the main site instead
+            alert("You can't access the OS from within the embedded browser! Redirecting back to the main site...");
+            window.top.location.href = "https://ryancodes.xyz";
+        }
     </script>
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Consolas&display=swap" rel="stylesheet">
