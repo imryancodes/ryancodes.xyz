@@ -213,9 +213,8 @@ header {
   border-color: rgba(255, 204, 0, 0.3);
   background: linear-gradient(145deg, rgba(49, 49, 49, 0.9), rgba(35, 35, 35, 0.9));
 }
-/* Add this to make text black on hover */
+/* Add this to make text bold on hover */
 .nav-pill:hover {
-  color: #000;
   font-weight: 600;
 }
 /* Special hover effect for project buttons */
@@ -1284,7 +1283,6 @@ input:checked + .slider:before {
 
 .social-btn:hover {
   transform: translateY(-2px);
-  color: #000;
   font-weight: 600;
 }
 
