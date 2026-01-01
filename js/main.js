@@ -5,17 +5,25 @@ const options = {
 };
 
 const sections = document.querySelectorAll('section');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      requestAnimationFrame(() => {
-        entry.target.classList.add('in-view');
-        // Once a section has been in view, stop observing it to prevent flickering
-        observer.unobserve(entry.target);
-      });
-    }
-  });
-}, options);
+let observer;
+
+try {
+  observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        requestAnimationFrame(() => {
+          entry.target.classList.add('in-view');
+          // Once a section has been in view, stop observing it to prevent flickering
+          observer.unobserve(entry.target);
+        });
+      }
+    });
+  }, options);
+} catch (error) {
+  console.warn('IntersectionObserver not supported:', error);
+  // Fallback: show all sections immediately
+  sections.forEach(section => section.classList.add('in-view'));
+}
 
 // Internal link smooth scroll for nav pills
 document.querySelectorAll('.nav-pill[href^="#"]').forEach(pill => {
@@ -23,6 +31,12 @@ document.querySelectorAll('.nav-pill[href^="#"]').forEach(pill => {
     e.preventDefault();
     const anchorHash = pill.getAttribute('href');
     const targetSection = document.querySelector(anchorHash);
+    
+    if (!targetSection) {
+      console.warn('Target section not found:', anchorHash);
+      return;
+    }
+    
     const currentPosition = window.scrollY;
     const targetPosition = targetSection.getBoundingClientRect().top + currentPosition;
     
@@ -40,7 +54,19 @@ document.querySelectorAll('.nav-pill[href^="#"]').forEach(pill => {
     }
     
     if (window.location.hash !== anchorHash) {
-      history.pushState(null, null, anchorHash);
+      try {
+        history.pushState(null, null, anchorHash);
+      } catch (error) {
+        console.warn('Could not update history:', error);
+      }
+    }
+  });
+  
+  // Add keyboard support for Enter key
+  pill.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      pill.click();
     }
   });
 });
@@ -55,6 +81,11 @@ const coderStart = fullText.indexOf(highlightWord);
 const coderEnd = coderStart + highlightWord.length;
 
 function typeLetter() {
+  if (!typedTextSpan) {
+    console.warn('Typed text element not found');
+    return;
+  }
+  
   if (charIndex <= fullText.length) {
     let currentHTML = "";
     if (charIndex <= coderStart) {
@@ -79,40 +110,49 @@ function typeLetter() {
 
 // Create static background elements
 function createStaticBackground() {
-  const accentLines = document.getElementById('accent-lines');
-  const lineCount = 5;
-  for (let i = 0; i < lineCount; i++) {
-    const line = document.createElement('div');
-    line.classList.add('accent-line');
-    const posY = 10 + (i * 20);
-    line.style.top = `${posY}%`;
-    line.style.left = '0';
-    line.style.width = '100%';
-    accentLines.appendChild(line);
-  }
-  
-  const codeSnippets = [
-    "function hello() { return world; }",
-    "<div class='code'>Hello World</div>",
-    "import { future } from 'dreams';",
-    "while(true) { keepCoding(); }",
-    "class Developer extends Human { }",
-    "git commit -m 'Fixed everything'",
-    "npm install future-skills"
-  ];
-  
-  const body = document.body;
-  const snippetCount = 6;
-  for (let i = 0; i < snippetCount; i++) {
-    const snippet = document.createElement('div');
-    snippet.classList.add('floating-code');
-    snippet.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
-    const posX = 5 + Math.floor(Math.random() * 90);
-    const posY = 5 + Math.floor(Math.random() * 90);
-    snippet.style.left = `${posX}%`;
-    snippet.style.top = `${posY}%`;
-    snippet.style.opacity = 0.07 + (Math.random() * 0.05);
-    body.appendChild(snippet);
+  try {
+    const accentLines = document.getElementById('accent-lines');
+    if (!accentLines) {
+      console.warn('Accent lines container not found');
+      return;
+    }
+    
+    const lineCount = 5;
+    for (let i = 0; i < lineCount; i++) {
+      const line = document.createElement('div');
+      line.classList.add('accent-line');
+      const posY = 10 + (i * 20);
+      line.style.top = `${posY}%`;
+      line.style.left = '0';
+      line.style.width = '100%';
+      accentLines.appendChild(line);
+    }
+    
+    const codeSnippets = [
+      "function hello() { return world; }",
+      "<div class='code'>Hello World</div>",
+      "import { future } from 'dreams';",
+      "while(true) { keepCoding(); }",
+      "class Developer extends Human { }",
+      "git commit -m 'Fixed everything'",
+      "npm install future-skills"
+    ];
+    
+    const body = document.body;
+    const snippetCount = 6;
+    for (let i = 0; i < snippetCount; i++) {
+      const snippet = document.createElement('div');
+      snippet.classList.add('floating-code');
+      snippet.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+      const posX = 5 + Math.floor(Math.random() * 90);
+      const posY = 5 + Math.floor(Math.random() * 90);
+      snippet.style.left = `${posX}%`;
+      snippet.style.top = `${posY}%`;
+      snippet.style.opacity = 0.07 + (Math.random() * 0.05);
+      body.appendChild(snippet);
+    }
+  } catch (error) {
+    console.error('Error creating static background:', error);
   }
 }
 
@@ -120,56 +160,76 @@ function createStaticBackground() {
 function animateCounters() {
   const statNumbers = document.querySelectorAll('.stat-number');
   
+  if (statNumbers.length === 0) {
+    return;
+  }
+  
   statNumbers.forEach(numberElement => {
-    const originalText = numberElement.textContent;
-    const target = parseInt(originalText, 10);
-    const duration = 1800; // Reduced duration for faster animation
-    const shouldAddPlus = originalText.includes('+') || numberElement.getAttribute('data-plus') === 'true';
-    
-    // Start from 0
-    numberElement.textContent = '0';
-    
-    let startTime = null;
-    
-    function easeOutCubic(t) {
-      return 1 - Math.pow(1 - t, 3); // Less aggressive easing for more consistent speed
-    }
-    
-    function updateCounter(timestamp) {
-      if (!startTime) startTime = timestamp;
+    try {
+      const originalText = numberElement.textContent;
+      const target = parseInt(originalText, 10);
       
-      const elapsedTime = timestamp - startTime;
-      const progress = Math.min(elapsedTime / duration, 1);
-      const easedProgress = easeOutCubic(progress);
-      
-      // Calculate the current value with easing (keeping decimals for smoother animation)
-      const exactValue = easedProgress * target; 
-      
-      // For display purposes, round to nearest integer
-      const displayValue = Math.round(exactValue);
-      
-      // Add the + sign if needed
-      numberElement.textContent = shouldAddPlus ? displayValue + '+' : displayValue;
-      
-      if (progress < 1) {
-        window.requestAnimationFrame(updateCounter);
-      } else {
-        // Ensure we end at exactly the target value
-        numberElement.textContent = shouldAddPlus ? target + '+' : target;
+      if (isNaN(target)) {
+        console.warn('Invalid target number:', originalText);
+        return;
       }
-    }
-    
-    // Use IntersectionObserver to trigger the animation when counters come into view
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
+      
+      const duration = 1800; // Reduced duration for faster animation
+      const shouldAddPlus = originalText.includes('+') || numberElement.getAttribute('data-plus') === 'true';
+      
+      // Start from 0
+      numberElement.textContent = '0';
+      
+      let startTime = null;
+      
+      function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3); // Less aggressive easing for more consistent speed
+      }
+      
+      function updateCounter(timestamp) {
+        if (!startTime) startTime = timestamp;
+        
+        const elapsedTime = timestamp - startTime;
+        const progress = Math.min(elapsedTime / duration, 1);
+        const easedProgress = easeOutCubic(progress);
+        
+        // Calculate the current value with easing (keeping decimals for smoother animation)
+        const exactValue = easedProgress * target; 
+        
+        // For display purposes, round to nearest integer
+        const displayValue = Math.round(exactValue);
+        
+        // Add the + sign if needed
+        numberElement.textContent = shouldAddPlus ? displayValue + '+' : displayValue;
+        
+        if (progress < 1) {
           window.requestAnimationFrame(updateCounter);
-          observer.unobserve(entry.target); // Only animate once
+        } else {
+          // Ensure we end at exactly the target value
+          numberElement.textContent = shouldAddPlus ? target + '+' : target;
         }
-      });
-    }, { threshold: 0.5 });
-    
-    observer.observe(numberElement);
+      }
+      
+      // Use IntersectionObserver to trigger the animation when counters come into view
+      try {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              window.requestAnimationFrame(updateCounter);
+              observer.unobserve(entry.target); // Only animate once
+            }
+          });
+        }, { threshold: 0.5 });
+        
+        observer.observe(numberElement);
+      } catch (error) {
+        console.warn('IntersectionObserver not available for counter animation:', error);
+        // Fallback: animate immediately
+        window.requestAnimationFrame(updateCounter);
+      }
+    } catch (error) {
+      console.error('Error animating counter:', error);
+    }
   });
 }
 
@@ -225,6 +285,22 @@ document.addEventListener('DOMContentLoaded', function() {
 // Handle page load
 window.addEventListener('load', function() {
   setTimeout(function() {
-    document.querySelector('.loader')?.classList.add('hidden');
+    const loader = document.querySelector('.loader');
+    if (loader) {
+      loader.classList.add('hidden');
+    }
   }, 300);
+});
+
+// Handle errors gracefully
+window.addEventListener('error', function(e) {
+  console.error('Global error:', e.error);
+  // Don't break the page, just log the error
+});
+
+// Handle unhandled promise rejections
+window.addEventListener('unhandledrejection', function(e) {
+  console.error('Unhandled promise rejection:', e.reason);
+  // Prevent default browser error handling
+  e.preventDefault();
 }); 

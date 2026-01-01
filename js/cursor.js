@@ -139,43 +139,63 @@ document.addEventListener('DOMContentLoaded', function() {
   // Handle toggle logic
   const cursorToggles = document.querySelectorAll('.cursor-toggle');
   cursorToggles.forEach(toggle => {
-    const icon = toggle.querySelector('.cursor-icon');
-    // Set initial state of checkboxes if they exist
-    const checkbox = toggle.querySelector('input[type="checkbox"]');
-    
-    function updateIcon(disabled) {
-      if (!icon) return;
-      if (disabled) {
-        // Cursor off icon (with slash)
-        icon.innerHTML = '<path d="M7 2l12 11.2l-5.8 0.5l3.3 7.3-2.2 1-3.2-7.4L7 18.5V2z" /><line x1="4" y1="4" x2="20" y2="20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />';
-      } else {
-        // Original cursor icon
-        icon.innerHTML = '<path d="M7 2l12 11.2l-5.8 0.5l3.3 7.3-2.2 1-3.2-7.4L7 18.5V2z"/>';
-      }
-    }
-
-    if (checkbox) {
-      checkbox.checked = !document.body.classList.contains('custom-cursor-disabled');
-    }
-    updateIcon(document.body.classList.contains('custom-cursor-disabled'));
-
-    toggle.addEventListener('click', (e) => {
-      e.preventDefault();
-      const isDisabled = document.body.classList.toggle('custom-cursor-disabled');
-      localStorage.setItem('customCursorDisabled', isDisabled);
+    try {
+      const icon = toggle.querySelector('.cursor-icon');
+      // Set initial state of checkboxes if they exist
+      const checkbox = toggle.querySelector('input[type="checkbox"]');
       
+      function updateIcon(disabled) {
+        if (!icon) return;
+        try {
+          if (disabled) {
+            // Cursor off icon (with slash)
+            icon.innerHTML = '<path d="M7 2l12 11.2l-5.8 0.5l3.3 7.3-2.2 1-3.2-7.4L7 18.5V2z" /><line x1="4" y1="4" x2="20" y2="20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />';
+          } else {
+            // Original cursor icon
+            icon.innerHTML = '<path d="M7 2l12 11.2l-5.8 0.5l3.3 7.3-2.2 1-3.2-7.4L7 18.5V2z"/>';
+          }
+        } catch (error) {
+          console.warn('Error updating icon:', error);
+        }
+      }
+
       if (checkbox) {
-        checkbox.checked = !isDisabled;
+        checkbox.checked = !document.body.classList.contains('custom-cursor-disabled');
       }
-      updateIcon(isDisabled);
+      updateIcon(document.body.classList.contains('custom-cursor-disabled'));
+
+      toggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isDisabled = document.body.classList.toggle('custom-cursor-disabled');
+        try {
+          localStorage.setItem('customCursorDisabled', isDisabled);
+        } catch (error) {
+          console.warn('Could not save cursor preference to localStorage:', error);
+        }
+        
+        if (checkbox) {
+          checkbox.checked = !isDisabled;
+        }
+        updateIcon(isDisabled);
+        
+        applyNoMouseCursor();
+        
+        // Update opacity immediately when toggled
+        if (isDisabled) {
+          cursorOuter.style.opacity = '0';
+          cursorInner.style.opacity = '0';
+        }
+      });
       
-      applyNoMouseCursor();
-      
-      // Update opacity immediately when toggled
-      if (isDisabled) {
-        cursorOuter.style.opacity = '0';
-        cursorInner.style.opacity = '0';
-      }
-    });
+      // Add keyboard support
+      toggle.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggle.click();
+        }
+      });
+    } catch (error) {
+      console.error('Error setting up cursor toggle:', error);
+    }
   });
 }); 
