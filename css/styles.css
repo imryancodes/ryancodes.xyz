@@ -3,10 +3,6 @@ body:not(.custom-cursor-disabled) * {
   cursor: none !important;
 }
 
-body.custom-cursor-disabled * {
-  /* No global overrides needed here */
-}
-
 * {
   box-sizing: border-box;
 }

@@ -65,19 +65,6 @@ a, button, .nav-pill, .project-btn, .social-button, .skill-item {
   transition: transform 0.3s ease 0.05s, filter 0.3s ease 0.05s;
 }
 
-/* Apply the extended hover area to specific elements as needed */
-.project-btn {
-  /* Removed padding/margin that messed up layout */
-}
-
-.social-button {
-  /* Removed padding/margin that messed up layout */
-}
-
-.skill-item {
-  /* Removed padding/margin that messed up layout */
-}
-
 /* More comprehensive cursor hiding - only when not disabled */
 body:not(.custom-cursor-disabled), 
 body:not(.custom-cursor-disabled) html, 
