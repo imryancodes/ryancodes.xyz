@@ -1277,6 +1277,105 @@ input:checked + .slider:before {
   }
 }
 
+/* Scrimba Home Ad */
+.scrimba-home-ad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+.scrimba-home-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: linear-gradient(145deg, rgba(255, 204, 0, 0.15), rgba(255, 153, 0, 0.15));
+  border-radius: 9999px;
+  padding: 0.4rem 1.2rem;
+  color: #fafafa;
+  text-decoration: none;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3),
+              inset 0 1px 1px rgba(255,255,255,0.1);
+  border: 1px solid rgba(255, 204, 0, 0.3);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.scrimba-home-link::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 204, 0, 0.2),
+    rgba(255, 204, 0, 0.4),
+    rgba(255, 204, 0, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+  z-index: -1;
+}
+
+.scrimba-home-link:hover::before {
+  left: 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.scrimba-home-link:hover {
+  transform: translateY(-2px) scale(1.05);
+  background: linear-gradient(145deg, rgba(255, 204, 0, 0.25), rgba(255, 153, 0, 0.25));
+  border-color: rgba(255, 204, 0, 0.5);
+  box-shadow: 0 4px 15px rgba(255, 204, 0, 0.2),
+              inset 0 1px 1px rgba(255,255,255,0.15);
+}
+
+.scrimba-home-link svg {
+  width: 20px;
+  height: 20px;
+  fill: #ffcc00;
+  transition: transform 0.3s ease;
+}
+
+.scrimba-home-link:hover svg {
+  transform: scale(1.1) rotate(5deg);
+  filter: drop-shadow(0 0 8px rgba(255, 204, 0, 0.4));
+}
+
+.scrimba-home-disclosure {
+  font-size: 0.75rem;
+  color: rgba(250, 250, 250, 0.6);
+  margin: 0;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .scrimba-home-link {
+    padding: 0.3rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .scrimba-home-link svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .scrimba-home-disclosure {
+    font-size: 0.7rem;
+  }
+}
+
 /* Project Gallery Styles */
 .projects-gallery {
   display: grid;
@@ -1786,5 +1885,129 @@ body.has-archive-banner header {
   
   body.has-archive-banner header {
     top: 6.6rem;
+  }
+}
+
+/* ====== Scrimba Promotion Section ====== */
+.scrimba-section {
+  position: relative;
+  scroll-margin-top: 4rem;
+  min-height: auto;
+  padding: 4rem 2rem;
+  background: linear-gradient(180deg, rgba(16, 16, 16, 0.95) 0%, rgba(28, 28, 28, 0.95) 100%);
+  border-top: 1px solid rgba(255, 204, 0, 0.1);
+}
+
+.scrimba-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.scrimba-section h2 {
+  color: #ffcc00;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+}
+
+.scrimba-intro {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.scrimba-offer {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.scrimba-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1.2rem 2.5rem;
+  background: linear-gradient(145deg, rgba(255, 204, 0, 0.15), rgba(255, 153, 0, 0.15));
+  color: #fafafa;
+  border-radius: 9999px;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3),
+              inset 0 1px 1px rgba(255,255,255,0.1);
+  border: 1px solid rgba(255, 204, 0, 0.3);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.scrimba-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 204, 0, 0.2),
+    rgba(255, 204, 0, 0.4),
+    rgba(255, 204, 0, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+  z-index: -1;
+}
+
+.scrimba-btn:hover::before {
+  left: 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.scrimba-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  background: linear-gradient(145deg, rgba(255, 204, 0, 0.25), rgba(255, 153, 0, 0.25));
+  border-color: rgba(255, 204, 0, 0.5);
+  box-shadow: 0 4px 15px rgba(255, 204, 0, 0.2),
+              inset 0 1px 1px rgba(255,255,255,0.15);
+}
+
+.scrimba-disclosure {
+  font-size: 0.9rem;
+  color: rgba(250, 250, 250, 0.7);
+  margin-top: 1rem;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .scrimba-section {
+    padding: 3rem 1.5rem;
+  }
+  
+  .scrimba-section h2 {
+    font-size: 1.5rem;
+  }
+  
+  .scrimba-intro {
+    font-size: 1rem;
+  }
+  
+  .scrimba-offer {
+    font-size: 1rem;
+  }
+  
+  .scrimba-btn {
+    padding: 0.8rem 2rem;
+    font-size: 0.95rem;
   }
 } 

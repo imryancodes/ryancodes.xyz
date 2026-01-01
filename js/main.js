@@ -10,10 +10,8 @@ const observer = new IntersectionObserver((entries) => {
     if (entry.isIntersecting) {
       requestAnimationFrame(() => {
         entry.target.classList.add('in-view');
-      });
-    } else {
-      requestAnimationFrame(() => {
-        entry.target.classList.remove('in-view');
+        // Once a section has been in view, stop observing it to prevent flickering
+        observer.unobserve(entry.target);
       });
     }
   });
