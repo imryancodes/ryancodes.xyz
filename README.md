@@ -7,3 +7,4 @@ Yes, I made this site.
 # How can I accsess your site?
 View it at https://ryancodes.xyz
 
+### © Ryancodes 2026
