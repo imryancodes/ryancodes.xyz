@@ -9,4 +9,4 @@ View it at https://ryancodes.xyz
 
 #
 
-### © Ryancodes 2026
+### © Ryan Kiapour 2026
