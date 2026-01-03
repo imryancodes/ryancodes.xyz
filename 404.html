@@ -1,61 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>404 Not Found</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-  <style>
-    body {
-      background-color: #101010;
-      color: #fafafa;
-      font-family: 'Inter', sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      margin: 0;
-      padding: 1rem;
-    }
-    .container {
-      background-color: #1c1c1c;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-      text-align: center;
-      max-width: 600px;
-    }
-    .container h1 {
-      font-size: 4rem;
-      margin-bottom: 0.5rem;
-      color: #ffcc00;
-    }
-    .container p {
-      font-size: 1.25rem;
-      margin-bottom: 2rem; /* Increased spacing for text */
-      line-height: 1.6;
-    }
-    .container a {
-      text-decoration: none;
-      background-color: #ffcc00;
-      color: #101010;
-      padding: 1rem 2rem; /* Increased padding for more spacing in the button */
-      border-radius: 5px;
-      font-weight: 600;
-      transition: background-color 0.3s ease;
-      display: inline-block;
-      margin-top: 1rem; /* Additional margin to separate from text */
-    }
-    .container a:hover {
-      background-color: #e6b800;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - Ryan Codes</title>
+    <style>
+        :root {
+            /* Theme Colors */
+            --bg-color: #121212; 
+            --text-main: #ffffff;
+            --text-muted: #a1a1aa;
+            --accent: #FFD700; /* Cyber Yellow */
+            --accent-hover: #e6c200;
+            --accent-glow: rgba(255, 215, 0, 0.5);
+            --grid-line: rgba(255, 215, 0, 0.07); /* Low opacity for lines */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* FIX: The grid is now a separate div strictly positioned 
+           in the background with a negative z-index.
+        */
+        .background-grid {
+            position: absolute;
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            z-index: -1; /* Forces it behind everything */
+            background-image: 
+                linear-gradient(var(--grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 40px 40px; /* Size of the squares */
+            pointer-events: none; /* Ensures you can't click/select the grid */
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            z-index: 10; /* Forces content to sit on top */
+            position: relative;
+        }
+
+        /* 404 Glitch Text */
+        .error-code {
+            font-size: 8rem;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+            color: var(--accent);
+            letter-spacing: -5px;
+            font-family: 'Courier New', Courier, monospace;
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        /* Glitch Layers */
+        .error-code::before,
+        .error-code::after {
+            content: '404';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color); 
+        }
+
+        .error-code::before {
+            color: #fff;
+            z-index: -1;
+            animation: glitch-anim-1 2.5s infinite linear alternate-reverse;
+        }
+
+        .error-code::after {
+            color: #ffaa00; 
+            z-index: -2;
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+        }
+
+        /* The Button */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 35px;
+            background-color: var(--accent);
+            color: #000000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px var(--accent-glow);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px var(--accent-glow);
+        }
+
+        /* Animations */
+        @keyframes glitch-anim-1 {
+            0% { clip-path: inset(20% 0 80% 0); transform: translate(-2px, 0); }
+            20% { clip-path: inset(60% 0 10% 0); transform: translate(2px, 0); }
+            40% { clip-path: inset(40% 0 50% 0); transform: translate(-2px, 0); }
+            60% { clip-path: inset(80% 0 5% 0); transform: translate(2px, 0); }
+            80% { clip-path: inset(10% 0 70% 0); transform: translate(-2px, 0); }
+            100% { clip-path: inset(30% 0 20% 0); transform: translate(2px, 0); }
+        }
+
+        @keyframes glitch-anim-2 {
+            0% { clip-path: inset(10% 0 60% 0); transform: translate(2px, 0); }
+            20% { clip-path: inset(80% 0 5% 0); transform: translate(-2px, 0); }
+            40% { clip-path: inset(30% 0 20% 0); transform: translate(2px, 0); }
+            60% { clip-path: inset(15% 0 80% 0); transform: translate(-2px, 0); }
+            80% { clip-path: inset(55% 0 10% 0); transform: translate(2px, 0); }
+            100% { clip-path: inset(40% 0 30% 0); transform: translate(-2px, 0); }
+        }
+
+        @media (max-width: 600px) {
+            .error-code { font-size: 6rem; }
+            h2 { font-size: 1.5rem; }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>404</h1>
-    <p>Oops! The page you're looking for doesn't exist.</p>
-    <a href="https://ryancodes.xyz/">Return Home</a>
-  </div>
+
+    <div class="background-grid"></div>
+
+    <div class="container">
+        <div class="error-code">404</div>
+        <h2>Connection Lost</h2>
+        <p>
+            The signal was interrupted. We couldn't find the page you're looking for.<br>
+            Check the URL or head back to base.
+        </p>
+        <a href="/" class="btn">Return Home</a>
+    </div>
+
 </body>
 </html>
