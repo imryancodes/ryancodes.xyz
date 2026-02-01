@@ -615,7 +615,7 @@ html { scrollbar-width: thin; scrollbar-color: #ffcc00 #101010; }
   .typed-container { font-size: 1.2rem; }
   #home p { font-size: 0.9rem; }
   .skill-item img { width: 80px; height: 80px; }
-  header { top: 0.4rem; width: calc(100% - 0.8rem); border-radius: 12px; }
+  header { position: absolute; top: 0.4rem; width: calc(100% - 0.8rem); border-radius: 12px; }
   footer { border-radius: 12px; width: calc(100% - 1.2rem); margin: 0.5rem auto; }
   
   .social-links {
