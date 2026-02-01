@@ -1,8 +1,9 @@
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Support</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
         body, html {
@@ -10,16 +11,14 @@
             margin: 0;
             overflow: hidden;
             background-color: black;
-            color: green;
-            font-family: monospace;
+            color: #0F0;
+            font-family: 'Courier New', Courier, monospace;
         }
-        .matrix {
+        canvas {
+            display: block;
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            overflow: hidden;
             z-index: 0;
         }
         .content {
@@ -30,52 +29,125 @@
             z-index: 1;
             text-align: center;
             color: white;
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7); /* Improved readability against matrix */
+            border-radius: 10px;
+            box-sizing: border-box; /* Ensure padding doesn't overflow width */
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #fff;
+            text-shadow: 0 0 5px #0f0;
+        }
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.5;
         }
         .email-link {
             display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 20px;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
             background-color: #007bff;
             color: white;
             text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s;
+            border-radius: 50px; /* Modern rounded pill shape */
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+            border: 2px solid transparent;
         }
-        .email-link:hover {
+        .email-link:hover, .email-link:active {
             background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.6);
+            border-color: #0f0; /* Matrix-themed accent on hover */
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.75rem;
+            }
+            .email-link {
+                width: 100%; /* Full width button on small screens */
+                box-sizing: border-box;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="matrix" id="matrix"></div>
+    <canvas id="matrixCanvas"></canvas>
+    
     <div class="content">
         <h1>Contact Ryancodes</h1>
-        <p>Click the button below to send me an email:</p>
-        <a href="mailto:contact@ryancodes.xyz?subject=Ryancodes" class="email-link">Send Email</a>
+        <p>Support on my projects is just a click away!</p>
+        <a href="mailto:contact@ryancodes.xyz?subject=Hello%20Ryancodes" class="email-link">Send Email</a>
     </div>
+
     <script>
-        const matrixElement = document.getElementById('matrix');
-        const columns = window.innerWidth / 20;
-        for(let i = 0; i < columns; i++) {
-            const column = document.createElement('div');
-            column.style.position = 'absolute';
-            column.style.top = `${-Math.random() * 1000}px`;
-            column.style.left = `${i * 20}px`;
-            column.style.color = 'green';
-            column.style.whiteSpace = 'nowrap';
-            matrixElement.appendChild(column);
-            
-            const animate = () => {
-                const character = Math.random() < 0.5 ? '0' : '1';
-                column.innerText += character;
-                if(column.innerText.length > 100) column.innerText = '';
-                column.style.top = `${parseInt(column.style.top) + 20}px`;
-                if(parseInt(column.style.top) > window.innerHeight) column.style.top = `${-Math.random() * 1000}px`;
-                setTimeout(animate, 50);
-            };
-            animate();
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        const cols = Math.floor(width / 20) + 1;
+        const ypos = Array(cols).fill(0);
+
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, width, height);
+
+        function matrix() {
+            // Draw a semi-transparent black rectangle on top of the previous frame
+            // This creates the fading trail effect
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, width, height);
+
+            ctx.fillStyle = '#0F0';
+            ctx.font = '15pt monospace';
+
+            ypos.forEach((y, index) => {
+                const text = String.fromCharCode(Math.random() * 128);
+                const x = index * 20;
+
+                ctx.fillText(text, x, y);
+
+                // Randomly reset the column to the top if it has gone off screen
+                if (y > height && Math.random() > 0.975) {
+                    ypos[index] = 0;
+                } else {
+                    ypos[index] = y + 20;
+                }
+            });
         }
+
+        let interval = setInterval(matrix, 50);
+
+        // Handle Window Resize
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            
+            // Recalculate columns
+            const newCols = Math.floor(width / 20) + 1;
+            
+            // Preserve existing drops if possible, or reset
+            if (newCols !== ypos.length) {
+                // If width changed significantly, simplest to reset or extend
+                // Extending logic:
+                while (ypos.length < newCols) ypos.push(Math.random() * height);
+                while (ypos.length > newCols) ypos.pop();
+            }
+            
+            // Clear background to avoid flicker artifacts during resize
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, width, height);
+        });
+
     </script>
 </body>
 </html>
