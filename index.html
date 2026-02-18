@@ -102,67 +102,52 @@
 
   <!-- Header & Navigation -->
   <header>
-    <div class="nav-wrapper">
+    <!-- Hamburger toggle (mobile only) -->
+    <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+    <nav class="nav-wrapper">
       <div class="nav-left">
-        <!-- Home Pill -->
-        <a href="#home" class="nav-pill">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-          </svg>
+        <div class="nav-indicator" aria-hidden="true"></div>
+        <a href="#home" class="nav-pill active" data-section="home">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
           <span>Home</span>
         </a>
-        <!-- About Me Pill -->
-        <a href="#about" class="nav-pill">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8V22h19.2v-2.8c0-3.2-6.4-4.8-9.6-4.8z"/>
-          </svg>
+        <a href="#about" class="nav-pill" data-section="about">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8V22h19.2v-2.8c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
           <span>About Me</span>
         </a>
-        <!-- My Projects Pill -->
-        <a href="#projects" class="nav-pill">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M10 4H2v16h20V6H12l-2-2z"/>
-          </svg>
-          <span>My Projects</span>
+        <a href="#projects" class="nav-pill" data-section="projects">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M10 4H2v16h20V6H12l-2-2z"/></svg>
+          <span>Projects</span>
         </a>
-        <!-- Skills Pill -->
-        <a href="#skills" class="nav-pill">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M8.59 16.34L13.17 12 8.59 7.66 10 6.25l6 5.75-6 5.75z"/>
-          </svg>
+        <a href="#skills" class="nav-pill" data-section="skills">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M8.59 16.34L13.17 12 8.59 7.66 10 6.25l6 5.75-6 5.75z"/></svg>
           <span>Skills</span>
         </a>
-        <!-- Archive Pill -->
-        <a href="#timeline" class="nav-pill">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/>
-          </svg>
+        <a href="#timeline" class="nav-pill" data-section="timeline">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/></svg>
           <span>Archive</span>
         </a>
-        <!-- Cursor Toggle Pill -->
+        <!-- Enter OS -->
+        <a href="https://ryancodes.xyz/os" class="nav-pill nav-terminal" aria-label="Enter OS">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M21 2H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h7l-2 3v1h8v-1l-2-3h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 12H3V4h18v10z"/></svg>
+          <span>RyOS</span>
+        </a>
+        <!-- Cursor Toggle -->
         <div class="nav-pill cursor-toggle" title="Toggle Custom Cursor" role="button" tabindex="0" aria-label="Toggle custom cursor on or off">
-          <svg class="cursor-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <svg class="cursor-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
             <path d="M7 2l12 11.2l-5.8 0.5l3.3 7.3-2.2 1-3.2-7.4L7 18.5V2z"/>
           </svg>
-          <span class="toggle-label">Cursor</span>
           <label class="switch">
             <input type="checkbox" checked aria-label="Custom cursor toggle">
             <span class="slider round"></span>
           </label>
         </div>
-        <!-- Terminal Pill -->
-        <a href="https://ryancodes.xyz/os" class="nav-pill nav-terminal" aria-label="Enter OS">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
-            <rect x="2" y="4" width="20" height="12" rx="2" ry="2" fill="#1e1e1e"/>
-            <rect x="4" y="6" width="16" height="8" fill="#333"/>
-            <rect x="6" y="8" width="4" height="4" fill="#0f0"/>
-            <rect x="12" y="8" width="6" height="2" fill="#0f0"/>
-            <rect x="6" y="16" width="12" height="2" rx="1" ry="1" fill="#666"/>
-          </svg>
-          <span>ENTER OS</span>
-        </a>
       </div>
-    </div>
+    </nav>
   </header>
 
   <!-- Main Content -->
@@ -253,59 +238,103 @@
       <!-- Project Gallery -->
       <div class="projects-gallery">
         <div class="project-card">
-          <img src="/Portfolio/WatchPal.png" alt="WatchPal website screenshot showing movie recommendations" class="project-img" loading="lazy" width="400" height="300">
-          <h3>WatchPal</h3>
-          <p>A website I made for helping you find a TV show or movie to watch.</p>
-          <div class="tech-stack">
-            <span class="tech-tag">HTML</span>
-            <span class="tech-tag">CSS</span>
-            <span class="tech-tag">JavaScript</span>
+          <div class="project-img-wrapper">
+            <img src="Portfolio/WatchPal.png" alt="WatchPal" class="project-img" loading="lazy">
+            <div class="project-badge">🎬</div>
           </div>
-          <a href="https://watchpal.xyz" class="project-btn" target="_blank" rel="noopener noreferrer">View Project</a>
+          <div class="project-content">
+            <h3>WatchPal</h3>
+            <p>A website I made for helping you find a TV show or movie to watch.</p>
+            <div class="tech-stack">
+              <span class="tech-tag">HTML</span>
+              <span class="tech-tag">CSS</span>
+              <span class="tech-tag">JavaScript</span>
+            </div>
+          </div>
+          <a href="https://watchpal.xyz" class="project-btn" target="_blank" rel="noopener noreferrer">
+            View Project
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+          </a>
         </div>
+
         <div class="project-card">
-          <img src="/Portfolio/War.png" alt="War Card Game iOS app screenshot showing card game interface" class="project-img" loading="lazy" width="400" height="300">
-          <h3>War Card Game</h3>
-          <p>A simple war card game I made for iOS using Swift.</p>
-          <div class="tech-stack">
-            <span class="tech-tag">Swift</span>
-            <span class="tech-tag">iOS</span>
-            <span class="tech-tag">SwiftUI</span>
+          <div class="project-img-wrapper">
+            <img src="Portfolio/War.png" alt="War Card Game" class="project-img" loading="lazy">
+            <div class="project-badge">🃏</div>
           </div>
-          <a href="https://apps.apple.com/us/app/war-card-game/id6478232396" class="project-btn" target="_blank" rel="noopener noreferrer">View Project</a>
+          <div class="project-content">
+            <h3>War Card Game</h3>
+            <p>A simple war card game I made for iOS using Swift.</p>
+            <div class="tech-stack">
+              <span class="tech-tag">Swift</span>
+              <span class="tech-tag">iOS</span>
+              <span class="tech-tag">SwiftUI</span>
+            </div>
+          </div>
+          <a href="https://apps.apple.com/us/app/war-card-game/id6478232396" class="project-btn" target="_blank" rel="noopener noreferrer">
+            View Project
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+          </a>
         </div>
+
         <div class="project-card">
-          <img src="/Portfolio/Avg_platformer.png" alt="Average Platformer game screenshot showing platformer gameplay" class="project-img" loading="lazy" width="400" height="300">
-          <h3>Average Platformer</h3>
-          <p>A platformer I created using Godot.</p>
-          <div class="tech-stack">
-            <span class="tech-tag">Godot</span>
-            <span class="tech-tag">GDScript</span>
-            <span class="tech-tag">Game Dev</span>
+          <div class="project-img-wrapper">
+            <img src="Portfolio/Avg_platformer.png" alt="Average Platformer" class="project-img" loading="lazy">
+            <div class="project-badge">🎮</div>
           </div>
-          <a href="https://ryancodes.itch.io/platformer" class="project-btn" target="_blank" rel="noopener noreferrer">View Project</a>
+          <div class="project-content">
+            <h3>Average Platformer</h3>
+            <p>A platformer I created using Godot.</p>
+            <div class="tech-stack">
+              <span class="tech-tag">Godot</span>
+              <span class="tech-tag">GDScript</span>
+              <span class="tech-tag">Game Dev</span>
+            </div>
+          </div>
+          <a href="https://ryancodes.itch.io/platformer" class="project-btn" target="_blank" rel="noopener noreferrer">
+            View Project
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+          </a>
         </div>
+
         <div class="project-card">
-          <img src="/Portfolio/Iztech.png" alt="Iztech tech support firm website screenshot" class="project-img" loading="lazy" width="400" height="300">
-          <h3>Iztech</h3>
-          <p>A free tech support firm I created. (END OF LIFE)</p>
-          <div class="tech-stack">
-            <span class="tech-tag">HTML</span>
-            <span class="tech-tag">CSS</span>
-            <span class="tech-tag">JavaScript</span>
+          <div class="project-img-wrapper">
+            <img src="Portfolio/Iztech.png" alt="Iztech" class="project-img" loading="lazy">
+            <div class="project-badge">🔧</div>
           </div>
-          <a href="https://github.com/imryancodes/iztech" class="project-btn" target="_blank" rel="noopener noreferrer">View Code</a>
+          <div class="project-content">
+            <h3>Iztech</h3>
+            <p>A free tech support firm I created. (End of Life)</p>
+            <div class="tech-stack">
+              <span class="tech-tag">HTML</span>
+              <span class="tech-tag">CSS</span>
+              <span class="tech-tag">JavaScript</span>
+            </div>
+          </div>
+          <a href="https://github.com/imryancodes/iztech" class="project-btn" target="_blank" rel="noopener noreferrer">
+            View Code
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+          </a>
         </div>
+
         <div class="project-card">
-          <img src="/Portfolio/EE.png" alt="Eco Educator iOS app screenshot showing recycling education interface" class="project-img" loading="lazy" width="400" height="300">
-          <h3>Eco Educator</h3>
-          <p>An IOS app I created for learning how to recycle.</p>
-          <div class="tech-stack">
-            <span class="tech-tag">Swift</span>
-            <span class="tech-tag">iOS</span>
-            <span class="tech-tag">SwiftUI</span>
+          <div class="project-img-wrapper">
+            <img src="Portfolio/EE.png" alt="Eco Educator" class="project-img" loading="lazy">
+            <div class="project-badge">🌱</div>
           </div>
-          <a href="https://apps.apple.com/us/app/eco-educator/id6743406567" class="project-btn" target="_blank" rel="noopener noreferrer">View Project</a>
+          <div class="project-content">
+            <h3>Eco Educator</h3>
+            <p>An iOS app I created for learning how to recycle.</p>
+            <div class="tech-stack">
+              <span class="tech-tag">Swift</span>
+              <span class="tech-tag">iOS</span>
+              <span class="tech-tag">SwiftUI</span>
+            </div>
+          </div>
+          <a href="https://apps.apple.com/us/app/eco-educator/id6743406567" class="project-btn" target="_blank" rel="noopener noreferrer">
+            View Project
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+          </a>
         </div>
       </div>
     </section>
@@ -318,23 +347,41 @@
       <div class="skills-category">
         <h3>Programming &amp; Scripting</h3>
         <div class="skills-grid">
-          <div class="skill-item" data-tooltip="Swift: Powerful iOS language">
-            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Swift.svg" alt="Swift programming language icon" loading="lazy" width="100" height="100" />
+          <div class="skill-item">
+            <div class="skill-icon">
+              <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Swift.svg" alt="Swift" loading="lazy" />
+            </div>
+            <span class="skill-name">Swift</span>
           </div>
-          <div class="skill-item" data-tooltip="JavaScript: Dynamic web language">
-            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/JavaScript.svg" alt="JavaScript" loading="lazy" />
+          <div class="skill-item">
+            <div class="skill-icon">
+              <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/JavaScript.svg" alt="JavaScript" loading="lazy" />
+            </div>
+            <span class="skill-name">JavaScript</span>
           </div>
-          <div class="skill-item" data-tooltip="CSS: Styling for the web">
-            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/CSS.svg" alt="CSS" loading="lazy" />
+          <div class="skill-item">
+            <div class="skill-icon">
+              <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/CSS.svg" alt="CSS" loading="lazy" />
+            </div>
+            <span class="skill-name">CSS</span>
           </div>
-          <div class="skill-item" data-tooltip="HTML: Markup for web content">
-            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/HTML.svg" alt="HTML" loading="lazy" />
+          <div class="skill-item">
+            <div class="skill-icon">
+              <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/HTML.svg" alt="HTML" loading="lazy" />
+            </div>
+            <span class="skill-name">HTML</span>
           </div>
-          <div class="skill-item" data-tooltip="Python: Versatile scripting language">
-            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Python-Dark.svg" alt="Python" loading="lazy" />
+          <div class="skill-item">
+            <div class="skill-icon">
+              <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Python-Dark.svg" alt="Python" loading="lazy" />
+            </div>
+            <span class="skill-name">Python</span>
           </div>
-          <div class="skill-item" data-tooltip="Node.JS: Server-side JavaScript">
-            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/NodeJS-Dark.svg" alt="Node.JS" loading="lazy" />
+          <div class="skill-item">
+            <div class="skill-icon">
+              <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/NodeJS-Dark.svg" alt="Node.js" loading="lazy" />
+            </div>
+            <span class="skill-name">Node.js</span>
           </div>
         </div>
       </div>
@@ -343,14 +390,23 @@
       <div class="skills-category">
         <h3>Game Development &amp; Hardware</h3>
         <div class="skills-grid">
-          <div class="skill-item" data-tooltip="Unreal Engine: Advanced game engine">
-            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/UnrealEngine.svg" alt="Unreal Engine" loading="lazy" />
+          <div class="skill-item">
+            <div class="skill-icon">
+              <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/UnrealEngine.svg" alt="Unreal Engine" loading="lazy" />
+            </div>
+            <span class="skill-name">Unreal</span>
           </div>
-          <div class="skill-item" data-tooltip="Godot: Open-source game engine">
-            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Godot-Dark.svg" alt="Godot" loading="lazy" />
+          <div class="skill-item">
+            <div class="skill-icon">
+              <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Godot-Dark.svg" alt="Godot" loading="lazy" />
+            </div>
+            <span class="skill-name">Godot</span>
           </div>
-          <div class="skill-item" data-tooltip="Arduino: Microcontroller platform">
-            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Arduino.svg" alt="Arduino" loading="lazy" />
+          <div class="skill-item">
+            <div class="skill-icon">
+              <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Arduino.svg" alt="Arduino" loading="lazy" />
+            </div>
+            <span class="skill-name">Arduino</span>
           </div>
         </div>
       </div>
@@ -359,30 +415,48 @@
       <div class="skills-category">
         <h3>Design &amp; Productivity</h3>
         <div class="skills-grid">
-          <div class="skill-item" data-tooltip="Figma: Collaborative design tool">
-            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Figma-Dark.svg" alt="Figma" loading="lazy" />
+          <div class="skill-item">
+            <div class="skill-icon">
+              <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Figma-Dark.svg" alt="Figma" loading="lazy" />
+            </div>
+            <span class="skill-name">Figma</span>
           </div>
-          <div class="skill-item" data-tooltip="Notion: All-in-one workspace">
-            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Notion-Dark.svg" alt="Notion" loading="lazy" />
+          <div class="skill-item">
+            <div class="skill-icon">
+              <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Notion-Dark.svg" alt="Notion" loading="lazy" />
+            </div>
+            <span class="skill-name">Notion</span>
           </div>
-          <div class="skill-item" data-tooltip="VSCode: Popular code editor">
-            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/VSCode-Dark.svg" alt="VSCode" loading="lazy" />
+          <div class="skill-item">
+            <div class="skill-icon">
+              <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/VSCode-Dark.svg" alt="VS Code" loading="lazy" />
+            </div>
+            <span class="skill-name">VS Code</span>
           </div>
         </div>
       </div>
       
       <!-- Learning -->
       <div class="skills-category">
-        <h3>Learning</h3>
+        <h3>Currently Learning</h3>
         <div class="skills-grid">
-          <div class="skill-item" data-tooltip="TypeScript: A strongly typed programming language that builds on JavaScript">
-            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/TypeScript.svg" alt="TypeScript" loading="lazy" />
+          <div class="skill-item">
+            <div class="skill-icon">
+              <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/TypeScript.svg" alt="TypeScript" loading="lazy" />
+            </div>
+            <span class="skill-name">TypeScript</span>
           </div>
-          <div class="skill-item" data-tooltip="React: UI library for modern web apps">
-            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/React-Dark.svg" alt="React" loading="lazy" />
+          <div class="skill-item">
+            <div class="skill-icon">
+              <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/React-Dark.svg" alt="React" loading="lazy" />
+            </div>
+            <span class="skill-name">React</span>
           </div>
-          <div class="skill-item" data-tooltip="Tailwind CSS: A utility-first CSS framework for rapidly building custom designs">
-            <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/TailwindCSS-Dark.svg" alt="Tailwind CSS" loading="lazy" />
+          <div class="skill-item">
+            <div class="skill-icon">
+              <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/TailwindCSS-Dark.svg" alt="Tailwind CSS" loading="lazy" />
+            </div>
+            <span class="skill-name">Tailwind</span>
           </div>
         </div>
       </div>

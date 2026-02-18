@@ -253,11 +253,52 @@ function addArchiveBanner() {
   }
 }
 
+// Create floating stars effect
+function createStars() {
+  try {
+    // Check if stars container already exists to avoid duplicates
+    if (document.querySelector('.stars-container')) {
+      return;
+    }
+    
+    const starsContainer = document.createElement('div');
+    starsContainer.className = 'stars-container';
+    starsContainer.setAttribute('aria-hidden', 'true');
+    
+    const starCount = 50; // Number of stars
+    
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      
+      // Random position
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.top = `${Math.random() * 100}%`;
+      
+      // Random size (1-3px)
+      const size = 1 + Math.random() * 2;
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      
+      // Random animation delay and duration for varied twinkling
+      star.style.animationDelay = `${Math.random() * 3}s`;
+      star.style.animationDuration = `${2 + Math.random() * 3}s`;
+      
+      starsContainer.appendChild(star);
+    }
+    
+    document.body.appendChild(starsContainer);
+  } catch (error) {
+    console.error('Error creating stars:', error);
+  }
+}
+
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
   typeLetter();
   createStaticBackground();
   animateCounters();
+  createStars(); // Add floating stars
   
   // Handle mobile modal popup
   if (window.location.hash === "#mobile") {
@@ -280,6 +321,122 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Call the function when the page loads
   addArchiveBanner();
+
+  // ====== Mouse Glow Aura Effect ======
+  const glowSelectors = '.project-card, .skill-item, .stat-item, .about-list li, .skills-category';
+  const glowCards = document.querySelectorAll(glowSelectors);
+  
+  glowCards.forEach(card => {
+    card.classList.add('glow-card');
+    const overlay = document.createElement('div');
+    overlay.classList.add('glow-overlay');
+    card.appendChild(overlay);
+    
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      overlay.style.setProperty('--mouse-x', x + 'px');
+      overlay.style.setProperty('--mouse-y', y + 'px');
+    });
+  });
+
+  // ====== Hamburger Menu Toggle ======
+  const hamburger = document.querySelector('.hamburger');
+  const navWrapper = document.querySelector('.nav-wrapper');
+  
+  if (hamburger && navWrapper) {
+    hamburger.addEventListener('click', () => {
+      const isOpen = hamburger.classList.toggle('open');
+      navWrapper.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen);
+    });
+
+    // Close menu when a nav link is clicked (mobile)
+    document.querySelectorAll('.nav-pill[href^="#"]').forEach(pill => {
+      pill.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          hamburger.classList.remove('open');
+          navWrapper.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+  }
+
+  // ====== Scroll Spy — Sliding Active Indicator ======
+  const navPills = document.querySelectorAll('.nav-pill[data-section]');
+  const spySections = document.querySelectorAll('section[id]');
+  const navIndicator = document.querySelector('.nav-indicator');
+  const navLeft = document.querySelector('.nav-left');
+  let scrollSpyLocked = false;
+
+  function moveIndicator(pill) {
+    if (!navIndicator || !navLeft || !pill) return;
+    const parentRect = navLeft.getBoundingClientRect();
+    const pillRect = pill.getBoundingClientRect();
+    navIndicator.style.left = (pillRect.left - parentRect.left) + 'px';
+    navIndicator.style.width = pillRect.width + 'px';
+  }
+
+  // On click, immediately move indicator and lock scroll-spy
+  navPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      scrollSpyLocked = true;
+      navPills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      moveIndicator(pill);
+      // Unlock after scroll finishes
+      clearTimeout(scrollSpyLocked._timer);
+      scrollSpyLocked._timer = setTimeout(() => {
+        scrollSpyLocked = false;
+      }, 800);
+    });
+  });
+
+  function updateActiveNav() {
+    if (scrollSpyLocked) return;
+    const scrollPos = window.scrollY + 120;
+
+    let currentSection = '';
+    spySections.forEach(section => {
+      if (section.offsetTop <= scrollPos) {
+        currentSection = section.getAttribute('id');
+      }
+    });
+
+    navPills.forEach(pill => {
+      if (pill.getAttribute('data-section') === currentSection) {
+        pill.classList.add('active');
+        moveIndicator(pill);
+      } else {
+        pill.classList.remove('active');
+      }
+    });
+  }
+
+  // Throttle scroll events for performance
+  let scrollTicking = false;
+  window.addEventListener('scroll', () => {
+    if (!scrollTicking) {
+      requestAnimationFrame(() => {
+        updateActiveNav();
+        scrollTicking = false;
+      });
+      scrollTicking = true;
+    }
+  });
+
+  // Position indicator on load (after pills are visible)
+  setTimeout(() => {
+    updateActiveNav();
+  }, 600);
+
+  // Reposition indicator on resize
+  window.addEventListener('resize', () => {
+    const activePill = document.querySelector('.nav-pill[data-section].active');
+    if (activePill) moveIndicator(activePill);
+  });
 });
 
 // Handle page load
@@ -288,6 +445,16 @@ window.addEventListener('load', function() {
     const loader = document.querySelector('.loader');
     if (loader) {
       loader.classList.add('hidden');
+    }
+    // Reposition indicator after loader hides
+    const activePill = document.querySelector('.nav-pill[data-section].active');
+    const navIndicator = document.querySelector('.nav-indicator');
+    const navLeft = document.querySelector('.nav-left');
+    if (activePill && navIndicator && navLeft) {
+      const parentRect = navLeft.getBoundingClientRect();
+      const pillRect = activePill.getBoundingClientRect();
+      navIndicator.style.left = (pillRect.left - parentRect.left) + 'px';
+      navIndicator.style.width = pillRect.width + 'px';
     }
   }, 300);
 });
