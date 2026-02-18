@@ -253,11 +253,52 @@ function addArchiveBanner() {
   }
 }
 
+// Create floating stars effect
+function createStars() {
+  try {
+    // Check if stars container already exists to avoid duplicates
+    if (document.querySelector('.stars-container')) {
+      return;
+    }
+    
+    const starsContainer = document.createElement('div');
+    starsContainer.className = 'stars-container';
+    starsContainer.setAttribute('aria-hidden', 'true');
+    
+    const starCount = 50; // Number of stars
+    
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      
+      // Random position
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.top = `${Math.random() * 100}%`;
+      
+      // Random size (1-3px)
+      const size = 1 + Math.random() * 2;
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      
+      // Random animation delay and duration for varied twinkling
+      star.style.animationDelay = `${Math.random() * 3}s`;
+      star.style.animationDuration = `${2 + Math.random() * 3}s`;
+      
+      starsContainer.appendChild(star);
+    }
+    
+    document.body.appendChild(starsContainer);
+  } catch (error) {
+    console.error('Error creating stars:', error);
+  }
+}
+
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
   typeLetter();
   createStaticBackground();
   animateCounters();
+  createStars(); // Add floating stars
   
   // Handle mobile modal popup
   if (window.location.hash === "#mobile") {
