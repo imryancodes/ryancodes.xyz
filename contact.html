@@ -3,17 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact</title>
+    <title>Contact - Ryancodes</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body, html {
             height: 100%;
-            margin: 0;
             overflow: hidden;
-            background-color: black;
-            color: #0F0;
-            font-family: 'Courier New', Courier, monospace;
+            background-color: #0a0a0a;
+            color: #e5e5e5;
+            font-family: 'Inter', sans-serif;
         }
+
         canvas {
             display: block;
             position: absolute;
@@ -21,6 +28,7 @@
             left: 0;
             z-index: 0;
         }
+
         .content {
             position: absolute;
             top: 50%;
@@ -28,64 +36,123 @@
             transform: translate(-50%, -50%);
             z-index: 1;
             text-align: center;
-            color: white;
             width: 90%;
-            max-width: 600px;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.7); /* Improved readability against matrix */
-            border-radius: 10px;
-            box-sizing: border-box; /* Ensure padding doesn't overflow width */
-        }
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: #fff;
-            text-shadow: 0 0 5px #0f0;
-        }
-        p {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            line-height: 1.5;
-        }
-        .email-link {
-            display: inline-block;
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 50px; /* Modern rounded pill shape */
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
-            border: 2px solid transparent;
-        }
-        .email-link:hover, .email-link:active {
-            background-color: #0056b3;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.6);
-            border-color: #0f0; /* Matrix-themed accent on hover */
+            max-width: 480px;
+            padding: 3rem 2.5rem;
+            background: rgba(20, 20, 20, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        /* Mobile Adjustments */
+        .back-link {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            z-index: 2;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(10px);
+            transition: all 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(20, 20, 20, 0.8);
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ffcc00;
+            padding: 0.35rem 0.85rem;
+            border: 1px solid rgba(255, 204, 0, 0.3);
+            border-radius: 999px;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 204, 0, 0.08);
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+
+        p {
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .email-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 2rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            background: #ffcc00;
+            color: #0a0a0a;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.25s ease;
+        }
+
+        .email-link:hover {
+            background: #e6b800;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 204, 0, 0.2);
+        }
+
         @media (max-width: 480px) {
-            h1 {
-                font-size: 1.75rem;
+            .content {
+                padding: 2.5rem 1.5rem;
             }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
             .email-link {
-                width: 100%; /* Full width button on small screens */
-                box-sizing: border-box;
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
 </head>
 <body>
     <canvas id="matrixCanvas"></canvas>
-    
+
+    <a href="/" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back
+    </a>
+
     <div class="content">
+        <div class="badge">Get in Touch</div>
         <h1>Contact Ryancodes</h1>
-        <p>Support on my projects is just a click away!</p>
-        <a href="mailto:contact@ryancodes.xyz?subject=Hello%20Ryancodes" class="email-link">Send Email</a>
+        <p>Have a question, want to collaborate, or just want to say hi? I'd love to hear from you.</p>
+        <a href="mailto:contact@ryancodes.xyz?subject=Hello%20Ryancodes" class="email-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Send Email
+        </a>
     </div>
 
     <script>
@@ -98,25 +165,21 @@
         const cols = Math.floor(width / 20) + 1;
         const ypos = Array(cols).fill(0);
 
-        ctx.fillStyle = '#000';
+        ctx.fillStyle = '#0a0a0a';
         ctx.fillRect(0, 0, width, height);
 
         function matrix() {
-            // Draw a semi-transparent black rectangle on top of the previous frame
-            // This creates the fading trail effect
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillStyle = 'rgba(10, 10, 10, 0.06)';
             ctx.fillRect(0, 0, width, height);
 
-            ctx.fillStyle = '#0F0';
+            ctx.fillStyle = 'rgba(255, 204, 0, 0.15)';
             ctx.font = '15pt monospace';
 
             ypos.forEach((y, index) => {
                 const text = String.fromCharCode(Math.random() * 128);
                 const x = index * 20;
-
                 ctx.fillText(text, x, y);
 
-                // Randomly reset the column to the top if it has gone off screen
                 if (y > height && Math.random() > 0.975) {
                     ypos[index] = 0;
                 } else {
@@ -125,29 +188,19 @@
             });
         }
 
-        let interval = setInterval(matrix, 50);
+        setInterval(matrix, 50);
 
-        // Handle Window Resize
         window.addEventListener('resize', () => {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
-            
-            // Recalculate columns
+
             const newCols = Math.floor(width / 20) + 1;
-            
-            // Preserve existing drops if possible, or reset
-            if (newCols !== ypos.length) {
-                // If width changed significantly, simplest to reset or extend
-                // Extending logic:
-                while (ypos.length < newCols) ypos.push(Math.random() * height);
-                while (ypos.length > newCols) ypos.pop();
-            }
-            
-            // Clear background to avoid flicker artifacts during resize
-            ctx.fillStyle = '#000';
+            while (ypos.length < newCols) ypos.push(Math.random() * height);
+            while (ypos.length > newCols) ypos.pop();
+
+            ctx.fillStyle = '#0a0a0a';
             ctx.fillRect(0, 0, width, height);
         });
-
     </script>
 </body>
 </html>
