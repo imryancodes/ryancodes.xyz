@@ -2095,8 +2095,8 @@ section h2 {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gradientShift 4s ease infinite;
-  text-shadow: 0 0 30px rgba(255, 204, 0, 0.3);
   position: relative;
+  filter: drop-shadow(0 0 20px rgba(255, 204, 0, 0.3));
 }
 
 @keyframes gradientShift {
@@ -2243,6 +2243,7 @@ section h2 {
   pointer-events: none;
   z-index: -6;
   overflow: hidden;
+  will-change: transform;
 }
 
 .star {
@@ -2253,6 +2254,7 @@ section h2 {
   border-radius: 50%;
   animation: twinkle 3s ease-in-out infinite;
   box-shadow: 0 0 6px rgba(255, 204, 0, 0.6);
+  will-change: opacity, transform;
 }
 
 @keyframes twinkle {
