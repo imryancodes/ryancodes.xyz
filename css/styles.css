@@ -1914,6 +1914,29 @@ input:checked + .slider:before {
   display: none;
 }
 
+/* Mysterious Card Styles */
+.mysterious-card .mysterious-img {
+  filter: blur(4px) grayscale(80%) contrast(1.2) sepia(0.5) hue-rotate(200deg);
+  opacity: 0.6;
+}
+
+.mysterious-card:hover .mysterious-img {
+  filter: blur(2px) grayscale(50%) contrast(1.2) sepia(0.5) hue-rotate(200deg);
+  opacity: 0.8;
+}
+
+.projects-gallery .project-card .disabled-btn {
+  background: rgba(255, 255, 255, 0.02);
+  color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.05);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.projects-gallery .project-card .disabled-btn svg {
+  opacity: 0.6;
+}
+
 /* Responsive Gallery */
 @media (max-width: 768px) {
   .projects-gallery {
