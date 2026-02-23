@@ -2809,3 +2809,159 @@ body::before {
 .project-img {
   transition: all 0.3s ease;
 }
+
+/* Helper & Portal */
+.helper-portal {
+  position: fixed;
+  bottom: 0;
+  right: 30px; 
+  left: auto;
+  z-index: 9000;
+  display: flex;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+.helper-portal.hidden {
+  display: none;
+}
+
+.portal-ring {
+  position: absolute;
+  bottom: 0px;
+  right: 15px;
+  width: 70px;
+  height: 25px;
+  background: radial-gradient(ellipse at center, rgba(255, 204, 0, 0.4) 0%, rgba(255, 204, 0, 0) 70%);
+  border-radius: 50%;
+  box-shadow: 0 0 20px #ffcc00, inset 0 0 10px #ffcc00;
+  opacity: 0;
+  transform: scaleX(0);
+  animation: portalOpen 0.8s forwards;
+  pointer-events: none;
+}
+
+.helper-character {
+  position: relative;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-end;
+  opacity: 0;
+  transform: translateY(50px) scale(0.5);
+  animation: helperRise 1s 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  pointer-events: auto;
+  margin-bottom: 25px;
+}
+
+.helper-bot {
+  width: 50px;
+  height: 50px;
+  background: #1c1c1c;
+  border: 2px solid #ffcc00;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffcc00;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5), 0 0 10px rgba(255, 204, 0, 0.3);
+  margin-left: 15px;
+  margin-right: 0;
+  z-index: 2;
+  animation: hoverBot 3s ease-in-out infinite;
+}
+
+.helper-bot svg {
+  width: 28px;
+  height: 28px;
+}
+
+.helper-tooltip {
+  position: relative;
+  margin-bottom: 20px;
+  background: rgba(22, 22, 28, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 204, 0, 0.3);
+  padding: 1rem;
+  border-radius: 12px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 12px;
+  width: 260px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  opacity: 0;
+  transform: translateX(10px);
+  animation: tooltipFade 0.5s 1.2s forwards;
+  color: #fff;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.helper-close {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.5);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.3s ease;
+}
+
+.helper-close:hover {
+  color: #ffcc00;
+}
+
+.helper-text strong {
+  color: #ffcc00;
+}
+
+@keyframes portalOpen {
+  0% { transform: scaleX(0); opacity: 0; }
+  50% { transform: scaleX(1.1); opacity: 1; }
+  100% { transform: scaleX(1); opacity: 0.8; }
+}
+
+@keyframes helperRise {
+  0% { transform: translateY(20px) scale(0); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+@keyframes tooltipFade {
+  0% { transform: translateX(10px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes hoverBot {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Dismiss Animations */
+.helper-portal.dismissing .helper-tooltip {
+  animation: tooltipFadeOut 0.3s both;
+}
+
+.helper-portal.dismissing .helper-character {
+  animation: helperSink 0.8s 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045) both;
+}
+
+.helper-portal.dismissing .portal-ring {
+  animation: portalClose 0.8s 0.4s both;
+}
+
+@keyframes tooltipFadeOut {
+  0% { transform: translateX(0); opacity: 1; }
+  100% { transform: translateX(10px); opacity: 0; }
+}
+
+@keyframes helperSink {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(20px) scale(0); opacity: 0; }
+}
+
+@keyframes portalClose {
+  0% { transform: scaleX(1); opacity: 0.8; }
+  50% { transform: scaleX(1.1); opacity: 1; }
+  100% { transform: scaleX(0); opacity: 0; }
+}

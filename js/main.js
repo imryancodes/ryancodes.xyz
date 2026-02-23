@@ -486,3 +486,44 @@ window.addEventListener('unhandledrejection', function(e) {
   // Prevent default browser error handling
   e.preventDefault();
 }); 
+
+// Helper Portal Animation
+document.addEventListener('DOMContentLoaded', () => {
+  const helperPortal = document.getElementById('helper-portal');
+  const helperClose = document.querySelector('.helper-close');
+  const mysteriousCards = document.querySelectorAll('.mysterious-card');
+  
+  if (helperPortal && helperClose && mysteriousCards.length > 0) {
+    // We use sessionStorage so it resets if you completely close the tab/browser
+    if (sessionStorage.getItem('helperDismissed') === 'true') {
+      helperPortal.style.display = 'none';
+      return; 
+    }
+
+    helperPortal.classList.add('hidden');
+    helperPortal.style.display = '';
+
+    const showHelper = () => {
+      if (helperPortal.classList.contains('hidden')) {
+        helperPortal.classList.remove('hidden');
+        mysteriousCards.forEach(card => card.removeEventListener('mouseenter', showHelper));
+        mysteriousCards.forEach(card => card.removeEventListener('touchstart', showHelper));
+      }
+    };
+    
+    // Trigger on hover or tap
+    mysteriousCards.forEach(card => {
+      card.addEventListener('mouseenter', showHelper);
+      card.addEventListener('touchstart', showHelper);
+    });
+
+    helperClose.addEventListener('click', () => {
+      helperPortal.classList.add('dismissing');
+      sessionStorage.setItem('helperDismissed', 'true');
+      
+      setTimeout(() => {
+        helperPortal.style.display = 'none';
+      }, 1500);
+    });
+  }
+});
