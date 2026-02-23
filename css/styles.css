@@ -1741,6 +1741,10 @@ input:checked + .slider:before {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
   transition:
     transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
     box-shadow 0.4s ease,
@@ -1761,20 +1765,23 @@ input:checked + .slider:before {
   width: 100%;
   aspect-ratio: 16 / 10;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.3);
+  border-radius: 15px 15px 0 0;
+  background: rgba(22, 22, 28, 0.85);
   font-size: 0;
   line-height: 0;
-  margin-bottom: -1px;
+  transform: translateZ(0);
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
 }
 
 .project-img-wrapper::after {
   content: "";
   position: absolute;
-  bottom: -1px;
+  bottom: 0;
   left: 0;
   right: 0;
-  height: 40%;
-  background: linear-gradient(to top, rgba(22, 22, 28, 1), transparent);
+  height: 45%;
+  background: linear-gradient(to top, rgba(22, 22, 28, 0.85) 0%, rgba(22, 22, 28, 0.85) 1px, transparent);
   pointer-events: none;
   z-index: 1;
 }
@@ -1784,11 +1791,13 @@ input:checked + .slider:before {
   height: 100%;
   object-fit: cover;
   display: block;
+  transform: translateZ(0);
+  will-change: transform;
   transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .projects-gallery .project-card:hover .project-img {
-  transform: scale(1.06);
+  transform: scale(1.06) translateZ(0);
 }
 
 /* Badge */
@@ -1813,9 +1822,12 @@ input:checked + .slider:before {
 /* Content area */
 .project-content {
   padding: 1.25rem 1.25rem 0;
+  margin-top: -1px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  position: relative;
+  z-index: 2;
 }
 
 .projects-gallery .project-card h3 {
