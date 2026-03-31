@@ -1819,6 +1819,109 @@ input:checked + .slider:before {
   z-index: 2;
 }
 
+/* Award Badge */
+.project-award-badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 204, 0, 0.35);
+  text-decoration: none;
+  z-index: 3;
+  box-shadow:
+    0 2px 12px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(255, 204, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  animation: awardGlow 3s ease-in-out infinite alternate;
+}
+
+.project-award-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 204, 0, 0.15),
+    transparent
+  );
+  animation: awardShimmer 4s ease-in-out infinite;
+}
+
+.project-award-badge:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 204, 0, 0.6);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(255, 204, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.project-award-badge:hover .award-arrow {
+  transform: translate(1px, -1px);
+}
+
+.award-apple-logo {
+  width: 12px;
+  height: 14px;
+  fill: #ffcc00;
+  flex-shrink: 0;
+}
+
+.award-text {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: #ffcc00;
+  text-transform: uppercase;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.award-arrow {
+  width: 10px;
+  height: 10px;
+  stroke: rgba(255, 204, 0, 0.6);
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+@keyframes awardGlow {
+  0% {
+    box-shadow:
+      0 2px 12px rgba(0, 0, 0, 0.4),
+      0 0 20px rgba(255, 204, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+  100% {
+    box-shadow:
+      0 2px 16px rgba(0, 0, 0, 0.4),
+      0 0 28px rgba(255, 204, 0, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+}
+
+@keyframes awardShimmer {
+  0%, 100% {
+    left: -100%;
+  }
+  50% {
+    left: 100%;
+  }
+}
+
 /* Content area */
 .project-content {
   padding: 1.25rem 1.25rem 0;
