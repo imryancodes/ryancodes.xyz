@@ -293,8 +293,114 @@ function createStars() {
   }
 }
 
+// ====== Theme System ======
+const THEMES = ['amber', 'midnight', 'rose', 'emerald', 'violet', 'sunset'];
+const THEME_LABELS = {
+  amber: 'Amber', midnight: 'Midnight', rose: 'Rose',
+  emerald: 'Emerald', violet: 'Violet', sunset: 'Sunset'
+};
+const THEME_COLORS = {
+  amber: '#ffcc00', midnight: '#4A9EFF', rose: '#FF6B9D',
+  emerald: '#34D399', violet: '#A78BFA', sunset: '#FB923C'
+};
+
+// Restore theme immediately to prevent flash
+(function() {
+  const saved = localStorage.getItem('site-theme');
+  if (saved && THEMES.includes(saved)) {
+    document.documentElement.setAttribute('data-theme', saved);
+  }
+})();
+
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('site-theme', theme);
+  
+  const label = document.querySelector('.theme-label');
+  if (label) label.textContent = THEME_LABELS[theme] || theme;
+  
+  // Update meta theme-color for mobile browsers
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) {
+    meta.setAttribute('content', THEME_COLORS[theme] || '#ffcc00');
+  }
+  
+  // Update star colors
+  document.querySelectorAll('.star').forEach(star => {
+    star.style.background = 'var(--accent)';
+    star.style.boxShadow = '0 0 6px rgba(var(--accent-rgb), 0.6)';
+  });
+  
+  // Update active state in menu
+  document.querySelectorAll('.theme-option').forEach(opt => {
+    opt.classList.toggle('active', opt.getAttribute('data-theme') === theme);
+  });
+  
+  // Animate the icon
+  const icon = document.querySelector('.theme-toggle svg');
+  if (icon) {
+    icon.classList.remove('theme-spin');
+    void icon.offsetWidth;
+    icon.classList.add('theme-spin');
+  }
+}
+
+function initThemeToggle() {
+  const toggle = document.getElementById('theme-toggle');
+  const menu = document.getElementById('theme-menu');
+  if (!toggle || !menu) return;
+  
+  // Restore saved theme label + active state
+  const saved = localStorage.getItem('site-theme') || 'amber';
+  const label = toggle.querySelector('.theme-label');
+  if (label) label.textContent = THEME_LABELS[saved] || saved;
+  
+  document.querySelectorAll('.theme-option').forEach(opt => {
+    opt.classList.toggle('active', opt.getAttribute('data-theme') === saved);
+  });
+  
+  // Toggle menu open/close on button click
+  toggle.addEventListener('click', (e) => {
+    // Don't toggle if clicking a theme option (it bubbles up)
+    if (e.target.closest('.theme-option')) return;
+    e.stopPropagation();
+    menu.classList.toggle('open');
+  });
+  
+  // Handle theme option clicks
+  menu.addEventListener('click', (e) => {
+    const option = e.target.closest('.theme-option');
+    if (!option) return;
+    e.stopPropagation();
+    const theme = option.getAttribute('data-theme');
+    if (theme) {
+      setTheme(theme);
+      // Close menu after short delay so user sees the checkmark
+      setTimeout(() => menu.classList.remove('open'), 200);
+    }
+  });
+  
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!toggle.contains(e.target)) {
+      menu.classList.remove('open');
+    }
+  });
+  
+  // Keyboard support
+  toggle.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      menu.classList.toggle('open');
+    } else if (e.key === 'Escape') {
+      menu.classList.remove('open');
+    }
+  });
+}
+
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+  initThemeToggle();
   typeLetter();
   createStaticBackground();
   animateCounters();

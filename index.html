@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="amber">
 <head>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZNLV0FEW1M"></script>
@@ -136,6 +136,22 @@
           <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M21 2H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h7l-2 3v1h8v-1l-2-3h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 12H3V4h18v10z"/></svg>
           <span>RyOS</span>
         </a>
+        <!-- Theme Toggle -->
+        <div class="nav-pill theme-toggle" title="Switch Theme" role="button" tabindex="0" aria-label="Switch color theme" id="theme-toggle">
+          <svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+          </svg>
+          <span class="theme-label">Amber</span>
+          <!-- Theme Dropdown Menu -->
+          <div class="theme-menu" id="theme-menu">
+            <button class="theme-option" data-theme="amber"><span class="theme-dot" style="background:#ffcc00"></span>Amber</button>
+            <button class="theme-option" data-theme="midnight"><span class="theme-dot" style="background:#4A9EFF"></span>Midnight</button>
+            <button class="theme-option" data-theme="rose"><span class="theme-dot" style="background:#FF6B9D"></span>Rose</button>
+            <button class="theme-option" data-theme="emerald"><span class="theme-dot" style="background:#34D399"></span>Emerald</button>
+            <button class="theme-option" data-theme="violet"><span class="theme-dot" style="background:#A78BFA"></span>Violet</button>
+            <button class="theme-option" data-theme="sunset"><span class="theme-dot" style="background:#FB923C"></span>Sunset</button>
+          </div>
+        </div>
         <!-- Cursor Toggle -->
         <div class="nav-pill cursor-toggle" title="Toggle Custom Cursor" role="button" tabindex="0" aria-label="Toggle custom cursor on or off">
           <svg class="cursor-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
@@ -159,7 +175,7 @@
       <p>Welcome to my website. Scroll or click the chips on top to see more!</p>
       <!-- Location Info -->
       <div class="location-info" aria-label="Location: Massachusetts, United States">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="#ffcc00" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
           <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
         </svg>
         <span>MA, United States</span>
