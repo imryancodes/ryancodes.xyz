@@ -139,7 +139,7 @@ function createStaticBackground() {
     ];
     
     const body = document.body;
-    const snippetCount = 6;
+    const snippetCount = 3;
     for (let i = 0; i < snippetCount; i++) {
       const snippet = document.createElement('div');
       snippet.classList.add('floating-code');
@@ -265,7 +265,7 @@ function createStars() {
     starsContainer.className = 'stars-container';
     starsContainer.setAttribute('aria-hidden', 'true');
     
-    const starCount = 50; // Number of stars
+    const starCount = 25; // Reduced for performance
     
     for (let i = 0; i < starCount; i++) {
       const star = document.createElement('div');
@@ -313,8 +313,11 @@ const THEME_COLORS = {
 })();
 
 function setTheme(theme) {
+  // Add transition class for smooth switch, remove after animation
+  document.body.classList.add('theme-transitioning');
   document.documentElement.setAttribute('data-theme', theme);
   localStorage.setItem('site-theme', theme);
+  setTimeout(() => document.body.classList.remove('theme-transitioning'), 500);
   
   const label = document.querySelector('.theme-label');
   if (label) label.textContent = THEME_LABELS[theme] || theme;

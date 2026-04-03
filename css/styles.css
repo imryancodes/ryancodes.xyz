@@ -150,11 +150,21 @@
   --social-twitter: #38BDF8;
 }
 
-/* Theme transition on body for smooth switching */
-body, header, footer, section, .project-card, .skill-item,
-.stat-item, .nav-pill, .timeline-content, .social-btn,
-.project-btn, .skills-category, .about-list li {
-  transition: var(--theme-transition);
+/* Theme transition — only applied temporarily during theme switch via JS */
+body.theme-transitioning,
+body.theme-transitioning header,
+body.theme-transitioning footer,
+body.theme-transitioning section,
+body.theme-transitioning .project-card,
+body.theme-transitioning .skill-item,
+body.theme-transitioning .stat-item,
+body.theme-transitioning .nav-pill,
+body.theme-transitioning .timeline-content,
+body.theme-transitioning .social-btn,
+body.theme-transitioning .project-btn,
+body.theme-transitioning .skills-category,
+body.theme-transitioning .about-list li {
+  transition: background-color 0.4s ease, color 0.3s ease, border-color 0.3s ease !important;
 }
 
 /* Universal rule to hide default cursor on all elements - only when not disabled */
@@ -349,7 +359,6 @@ header {
     background-color 0.3s ease;
   opacity: 0;
   animation: pillAppear 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  will-change: opacity;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   flex-shrink: 0;
@@ -474,16 +483,13 @@ section {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
+  padding: 4rem 2rem 2rem;
   opacity: 0;
   transform: translateY(30px);
   transition:
     opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
     transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   text-align: center;
-  will-change: opacity, transform;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
 }
 #home {
   scroll-margin-top: 0;
@@ -2886,9 +2892,8 @@ section h2 {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradientShift 4s ease infinite;
+  animation: gradientShift 6s ease infinite;
   position: relative;
-  filter: drop-shadow(0 0 20px rgba(var(--accent-rgb), 0.3));
 }
 
 @keyframes gradientShift {
@@ -2938,37 +2943,11 @@ section h2 {
 
 
 
-/* Neon Glow Border Animation for Interactive Elements */
+/* Neon Glow Border — disabled for performance */
 .nav-pill::after,
 .project-btn::after,
 .social-btn::after {
-  content: "";
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: linear-gradient(
-    45deg,
-    var(--accent),
-    var(--accent-secondary),
-    var(--accent),
-    var(--accent-hover),
-    var(--accent)
-  );
-  background-size: 400% 400%;
-  border-radius: inherit;
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  animation: borderGlow 3s ease infinite;
-  filter: blur(8px);
-}
-
-.nav-pill:hover::after,
-.project-btn:hover::after,
-.social-btn:hover::after {
-  opacity: 0.6;
+  content: none;
 }
 
 @keyframes borderGlow {
@@ -3236,7 +3215,7 @@ body::before {
   background:
     radial-gradient(
       ellipse at 20% 20%,
-      rgba(var(--accent-rgb), 0.03) 0%,
+      rgba(var(--accent-rgb), 0.02) 0%,
       transparent 50%
     ),
     radial-gradient(
@@ -3251,7 +3230,6 @@ body::before {
     );
   pointer-events: none;
   z-index: -10;
-  animation: bgPulse 10s ease-in-out infinite;
 }
 
 @keyframes bgPulse {
