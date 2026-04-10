@@ -6,6 +6,14 @@
     <title>Contact - Ryancodes</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/cursor.css">
+    <script>
+        (function() {
+            const saved = localStorage.getItem('site-theme');
+            if (saved) document.documentElement.setAttribute('data-theme', saved);
+        })();
+    </script>
     <style>
         * {
             box-sizing: border-box;
@@ -16,8 +24,8 @@
         body, html {
             height: 100%;
             overflow: hidden;
-            background-color: #0a0a0a;
-            color: #e5e5e5;
+            background-color: var(--bg-primary, #0a0a0a);
+            color: var(--text-primary, #e5e5e5);
             font-family: 'Inter', sans-serif;
         }
 
@@ -39,11 +47,11 @@
             width: 90%;
             max-width: 480px;
             padding: 3rem 2.5rem;
-            background: rgba(20, 20, 20, 0.85);
+            background: var(--bg-card, rgba(20, 20, 20, 0.85));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
         }
 
         .back-link {
@@ -51,7 +59,7 @@
             top: 1.5rem;
             left: 1.5rem;
             z-index: 2;
-            color: rgba(255, 255, 255, 0.5);
+            color: var(--text-muted, rgba(255, 255, 255, 0.5));
             text-decoration: none;
             font-size: 0.85rem;
             font-weight: 500;
@@ -60,16 +68,16 @@
             gap: 0.4rem;
             padding: 0.5rem 1rem;
             border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(20, 20, 20, 0.6);
+            border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+            background: var(--bg-nav, rgba(20, 20, 20, 0.6));
             backdrop-filter: blur(10px);
             transition: all 0.2s ease;
         }
 
         .back-link:hover {
-            color: #fff;
-            border-color: rgba(255, 255, 255, 0.2);
-            background: rgba(20, 20, 20, 0.8);
+            color: var(--text-primary, #fff);
+            border-color: var(--border-medium, rgba(255, 255, 255, 0.2));
+            background: var(--bg-card, rgba(20, 20, 20, 0.8));
         }
 
         .badge {
@@ -78,19 +86,19 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: #ffcc00;
+            color: var(--accent, #ffcc00);
             padding: 0.35rem 0.85rem;
-            border: 1px solid rgba(255, 204, 0, 0.3);
+            border: 1px solid var(--border-accent, rgba(255, 204, 0, 0.3));
             border-radius: 999px;
             margin-bottom: 1.5rem;
-            background: rgba(255, 204, 0, 0.08);
+            background: rgba(var(--accent-rgb, 255, 204, 0), 0.08);
         }
 
         h1 {
             font-size: 2rem;
             font-weight: 700;
             margin-bottom: 0.75rem;
-            color: #fff;
+            color: var(--text-primary, #fff);
             letter-spacing: -0.5px;
         }
 
@@ -98,7 +106,7 @@
             font-size: 0.95rem;
             margin-bottom: 2rem;
             line-height: 1.6;
-            color: rgba(255, 255, 255, 0.5);
+            color: var(--text-muted, rgba(255, 255, 255, 0.5));
         }
 
         .email-link {
@@ -108,17 +116,17 @@
             padding: 0.75rem 2rem;
             font-size: 0.95rem;
             font-weight: 600;
-            background: #ffcc00;
-            color: #0a0a0a;
+            background: var(--accent, #ffcc00);
+            color: var(--bg-primary, #0a0a0a);
             text-decoration: none;
             border-radius: 10px;
             transition: all 0.25s ease;
         }
 
         .email-link:hover {
-            background: #e6b800;
+            background: var(--accent-hover, #e6b800);
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255, 204, 0, 0.2);
+            box-shadow: 0 8px 25px rgba(var(--accent-rgb, 255, 204, 0), 0.2);
         }
 
         @media (max-width: 480px) {
@@ -138,6 +146,10 @@
     </style>
 </head>
 <body>
+    <!-- Custom Cursor Elements -->
+    <div class="cursor-outer" aria-hidden="true"></div>
+    <div class="cursor-inner" aria-hidden="true"></div>
+
     <canvas id="matrixCanvas"></canvas>
 
     <a href="/" class="back-link">
@@ -165,14 +177,20 @@
         const cols = Math.floor(width / 20) + 1;
         const ypos = Array(cols).fill(0);
 
-        ctx.fillStyle = '#0a0a0a';
-        ctx.fillRect(0, 0, width, height);
+        function updateCanvasBg() {
+            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--bg-primary').trim() || '#0a0a0a';
+            ctx.fillRect(0, 0, width, height);
+        }
+        updateCanvasBg();
 
         function matrix() {
-            ctx.fillStyle = 'rgba(10, 10, 10, 0.06)';
+            ctx.globalAlpha = 0.06;
+            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--bg-primary').trim() || '#0a0a0a';
             ctx.fillRect(0, 0, width, height);
+            ctx.globalAlpha = 1.0;
 
-            ctx.fillStyle = 'rgba(255, 204, 0, 0.15)';
+            const accentRgb = getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim() || '255, 204, 0';
+            ctx.fillStyle = `rgba(${accentRgb}, 0.15)`;
             ctx.font = '15pt monospace';
 
             ypos.forEach((y, index) => {
@@ -198,9 +216,9 @@
             while (ypos.length < newCols) ypos.push(Math.random() * height);
             while (ypos.length > newCols) ypos.pop();
 
-            ctx.fillStyle = '#0a0a0a';
-            ctx.fillRect(0, 0, width, height);
+            updateCanvasBg();
         });
     </script>
+    <script src="js/cursor.js" defer></script>
 </body>
 </html>

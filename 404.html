@@ -4,16 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page Not Found - Ryan Codes</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/cursor.css">
+    <script>
+        (function() {
+            const saved = localStorage.getItem('site-theme');
+            if (saved) document.documentElement.setAttribute('data-theme', saved);
+        })();
+    </script>
     <style>
         :root {
-            /* Theme Colors */
-            --bg-color: #121212; 
-            --text-main: #ffffff;
-            --text-muted: #a1a1aa;
-            --accent: #FFD700; /* Cyber Yellow */
-            --accent-hover: #e6c200;
-            --accent-glow: rgba(255, 215, 0, 0.5);
-            --grid-line: rgba(255, 215, 0, 0.07); /* Low opacity for lines */
+            /* Theme Colors specific to 404 */
+            --accent-glow: rgba(var(--accent-rgb, 255, 204, 0), 0.5);
+            --grid-line: rgba(var(--accent-rgb, 255, 204, 0), 0.07);
         }
 
         * {
@@ -24,8 +27,8 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background-color: var(--bg-primary, #121212);
+            color: var(--text-primary, #ffffff);
             height: 100vh;
             display: flex;
             align-items: center;
@@ -68,7 +71,7 @@
             margin-bottom: 0.5rem;
             position: relative;
             display: inline-block;
-            color: var(--accent);
+            color: var(--accent, #FFD700);
             letter-spacing: -5px;
             font-family: 'Courier New', Courier, monospace;
             text-shadow: 0 0 20px var(--accent-glow);
@@ -83,17 +86,17 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--bg-color); 
+            background: var(--bg-primary, #121212); 
         }
 
         .error-code::before {
-            color: #fff;
+            color: var(--text-primary, #fff);
             z-index: -1;
             animation: glitch-anim-1 2.5s infinite linear alternate-reverse;
         }
 
         .error-code::after {
-            color: #ffaa00; 
+            color: var(--accent-secondary, #ffaa00); 
             z-index: -2;
             animation: glitch-anim-2 3s infinite linear alternate-reverse;
         }
@@ -105,7 +108,7 @@
         }
 
         p {
-            color: var(--text-muted);
+            color: var(--text-muted, #a1a1aa);
             font-size: 1.1rem;
             line-height: 1.6;
             margin-bottom: 2.5rem;
@@ -117,8 +120,8 @@
             align-items: center;
             justify-content: center;
             padding: 14px 35px;
-            background-color: var(--accent);
-            color: #000000;
+            background-color: var(--accent, #FFD700);
+            color: var(--bg-primary, #000000);
             text-decoration: none;
             border-radius: 50px;
             font-weight: 700;
@@ -130,7 +133,7 @@
         }
 
         .btn:hover {
-            background-color: var(--accent-hover);
+            background-color: var(--accent-hover, #e6c200);
             transform: translateY(-2px);
             box-shadow: 0 0 25px var(--accent-glow);
         }
@@ -162,6 +165,10 @@
 </head>
 <body>
 
+    <!-- Custom Cursor Elements -->
+    <div class="cursor-outer" aria-hidden="true"></div>
+    <div class="cursor-inner" aria-hidden="true"></div>
+
     <div class="background-grid"></div>
 
     <div class="container">
@@ -174,5 +181,6 @@
         <a href="/" class="btn">Return Home</a>
     </div>
 
+    <script src="js/cursor.js" defer></script>
 </body>
 </html>
