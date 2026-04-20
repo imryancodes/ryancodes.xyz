@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 120" role="img" aria-label="ryancodes" style="color:#111318">
+  <title>ryancodes</title>
+  <defs>
+    <linearGradient id="amber" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffd633"/>
+      <stop offset="100%" stop-color="#e6b800"/>
+    </linearGradient>
+  </defs>
+  <!-- Opening bracket -->
+  <path d="M 30 60 L 8 60 L 30 30 M 8 60 L 30 90"
+        fill="none" stroke="url(#amber)" stroke-width="8"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Closing bracket -->
+  <path d="M 290 60 L 312 60 L 290 30 M 312 60 L 290 90"
+        fill="none" stroke="url(#amber)" stroke-width="8"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Wordmark -->
+  <text x="160" y="72" text-anchor="middle"
+        font-family="Inter, 'Helvetica Neue', Arial, sans-serif"
+        font-weight="800" font-size="34" letter-spacing="-1" fill="currentColor">
+    ryancodes
+  </text>
+</svg>
