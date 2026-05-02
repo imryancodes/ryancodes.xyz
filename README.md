@@ -1,12 +1,3 @@
-# What is this?
-My portfolio site.
+This is the repo that contained and hosted my site (v1-v4), I have now switched my site to be hosted on vercel since it is now a react site.
 
-# Did you make this?
-Yes, I made this site.
-
-# How can I accsess your site?
-View it at https://ryancodes.xyz
-
-#
-
-### © Ryan Kiapour 2026
+The url is still https://ryancodes.xyz, to see archives of my site go to https://ryancodes.xyz/#archives
